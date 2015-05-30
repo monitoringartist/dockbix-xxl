@@ -1,5 +1,5 @@
 ### Zabbix-Server 2.4 (CentOS-7 + Supervisor)
-[Docker Image](https://registry.hub.docker.com/u/million12/zabbix-server/) with Zabbix Server using CentOS-7 and Supervisor.
+[Docker Image](https://registry.hub.docker.com/u/zabbix/zabbix-server-2.4/) with Zabbix Server using CentOS-7 and Supervisor.
 Image is using external datbase. 
 
 [![Circle CI](https://circleci.com/gh/zabbix/zabbix-community-docker/tree/master.svg?style=svg&circle-token=930b0a85da051123bf3f2c9c28ede5b29c607665)](https://circleci.com/gh/zabbix/zabbix-community-docker/tree/master)
