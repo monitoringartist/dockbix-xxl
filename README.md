@@ -1,24 +1,24 @@
 Zabbix Community Dockerfiles
 ============================
 
-[Github repo](https://github.com/zabbix/zabbix-community-docker is intended
- as source for [Zabbix Docker registry](https://registry.hub.docker.com/repos/zabbix/).
-Please use these community Zabbix Docker images, if you want to [build/ship your own image](#how-to-build-own-docker-image).
+[Github repo](https://github.com/zabbix/zabbix-community-docker) is intended
+ as a source for [Zabbix Docker registry](https://registry.hub.docker.com/repos/zabbix/).
+Please use these community Zabbix Docker images, if you want to [build/ship your own Zabbix Docker image](#how-to-build-own-docker-image).
 
 Available images
 ================
 
-1. zabbix-server (2.4)
+### 1. zabbix-server (2.4)
 
-Compiled zabbix-server with almost all features (MySQL, Java, SNMP, Curl, Ipmi)
-base on CentOS 7 and Supervisor. Image requires external MySQL database
-(you can run MySQL also as Docker container).
+Compiled zabbix-server with almost all features (MySQL, Java, SNMP, Curl, Ipmi) 
+and Zabbix web UI based on CentOS 7 and Supervisor. Image requires external 
+MySQL database (you can run MySQL also as Docker container).
 
 #### Zabbix database as Docker container
 To be able to connect to database we would need one to be running first. 
 Easiest way to do that is to use another docker image. 
 For this purpose you can use [million12/mariadb](https://registry.hub.docker.com/u/million12/mariadb/)
- image as our database.
+ image as database.
 
 **For more information about million12/MariaDB see [documentation.](https://github.com/million12/docker-mariadb) **
 
@@ -93,7 +93,7 @@ FROM zabbix/zabbix-server-2.4:latest
 ```
 
 Recommended example how to build custom Zabbix server on top of base image is 
-[repo million12/docker-zabbix-server](https://github.com/million12/docker-zabbix-server). 
+[million12/docker-zabbix-server](https://github.com/million12/docker-zabbix-server). 
 It provides custom features, such as Push notification, Slack and SMTP auth.  
 
 About Docker
