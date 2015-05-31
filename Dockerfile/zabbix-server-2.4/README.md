@@ -1,9 +1,9 @@
 Zabbix Community Dockerfiles
 ============================
 
-[Github repo](https://github.com/zabbix/zabbix-community-docker) is intended
+[Zabbix Github repo](https://github.com/zabbix/zabbix-community-docker) is intended
  as a source for [Zabbix Docker registry](https://registry.hub.docker.com/repos/zabbix/).
-Please use these community Zabbix Docker images, if you want to [build/ship your own Zabbix Docker image](#how-to-build-own-docker-image).
+Please use these community Zabbix Docker images, if you want to [build/ship your own Zabbix Docker image](https://github.com/zabbix/zabbix-community-docker#how-to-build-own-docker-image).
 
 Available images
 ================
