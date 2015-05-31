@@ -62,7 +62,8 @@ To log in into zabbix web interface for the first time use credentials `Admin:za
 
 Access web interface under [http://docker_host.ip]()
 
-#### Troubleshooting
+Troubleshooting
+===============
 Use docker command to see if all required containers are up and running: 
 ```
 $ docker ps -f
