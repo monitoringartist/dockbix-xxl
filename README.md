@@ -8,7 +8,7 @@ Please use these community Zabbix Docker images, if you want to [build/ship your
 Available images
 ================
 
-### 1. zabbix-server (2.4)
+### 1. zabbix-server (2.4) [![Circle CI](https://circleci.com/gh/zabbix/zabbix-community-docker/tree/master.svg?style=svg&circle-token=930b0a85da051123bf3f2c9c28ede5b29c607665)](https://circleci.com/gh/zabbix/zabbix-community-docker/tree/master)
 
 Compiled zabbix-server with almost all features (MySQL, Java, SNMP, Curl, Ipmi) 
 and Zabbix web UI based on CentOS 7 and Supervisor. Image requires external 
