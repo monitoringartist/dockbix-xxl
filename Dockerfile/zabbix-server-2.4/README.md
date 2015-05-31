@@ -77,16 +77,32 @@ use the escape sequence Ctrl+p + Ctrl+q):
 ```
 $ docker attach zabbix
 ```
-Sometimes you might just want to review how things are deployed inside a container, you can do this by executing a _bash shell_ through _docker's exec_ command:
+Sometimes you might just want to review how things are deployed inside a running container, you can do this by executing a _bash shell_ through _docker's exec_ command:
 ```
-docker exec -i -t zabbix-exploring /bin/bash
+docker exec -i -t zabbix /bin/bash
+```
+History of an image and size of layers: 
+``` 
+docker history --no-trunc=true zabbix/zabbix-server-2.4 | tr -s ' ' | tail -n+2 | awk -F " ago " '{print $2}'
+```
+Run specific Zabbix version, e.g. 2.4.4 - just specify 2.4.4 tag for image:
+```
+	docker run \
+		-d \
+		--name zabbix \
+		-p 80:80 \
+		-p 10051:10051 \
+		--env="DB_ADDRESS=database_ip" \
+		--env="DB_USER=username" \
+		--env="DB_PASS=my_password" \
+		zabbix/zabbix-server-2.4:2.4.4
 ```
 
 How to build own Docker image
 =============================
 
 It's easy to build customized image on top of this base community image. 
-You will need to specify only FROM definition in your Dockerfile. For 
+You will need to specify only _FROM_ definition in your Dockerfile. For 
 example: if you want to use always the latest available version, then please use:
 
 ```
@@ -100,4 +116,5 @@ It provides custom features, such as Push notification, Slack and SMTP auth.
 About Docker
 ============
 
-See [Awesome Docker](https://github.com/veggiemonk/awesome-docker)
+[Official Docker Doc](https://docs.docker.com/)
+[Awesome Docker](https://github.com/veggiemonk/awesome-docker)
