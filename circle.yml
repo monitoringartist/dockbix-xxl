@@ -24,3 +24,9 @@ test:
     - while true; do if grep "nginx entered RUNNING state" -a ${CIRCLE_ARTIFACTS}/zabbix.log; then break; else sleep 1; fi done
     # Check Zabbix Web interface status
     - curl -s -L --head http://127.0.0.1/ | grep "HTTP/1.1 200 OK"
+    # Check if after restartting docker image server works.
+    - docker restart zabbix
+    - docker logs -f zabbix | tee -a ${CIRCLE_ARTIFACTS}/zabbix-after-restart.log:
+        background: true
+    - while true; do if grep "nginx entered RUNNING state" -a ${CIRCLE_ARTIFACTS}/zabbix-after-restart.log; then break; else sleep 1; fi done
+    - curl -s -L --head http://127.0.0.1/ | grep "HTTP/1.1 200 OK"

@@ -1,4 +1,5 @@
-set -eu 
+#!/bin/sh
+set -eu
 export TERM=xterm
 # Bash Colors
 red=`tput setaf 1`
@@ -40,8 +41,8 @@ system_pids() {
   chmod 777 /var/run/zabbix_server.pid /var/run/zabbix_agentd.pid /var/run/zabbix_java.pid
 }
 fix_permissions() {
-  groupadd zabbix
-  useradd -g zabbix zabbix
+  getent group zabbix || groupadd zabbix
+  getent passwd zabbix || useradd -g zabbix -M zabbix
   chown -R zabbix:zabbix /usr/local/etc/
   chown -R zabbix:zabbix /usr/local/src/zabbix/
   mkdir -p /usr/local/src/zabbix/frontends/php/conf/
