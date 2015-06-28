@@ -5,7 +5,7 @@ Zabbix Community Dockerfiles
  as a source for [Zabbix Docker registry](https://registry.hub.docker.com/repos/zabbix/).
 Please use these community Zabbix Docker images, if you want to [build/ship your own Zabbix Docker image](https://github.com/zabbix/zabbix-community-docker#how-to-build-own-docker-image).
 
-zabbix-server-2.4 [![Circle CI](https://circleci.com/gh/zabbix/zabbix-community-docker/tree/master.svg?style=svg&circle-token=930b0a85da051123bf3f2c9c28ede5b29c607665)](https://circleci.com/gh/zabbix/zabbix-community-docker/tree/master)
+zabbix-server-2.4 [![Circle CI](https://circleci.com/gh/zabbix/zabbix-community-docker/tree/master.svg?style=svg&circle-token=930b0a85da051123bf3f2c9c28ede5b29c607665)](https://circleci.com/gh/zabbix/zabbix-community-docker/tree/master) [![](https://badge.imagelayers.io/zabbix/zabbix-server-2.4:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-server-2.4:latest 'Get your own badge on imagelayers.io')
 =================
 
 Compiled zabbix-server with almost all features (MySQL, Java, SNMP, Curl, Ipmi) 
