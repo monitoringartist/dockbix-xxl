@@ -3,12 +3,15 @@ MAINTAINER Przemyslaw Ozgo linux@ozgo.info
 
 ENV ZABBIX_VERSION=2.4.5
 
+ADD foreground.patch /
+
 RUN \
   yum clean all && yum makecache && \
   yum update --nogpgcheck -y && \
   yum install --nogpgcheck -y svn gcc automake make nmap traceroute iptstate wget sudo net-snmp-devel net-snmp-libs net-snmp net-snmp-perl net-snmp-python net-snmp-utils php-snmp php-ldap java-1.8.0-openjdk java-1.8.0-openjdk-devel mariadb-devel libxml2-devel libcurl-devel OpenIPMI-devel && \
   svn co svn://svn.zabbix.com/tags/${ZABBIX_VERSION} /usr/local/src/zabbix && \
   cd /usr/local/src/zabbix && \
+  svn patch /foreground.patch && \
   ./bootstrap.sh && \
   ./configure --enable-server --enable-agent --with-mysql --enable-java --with-net-snmp --with-libcurl --with-libxml2 --with-openipmi && \
   make dbschema && \
