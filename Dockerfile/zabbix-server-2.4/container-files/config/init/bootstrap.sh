@@ -57,7 +57,7 @@ update_config() {
   sed -i 's/DB_PASS/'${DB_PASS}'/g' /usr/local/etc/web/zabbix.conf.php
 }
 ####################### End of default settings #######################
-# Zabbix default sql files 
+# Zabbix default sql files
 ZABBIX_SQL_DIR="/usr/local/src/zabbix/database/mysql"
 log "Preparing server configuration"
 update_config
@@ -74,7 +74,6 @@ if ! mysql -u ${DB_USER} -p${DB_PASS} -h ${DB_ADDRESS} -e "use zabbix;"; then
   log "Database and user created. Importing Default SQL"
   log `import_zabbix_db`
   log "Import Finished. Starting"
-else 
+else
   log "Zabbix DB Exists. Starting server."
 fi
-zabbix_agentd -c /usr/local/etc/zabbix_agentd.conf
