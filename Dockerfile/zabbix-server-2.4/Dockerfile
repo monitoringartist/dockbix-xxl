@@ -1,7 +1,7 @@
 FROM million12/nginx-php
 MAINTAINER Przemyslaw Ozgo linux@ozgo.info
 
-ENV ZABBIX_VERSION=2.4.5
+ENV ZABBIX_VERSION=2.4.6
 
 ADD foreground.patch /
 
