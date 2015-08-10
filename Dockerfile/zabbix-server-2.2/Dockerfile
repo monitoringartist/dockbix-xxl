@@ -4,7 +4,7 @@ FROM centos:centos7
 MAINTAINER Jan Garaj jan.garaj@gmail.com
 
 ENV \
-  ZABBIX_VERSION=2.2.0 \
+  ZABBIX_VERSION=2.2.10 \
   STATUS_PAGE_ALLOWED_IP=127.0.0.1 \
   JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk/bin/java \
   JAVA=/usr/lib/jvm/java-1.8.0-openjdk/bin/java \
@@ -16,17 +16,12 @@ ENV \
   PHP_TIMEZONE=UTC \
   DEBUG_LEVEL=3
 
-# Layer: serviced
+# Layer: base
 RUN \
   yum clean all && \
   yum update -y && \
   yum install -y epel-release && \
   yum install -y supervisor && \
-  yum clean all && rm -rf /tmp/*    
-ADD container-files-serviced /  
-
-# Layer: nginx
-RUN \
   yum install -y http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm && \
   yum install -y nginx inotify-tools && \
   `# Rename nginx:nginx user/group to www:www, also set uid:gid to 80:80 (just to make it nice)` \
@@ -45,17 +40,19 @@ RUN \
        php-session php-net-socket php-mbstring php-gettext php-cli \
        php-mysqlnd php-opcache php-pdo php-snmp php-ldap && \    
   yum clean all && rm -rf /tmp/*
-ADD container-files-nginx /
+ADD container-files-base /
   
 # Layer: zabbix
 COPY container-files-zabbix /
 RUN \
   yum install -y tar svn gcc automake make nmap traceroute iptstate wget \
-              net-snmp-devel net-snmp-libs net-snmp net-snmp-perl \
-              net-snmp-python net-snmp-utils java-1.8.0-openjdk \
+              net-snmp-devel net-snmp-libs net-snmp net-snmp-perl iksemel \
+              net-snmp-python net-snmp-utils java-1.8.0-openjdk python-pip \
               java-1.8.0-openjdk-devel mariadb-devel libxml2-devel \
               libcurl-devel OpenIPMI-devel mysql iksemel-devel net-tools && \
+ `# reinstall glibc for locales` \
   yum -y -q reinstall glibc-common && \
+  cp /usr/local/etc/zabbix_agend.conf /tmp && \
   svn co svn://svn.zabbix.com/tags/${ZABBIX_VERSION} /usr/local/src/zabbix && \
   cd /usr/local/src/zabbix && \
   ./bootstrap.sh && \
@@ -63,6 +60,7 @@ RUN \
   make dbschema && \
   make install && \
   cp /usr/local/etc/web/zabbix.conf.php /usr/local/src/zabbix/frontends/php/conf/ && \
+  pip install py-zabbix && \
   wget https://github.com/schweikert/fping/archive/3.10.tar.gz && \
   tar -xvf 3.10.tar.gz && \ 
   cd fping-3.10/ && \
@@ -73,12 +71,15 @@ RUN \
   setcap cap_net_raw+ep /usr/local/sbin/fping && \
   setcap cap_net_raw+ep /usr/local/sbin/fping6 && \
   cd .. && \
+  cp -f /tmp/zabbix_agend.conf /usr/local/etc/ && \
   rm -rf fping-3.10 && \
   rm -rf 3.10.tar.gz && \ 
-  yum remove -y tar svn gcc automake mariadb-devel java-1.8.0-openjdk-devel libxml2-devel libcurl-devel OpenIPMI-devel iksemel-devel && \
+  yum autoremove -y python-pip tar svn gcc automake mariadb-devel java-1.8.0-openjdk-devel libxml2-devel libcurl-devel OpenIPMI-devel iksemel-devel && \
+  yum install -y OpenIPMI-libs && \
   chmod +x /config/bootstrap.sh && \ 
   chmod +x /config/ds.sh && \
-  yum clean all && rm -rf /tmp/*  
+  yum clean all && \
+  rm -rf /tmp/*  
 
 ENTRYPOINT ["/config/bootstrap.sh"]
 

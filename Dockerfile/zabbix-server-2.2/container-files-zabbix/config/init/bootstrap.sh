@@ -87,4 +87,6 @@ if ! mysql -u ${DB_USER} -p${DB_PASS} -h ${DB_ADDRESS} -e "use zabbix;"; then
 else 
   log "Zabbix DB Exists. Starting server."
 fi
+# TODO wait for zabbix-server start
+#python /config/pyzabbix.py 2>/dev/null
 zabbix_agentd -c /usr/local/etc/zabbix_agentd.conf
