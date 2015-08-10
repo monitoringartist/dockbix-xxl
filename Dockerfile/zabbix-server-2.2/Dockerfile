@@ -55,6 +55,7 @@ RUN \
               net-snmp-python net-snmp-utils java-1.8.0-openjdk \
               java-1.8.0-openjdk-devel mariadb-devel libxml2-devel \
               libcurl-devel OpenIPMI-devel mysql iksemel-devel net-tools && \
+  yum -y -q reinstall glibc-common && \
   svn co svn://svn.zabbix.com/tags/${ZABBIX_VERSION} /usr/local/src/zabbix && \
   cd /usr/local/src/zabbix && \
   ./bootstrap.sh && \
