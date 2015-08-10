@@ -61,6 +61,7 @@ RUN \
   ./configure --enable-server --enable-agent --with-mysql --enable-java --with-net-snmp --with-libcurl --with-libxml2 --with-openipmi --enable-ipv6 --with-jabber && \
   make dbschema && \
   make install && \
+  cp /usr/local/etc/web/zabbix.conf.php /usr/local/src/zabbix/frontends/php/conf/ && \
   wget https://github.com/schweikert/fping/archive/3.10.tar.gz && \
   tar -xvf 3.10.tar.gz && \ 
   cd fping-3.10/ && \
