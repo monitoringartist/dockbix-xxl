@@ -21,14 +21,14 @@ error() {
   echo "${bold}${red}[ERROR `date +'%T'`]${reset} ${red}$@${reset}";
 }
 create_db() {
-  mysql -u ${DB_USER} -p${DB_PASS} -h ${DB_ADDRESS} -e "CREATE DATABASE IF NOT EXISTS zabbix CHARACTER SET utf8;"
-  mysql -u ${DB_USER} -p${DB_PASS} -h ${DB_ADDRESS} -e "GRANT ALL ON zabbix.* TO '${DB_USER}'@'%' identified by '${DB_PASS}';"
-  mysql -u ${DB_USER} -p${DB_PASS} -h ${DB_ADDRESS} -e "flush privileges;"
+  mysql -u ${DB_USER} -p${DB_PASS} -h ${DB_ADDR} -e "CREATE DATABASE IF NOT EXISTS zabbix CHARACTER SET utf8;"
+  mysql -u ${DB_USER} -p${DB_PASS} -h ${DB_ADDR} -e "GRANT ALL ON zabbix.* TO '${DB_USER}'@'%' identified by '${DB_PASS}';"
+  mysql -u ${DB_USER} -p${DB_PASS} -h ${DB_ADDR} -e "flush privileges;"
 }
 import_zabbix_db() {
-  mysql -u ${DB_USER} -p${DB_PASS} -h ${DB_ADDRESS} -D zabbix < ${ZABBIX_SQL_DIR}/schema.sql
-  mysql -u ${DB_USER} -p${DB_PASS} -h ${DB_ADDRESS} -D zabbix < ${ZABBIX_SQL_DIR}/images.sql
-  mysql -u ${DB_USER} -p${DB_PASS} -h ${DB_ADDRESS} -D zabbix < ${ZABBIX_SQL_DIR}/data.sql
+  mysql -u ${DB_USER} -p${DB_PASS} -h ${DB_ADDR} -D zabbix < ${ZABBIX_SQL_DIR}/schema.sql
+  mysql -u ${DB_USER} -p${DB_PASS} -h ${DB_ADDR} -D zabbix < ${ZABBIX_SQL_DIR}/images.sql
+  mysql -u ${DB_USER} -p${DB_PASS} -h ${DB_ADDR} -D zabbix < ${ZABBIX_SQL_DIR}/data.sql
 }
 logging() {
   mkdir -p /var/log/zabbix
@@ -50,11 +50,21 @@ fix_permissions() {
   chmod u+s `which ping`
 }
 update_config() {
-  sed -i 's/DBUser=zabbix/DBUser='${DB_USER}'/g' /usr/local/etc/zabbix_server.conf
-  sed -i 's/DBPassword=zabbix/DBPassword='${DB_PASS}'/g' /usr/local/etc/zabbix_server.conf
-  sed -i 's/DB_ADDRESS/'${DB_ADDRESS}'/g' /usr/local/etc/web/zabbix.conf.php
-  sed -i 's/DB_USER/'${DB_USER}'/g' /usr/local/etc/web/zabbix.conf.php
-  sed -i 's/DB_PASS/'${DB_PASS}'/g' /usr/local/etc/web/zabbix.conf.php
+  sed -i 's/DEBUG_LEVEL/'${DEBUG_LEVEL}'/g' /usr/local/etc/zabbix_server.conf
+  sed -i 's/DB_ADDR/'${DB_ADDR}'/g' /usr/local/etc/zabbix_server.conf
+  sed -i 's/DB_USER/'${DB_USER}'/g' /usr/local/etc/zabbix_server.conf
+  sed -i 's/DB_PASS/'${DB_PASS}'/g' /usr/local/etc/zabbix_server.conf
+  sed -i 's/DB_PORT/'${DB_PORT}'/g' /usr/local/etc/zabbix_server.conf
+  sed -i 's/DB_NAME/'${DB_NAME}'/g' /usr/local/etc/zabbix_server.conf
+
+  #cp /usr/local/src/zabbix/frontends/php/zabbix.conf.php /usr/local/src/zabbix/frontends/php/conf/
+  sed -i 's/DB_ADDR/'${DB_ADDR}'/g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
+  sed -i 's/DB_USER/'${DB_USER}'/g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
+  sed -i 's/DB_PASS/'${DB_PASS}'/g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
+  sed -i 's/DB_PORT/'${DB_PORT}'/g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
+  sed -i 's/DB_NAME/'${DB_NAME}'/g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
+
+  sed -i 's/PHP_TIMEZONE/'${PHP_TIMEZONE}'/g' /etc/php.d/zz-zabbix.ini
 }
 ####################### End of default settings #######################
 # Zabbix default sql files 

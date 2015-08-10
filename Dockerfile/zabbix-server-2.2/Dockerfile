@@ -1,4 +1,4 @@
-# docker build --rm=true -t zabbix/zabbix-server-2.2 .
+# docker build --rm=true -t jangaraj/zabbix-server-2.2 .
 
 FROM centos:centos7
 MAINTAINER Jan Garaj jan.garaj@gmail.com
@@ -8,7 +8,13 @@ ENV \
   STATUS_PAGE_ALLOWED_IP=127.0.0.1 \
   JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk/bin/java \
   JAVA=/usr/lib/jvm/java-1.8.0-openjdk/bin/java \
-  DB_ADDRESS=127.0.0.1 DB_USER=admin DB_PASS=password
+  DB_ADDR=zabbix.db \
+  DB_USER=admin \
+  DB_PASS=password \
+  DB_PORT=3306 \
+  DB_NAME=zabbix \
+  PHP_TIMEZONE=UTC \
+  DEBUG_LEVEL=3
 
 # Layer: serviced
 RUN \
@@ -22,7 +28,7 @@ ADD container-files-serviced /
 # Layer: nginx
 RUN \
   yum install -y http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm && \
-  yum install -y nginx && \
+  yum install -y nginx inotify-tools && \
   `# Rename nginx:nginx user/group to www:www, also set uid:gid to 80:80 (just to make it nice)` \
   groupmod --gid 80 --new-name www nginx && \
   usermod --uid 80 --home /data/www --gid 80 --login www --shell /bin/bash --comment www nginx && \
@@ -42,13 +48,13 @@ RUN \
 ADD container-files-nginx /
   
 # Layer: zabbix
-# TODO web ui auto config, timezone env, rm -rf /usr/local/src/zabbix
+COPY container-files-zabbix /
 RUN \
   yum install -y tar svn gcc automake make nmap traceroute iptstate wget \
               net-snmp-devel net-snmp-libs net-snmp net-snmp-perl \
               net-snmp-python net-snmp-utils java-1.8.0-openjdk \
               java-1.8.0-openjdk-devel mariadb-devel libxml2-devel \
-              libcurl-devel OpenIPMI-devel mysql && \
+              libcurl-devel OpenIPMI-devel mysql iksemel-devel net-tools && \
   svn co svn://svn.zabbix.com/tags/${ZABBIX_VERSION} /usr/local/src/zabbix && \
   cd /usr/local/src/zabbix && \
   ./bootstrap.sh && \
@@ -67,11 +73,11 @@ RUN \
   cd .. && \
   rm -rf fping-3.10 && \
   rm -rf 3.10.tar.gz && \ 
-  yum remove -y tar svn make gcc automake mariadb-devel java-1.8.0-openjdk-devel libxml2-devel libcurl-devel OpenIPMI-devel && \
+  yum remove -y tar svn gcc automake mariadb-devel java-1.8.0-openjdk-devel libxml2-devel libcurl-devel OpenIPMI-devel iksemel-devel && \
   chmod +x /config/bootstrap.sh && \ 
+  chmod +x /config/ds.sh && \
   yum clean all && rm -rf /tmp/*  
-COPY container-files-zabbix /
 
-#ENTRYPOINT ["/config/bootstrap.sh"]
+ENTRYPOINT ["/config/bootstrap.sh"]
 
 EXPOSE 10051 10052 80
