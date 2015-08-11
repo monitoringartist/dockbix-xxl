@@ -36,72 +36,73 @@ _Remember to use the same credentials when deploying zabbix-server image._
 #### Environmental Variable
 In this Image you can use environmental variables to config Zabbix server and PHP, available variables:
 
-|| Variable || Default value ||
-|| PHP_TIMEZONE || UTC || 
-|| ZS_ListenPort || 10051 ||
-|| ZS_SourceIP || ||
-|| ZS_LogFile || /tmp/zabbix_server.log ||
-|| ZS_LogFileSize || 10 ||
-|| ZS_DebugLevel || 3 ||
-|| ZS_PidFile || /var/run/zabbix_server.pid ||
-|| ZS_DBHost || zabbix.db ||
-|| ZS_DBName || zabbix ||
-|| ZS_DBSchema || ||
-|| ZS_DBUser || zabbix ||
-|| ZS_DBPassword || zabbix ||
-|| ZS_DBSocket || /tmp/mysql.sock ||
-|| ZS_DBPort || 3306 ||
-|| ZS_StartPollers || 5 ||
-|| ZS_StartPollersUnreachable || 1 ||
-|| ZS_StartTrappers || 5 ||
-|| ZS_StartPingers || 1 ||
-|| ZS_StartDiscoverers || 1 ||
-|| ZS_StartHTTPPollers || 1 ||
-|| ZS_StartTimers || 1 ||
-|| ZS_JavaGateway || 127.0.0.1 ||
-|| ZS_JavaGatewayPort || 10052 ||
-|| ZS_StartJavaPollers || 0 ||
-|| ZS_StartVMwareCollectors || 0 ||
-|| ZS_VMwareFrequency || 60 ||
-|| ZS_VMwarePerfFrequency || 60 ||
-|| ZS_VMwareCacheSize || 8M ||
-|| ZS_VMwareTimeout || 10 ||
-|| ZS_SNMPTrapperFile || /tmp/zabbix_traps.tmp ||
-|| ZS_StartSNMPTrapper || 0 ||
-|| ZS_ListenIP || 0.0.0.0 ||
-|| ZS_HousekeepingFrequency || 1 ||
-|| ZS_MaxHousekeeperDelete || 500 ||
-|| ZS_SenderFrequency || 30 ||
-|| ZS_CacheSize || 8M ||
-|| ZS_CacheUpdateFrequency || 60 ||
-|| ZS_StartDBSyncers || 4 ||
-|| ZS_HistoryCacheSize || 8M ||
-|| ZS_TrendCacheSize || 4M ||
-|| ZS_HistoryTextCacheSize || 16M ||
-|| ZS_ValueCacheSize || 8M ||
-|| ZS_Timeout || 3 ||
-|| ZS_TrapperTimeout || 300 ||
-|| ZS_UnreachablePeriod || 45 ||
-|| ZS_UnavailableDelay || 60 ||
-|| ZS_UnreachableDelay || 15 ||
-|| ZS_AlertScriptsPath || /usr/local/share/zabbix/alertscripts ||
-|| ZS_ExternalScripts || /usr/local/share/zabbix/externalscripts ||
-|| ZS_FpingLocation || /usr/sbin/fping ||
-|| ZS_Fping6Location || /usr/sbin/fping6 ||
-|| ZS_SSHKeyLocation || ||
-|| ZS_LogSlowQueries || 0 ||
-|| ZS_TmpDir || /tmp ||
-|| ZS_StartProxyPollers || 1 ||
-|| ZS_ProxyConfigFrequency || 3600 ||
-|| ZS_ProxyDataFrequency || 1 ||
-|| ZS_AllowRoot || 0 ||
-|| ZS_User || zabbix ||
-|| ZS_Include || ||
-|| ZS_SSLCertLocation || /usr/local/share/zabbix/ssl/certs ||
-|| ZS_SSLKeyLocation || /usr/local/share/zabbix/ssl/keys ||
-|| ZS_SSLCALocation || ||
-|| ZS_LoadModulePath || /usr/lib/zabbix/modules ||
-|| ZS_LoadModule || ||
+| Variable | Default value |
+| -------- | ------------- |
+| PHP_TIMEZONE | UTC | 
+| ZS_ListenPort | 10051 |
+| ZS_SourceIP | |
+| ZS_LogFile | /tmp/zabbix_server.log |
+| ZS_LogFileSize | 10 |
+| ZS_DebugLevel | 3 |
+| ZS_PidFile | /var/run/zabbix_server.pid |
+| ZS_DBHost | zabbix.db |
+| ZS_DBName | zabbix |
+| ZS_DBSchema | |
+| ZS_DBUser | zabbix |
+| ZS_DBPassword | zabbix |
+| ZS_DBSocket | /tmp/mysql.sock |
+| ZS_DBPort | 3306 |
+| ZS_StartPollers | 5 |
+| ZS_StartPollersUnreachable | 1 |
+| ZS_StartTrappers | 5 |
+| ZS_StartPingers | 1 |
+| ZS_StartDiscoverers | 1 |
+| ZS_StartHTTPPollers | 1 |
+| ZS_StartTimers | 1 |
+| ZS_JavaGateway | 127.0.0.1 |
+| ZS_JavaGatewayPort | 10052 |
+| ZS_StartJavaPollers | 0 |
+| ZS_StartVMwareCollectors | 0 |
+| ZS_VMwareFrequency | 60 |
+| ZS_VMwarePerfFrequency | 60 |
+| ZS_VMwareCacheSize | 8M |
+| ZS_VMwareTimeout | 10 |
+| ZS_SNMPTrapperFile | /tmp/zabbix_traps.tmp |
+| ZS_StartSNMPTrapper | 0 |
+| ZS_ListenIP | 0.0.0.0 |
+| ZS_HousekeepingFrequency | 1 |
+| ZS_MaxHousekeeperDelete | 500 |
+| ZS_SenderFrequency | 30 |
+| ZS_CacheSize | 8M |
+| ZS_CacheUpdateFrequency | 60 |
+| ZS_StartDBSyncers | 4 |
+| ZS_HistoryCacheSize | 8M |
+| ZS_TrendCacheSize | 4M |
+| ZS_HistoryTextCacheSize | 16M |
+| ZS_ValueCacheSize | 8M |
+| ZS_Timeout | 3 |
+| ZS_TrapperTimeout | 300 |
+| ZS_UnreachablePeriod | 45 |
+| ZS_UnavailableDelay | 60 |
+| ZS_UnreachableDelay | 15 |
+| ZS_AlertScriptsPath | /usr/local/share/zabbix/alertscripts |
+| ZS_ExternalScripts | /usr/local/share/zabbix/externalscripts |
+| ZS_FpingLocation | /usr/sbin/fping |
+| ZS_Fping6Location | /usr/sbin/fping6 |
+| ZS_SSHKeyLocation | |
+| ZS_LogSlowQueries | 0 |
+| ZS_TmpDir | /tmp |
+| ZS_StartProxyPollers | 1 |
+| ZS_ProxyConfigFrequency | 3600 |
+| ZS_ProxyDataFrequency | 1 |
+| ZS_AllowRoot | 0 |
+| ZS_User | zabbix |
+| ZS_Include | |
+| ZS_SSLCertLocation | /usr/local/share/zabbix/ssl/certs |
+| ZS_SSLKeyLocation | /usr/local/share/zabbix/ssl/keys |
+| ZS_SSLCALocation | |
+| ZS_LoadModulePath | /usr/lib/zabbix/modules |
+| ZS_LoadModule | |
 
 #### Zabbix server deployment
 Now when we have Zabbix database running we can deploy zabbix-server image with appropriate environmental variables set.
