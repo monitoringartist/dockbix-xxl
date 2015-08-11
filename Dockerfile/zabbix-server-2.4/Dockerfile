@@ -107,7 +107,8 @@ RUN \
               net-snmp-devel net-snmp-libs net-snmp net-snmp-perl iksemel \
               net-snmp-python net-snmp-utils java-1.8.0-openjdk python-pip \
               java-1.8.0-openjdk-devel mariadb-devel libxml2-devel gettext \
-              libcurl-devel OpenIPMI-devel mysql iksemel-devel net-tools && \
+              libcurl-devel OpenIPMI-devel mysql iksemel-devel net-tools \
+              snmptt && \
  `# reinstall glibc for locales` \
   yum -y -q reinstall glibc-common && \
   cp /usr/local/etc/zabbix_agend.conf /tmp && \
