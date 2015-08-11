@@ -33,8 +33,8 @@ Example:
 _Remember to use the same credentials when deploying zabbix-server image._
 
 
-#### Environmental Variable
-In this Image you can use environmental variables to config Zabbix server and PHP, available variables:
+#### Environmental variables
+In this Image you can use environmental variables to config Zabbix server and PHP. Available variables:
 
 | Variable | Default value |
 | -------- | ------------- |
