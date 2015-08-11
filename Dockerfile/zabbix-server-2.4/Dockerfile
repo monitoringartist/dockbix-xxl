@@ -10,14 +10,14 @@ ENV \
   JAVA=/usr/lib/jvm/java-1.8.0-openjdk/bin/java \
   PHP_TIMEZONE=UTC \
   ZS_ListenPort=10051 \
-  ZS_SourceIP='' \
+  ZS_SourceIP="" \
   ZS_LogFile=/tmp/zabbix_server.log \
   ZS_LogFileSize=10 \
   ZS_DebugLevel=3 \
   ZS_PidFile=/var/run/zabbix_server.pid \
   ZS_DBHost=zabbix.db \
   ZS_DBName=zabbix \
-  ZS_DBSchema='' \
+  ZS_DBSchema="" \
   ZS_DBUser=zabbix \
   ZS_DBPassword=zabbix \
   ZS_DBSocket=/tmp/mysql.sock \
@@ -48,18 +48,18 @@ ENV \
   ZS_StartDBSyncers=4 \
   ZS_HistoryCacheSize=8M \
   ZS_TrendCacheSize=4M \
-  ZS_HistoryTextCacheSize=16MB \
+  ZS_HistoryTextCacheSize=16M \
   ZS_ValueCacheSize=8M \
   ZS_Timeout=3 \
   ZS_TrapperTimeout=300 \
   ZS_UnreachablePeriod=45 \
   ZS_UnavailableDelay=60 \
   ZS_UnreachableDelay=15 \
-  ZS_AlertScriptsPath=${datadir}/zabbix/alertscripts \
-  ZS_ExternalScripts=${datadir}/zabbix/externalscripts \
+  ZS_AlertScriptsPath=/usr/local/share/zabbix/alertscripts \
+  ZS_ExternalScripts=/usr/local/share/zabbix/externalscripts \
   ZS_FpingLocation=/usr/sbin/fping \
   ZS_Fping6Location=/usr/sbin/fping6 \
-  ZS_SSHKeyLocation='' \
+  ZS_SSHKeyLocation="" \
   ZS_LogSlowQueries=0 \
   ZS_TmpDir=/tmp \
   ZS_StartProxyPollers=1 \
@@ -67,12 +67,12 @@ ENV \
   ZS_ProxyDataFrequency=1 \
   ZS_AllowRoot=0 \
   ZS_User=zabbix \
-  ZS_Include='' \
-  ZS_SSLCertLocation=${datadir}/zabbix/ssl/certs \
-  ZS_SSLKeyLocation=${datadir}/zabbix/ssl/keys \
-  ZS_SSLCALocation='' \
-  ZS_LoadModulePath=${libdir}/modules \
-  ZS_LoadModule='' 
+  ZS_Include="" \
+  ZS_SSLCertLocation=/usr/local/share/zabbix/ssl/certs \
+  ZS_SSLKeyLocation=/usr/local/share/zabbix/ssl/keys \
+  ZS_SSLCALocation="" \
+  ZS_LoadModulePath=/usr/lib/zabbix/modules \
+  ZS_LoadModule=""
 
 # Layer: base
 RUN \
@@ -137,6 +137,9 @@ RUN \
   chmod +x /config/bootstrap.sh && \ 
   chmod +x /config/ds.sh && \
   yum clean all && \
+  mkdir -p /usr/local/share/ssl/certs && \
+  mkdir -p /usr/local/share/ssl/keys && \
+  mkdir -p /usr/lib/zabbix/modules && \
   rm -rf /tmp/*  
 
 ENTRYPOINT ["/config/bootstrap.sh"]
