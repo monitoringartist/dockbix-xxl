@@ -106,7 +106,7 @@ RUN \
   yum install -y tar svn gcc automake make nmap traceroute iptstate wget \
               net-snmp-devel net-snmp-libs net-snmp net-snmp-perl iksemel \
               net-snmp-python net-snmp-utils java-1.8.0-openjdk python-pip \
-              java-1.8.0-openjdk-devel mariadb-devel libxml2-devel \
+              java-1.8.0-openjdk-devel mariadb-devel libxml2-devel gettext \
               libcurl-devel OpenIPMI-devel mysql iksemel-devel net-tools && \
  `# reinstall glibc for locales` \
   yum -y -q reinstall glibc-common && \
@@ -132,7 +132,9 @@ RUN \
   cp -f /tmp/zabbix_agend.conf /usr/local/etc/ && \
   rm -rf fping-3.10 && \
   rm -rf 3.10.tar.gz && \ 
-  yum autoremove -y python-pip tar svn gcc automake mariadb-devel java-1.8.0-openjdk-devel libxml2-devel libcurl-devel OpenIPMI-devel iksemel-devel && \
+  cd /usr/local/src/zabbix/frontends/php && \
+  locale/make_mo.sh && \
+  yum autoremove -y gettext python-pip tar svn gcc automake mariadb-devel java-1.8.0-openjdk-devel libxml2-devel libcurl-devel OpenIPMI-devel iksemel-devel && \
   yum install -y OpenIPMI-libs && \
   chmod +x /config/bootstrap.sh && \ 
   chmod +x /config/ds.sh && \
