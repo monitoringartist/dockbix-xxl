@@ -1,0 +1,3 @@
+[mysqld]
+default-storage-engine      = InnoDB
+innodb                      = FORCE
