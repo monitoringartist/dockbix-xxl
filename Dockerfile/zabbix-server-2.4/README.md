@@ -38,7 +38,11 @@ In this Image you can use environmental variables to config Zabbix server and PH
 
 | Variable | Default value |
 | -------- | ------------- |
-| PHP_TIMEZONE | UTC | 
+| PHP_date_timezone | UTC |
+| PHP_max_execution_time | 300 |
+| PHP_max_input_time | 300 |
+| PHP_memory_limit | 128M |
+| PHP_error_reporting | E_ALL |
 | ZS_ListenPort | 10051 |
 | ZS_SourceIP | |
 | ZS_LogFile | /tmp/zabbix_server.log |
@@ -103,6 +107,20 @@ In this Image you can use environmental variables to config Zabbix server and PH
 | ZS_SSLCALocation | |
 | ZS_LoadModulePath | /usr/lib/zabbix/modules |
 | ZS_LoadModule | |
+
+#### Configuration from volumes
+Full config files can be also used. Environment configs will be overriden by values from config files in this case. You need only to add */etc/custom-config/* volume:
+
+```
+-v /host/custom-config/:/etc/custom-config/
+```
+
+Available files:
+| File | Description |
+| ---- | ----------- |
+| php-zabbix.ini | PHP configuration file |
+| zabbix_server.conf | Zabbix server configuration file |
+
 
 #### Zabbix server deployment
 Now when we have Zabbix database running we can deploy zabbix-server image with appropriate environmental variables set.

@@ -126,7 +126,20 @@ update_config() {
   sed -i 's/ZS_DBPort/'${ZS_DBPort}'/g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
   sed -i 's/ZS_DBName/'${ZS_DBName}'/g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
 
-  sed -i 's/PHP_TIMEZONE/'${PHP_TIMEZONE}'/g' /etc/php.d/zz-zabbix.ini
+  sed -i 's/PHP_date_timezone/'${PHP_date_timezone}'/g' /etc/php.d/zz-zabbix.ini
+  sed -i 's/PHP_max_execution_time/'${PHP_max_execution_time}'/g' /etc/php.d/zz-zabbix.ini
+  sed -i 's/PHP_max_input_time/'${PHP_max_input_time}'/g' /etc/php.d/zz-zabbix.ini
+  sed -i 's/PHP_memory_limit/'${PHP_memory_limit}'/g' /etc/php.d/zz-zabbix.ini
+  sed -i 's/PHP_error_reporting/'${PHP_error_reporting}'/g' /etc/php.d/zz-zabbix.ini
+
+  if [ -f /etc/custom-config/php-zabbix.ini ]; then
+    cp -f /etc/custom-config/php-zabbix.ini /etc/php.d/zz-zabbix.ini
+  fi
+  if [ -f /etc/custom-config/zabbix_server.conf ]; then
+    cp -f /etc/custom-config/zabbix_server.conf /usr/local/etc/zabbix_server.conf
+  fi
+
+
 }
 ####################### End of default settings #######################
 # Zabbix default sql files 

@@ -8,7 +8,11 @@ ENV \
   STATUS_PAGE_ALLOWED_IP=127.0.0.1 \
   JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk/bin/java \
   JAVA=/usr/lib/jvm/java-1.8.0-openjdk/bin/java \
-  PHP_TIMEZONE=UTC \
+  PHP_date_timezone=UTC \ 
+  PHP_max_execution_time=300 \
+  PHP_max_input_time=300 \
+  PHP_memory_limit=128M \
+  PHP_error_reporting=E_ALL \
   ZS_ListenPort=10051 \
   ZS_SourceIP="" \
   ZS_LogFile=/tmp/zabbix_server.log \
