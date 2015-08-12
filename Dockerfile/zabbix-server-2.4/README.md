@@ -116,6 +116,7 @@ Full config files can be also used. Environment configs will be overriden by val
 ```
 
 Available files:
+
 | File | Description |
 | ---- | ----------- |
 | php-zabbix.ini | PHP configuration file |
