@@ -42,10 +42,10 @@ Full config files can be also used. Environment configs will be overriden by val
 ```
 
 Available files:
+
 | File | Description |
 | ---- | ----------- |
 | mariadb-tuning.cnf | MariaDB configuration file |
-| | |
 
 The first time that you run your container, a new user admin with all privileges will be created in MariaDB with a random password. To get the password, check the logs of the container by running:  
 `docker logs <CONTAINER_ID>`  
