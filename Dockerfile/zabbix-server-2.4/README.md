@@ -15,10 +15,10 @@ MySQL database (you can run MySQL also as Docker container).
 #### Zabbix database as Docker container
 To be able to connect to database we would need one to be running first. 
 Easiest way to do that is to use another docker image. 
-For this purpose you can use [million12/mariadb](https://registry.hub.docker.com/u/million12/mariadb/)
+For this purpose you can use [zabbix/zabbix-db-mariadb](https://registry.hub.docker.com/u/zabbix/zabbix-db-mariadb)
  image as database.
 
-**For more information about million12/MariaDB see [documentation.](https://github.com/million12/docker-mariadb) **
+**For more information about zabbix/zabbix-db-mariadb see [documentation.](https://github.com/zabbix/zabbix-community-docker) **
 
 Example:  
 
@@ -28,7 +28,7 @@ Example:
 		-p 3306:3306 \
 		--env="MARIADB_USER=username" \
 		--env="MARIADB_PASS=my_password" \
-		million12/mariadb
+		zabbix/zabbix-db-mariadb
 
 _Remember to use the same credentials when deploying zabbix-server image._
 
@@ -108,7 +108,7 @@ In this Image you can use environmental variables to config Zabbix server and PH
 | ZS_LoadModulePath | /usr/lib/zabbix/modules |
 | ZS_LoadModule | |
 
-#### Configuration from volumes
+#### Configuration from volume
 Full config files can be also used. Environment configs will be overriden by values from config files in this case. You need only to add */etc/custom-config/* volume:
 
 ```
