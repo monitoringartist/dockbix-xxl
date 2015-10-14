@@ -8,7 +8,7 @@ Please use these community Zabbix Docker images, if you want to [build/ship your
 zabbix-server-2.4 [![Circle CI](https://circleci.com/gh/zabbix/zabbix-community-docker/tree/master.svg?style=svg&circle-token=930b0a85da051123bf3f2c9c28ede5b29c607665)](https://circleci.com/gh/zabbix/zabbix-community-docker/tree/master) [![](https://badge.imagelayers.io/zabbix/zabbix-server-2.4:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-server-2.4:latest 'Get your own badge on imagelayers.io')
 =================
 
-Compiled zabbix-server with almost all features (MySQL, Java, SNMP, Curl, Ipmi) 
+Compiled zabbix-server with almost all features (MySQL support, Java, SNMP, Curl, Ipmi) 
 and Zabbix web UI based on CentOS 7, Supervisor, Nginx, PHP. Image requires external 
 MySQL database (you can run MySQL also as Docker container).
 
