@@ -52,6 +52,7 @@ fix_permissions() {
 update_config() {
   sed -i 's/DBUser=zabbix/DBUser='${DB_USER}'/g' /usr/local/etc/zabbix_server.conf
   sed -i 's/DBPassword=zabbix/DBPassword='${DB_PASS}'/g' /usr/local/etc/zabbix_server.conf
+  sed -i 's/DBHost=zabbix.db/DBHost='${DB_ADDRESS}'/g' /usr/local/etc/zabbix_server.conf
   sed -i 's/DB_ADDRESS/'${DB_ADDRESS}'/g' /usr/local/etc/web/zabbix.conf.php
   sed -i 's/DB_USER/'${DB_USER}'/g' /usr/local/etc/web/zabbix.conf.php
   sed -i 's/DB_PASS/'${DB_PASS}'/g' /usr/local/etc/web/zabbix.conf.php
