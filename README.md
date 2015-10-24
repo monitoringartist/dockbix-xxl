@@ -35,7 +35,7 @@ $ docker attach zabbix
 ```
 Sometimes you might just want to review how things are deployed inside a running container, you can do this by executing a _bash shell_ through _docker's exec_ command:
 ```
-docker exec -i -t zabbix /bin/bash
+docker exec -ti zabbix /bin/bash
 ```
 History of an image and size of layers: 
 ``` 
@@ -48,9 +48,9 @@ Run specific Zabbix version, e.g. 2.4.4 - just specify 2.4.4 tag for image:
 		--name zabbix \
 		-p 80:80 \
 		-p 10051:10051 \
-		--env="DB_ADDRESS=database_ip" \
-		--env="DB_USER=username" \
-		--env="DB_PASS=my_password" \
+		--env="ZS_DBHost=database_ip" \
+		--env="ZS_DBUser=username" \
+		--env="ZS_DBPassword=my_password" \
 		zabbix/zabbix-server-2.4:2.4.4
 ```
 

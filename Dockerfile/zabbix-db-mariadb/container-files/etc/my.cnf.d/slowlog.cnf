@@ -1,0 +1,10 @@
+#
+# Pre-configure slow logging.
+# Disabled it by default, but it can be switched on during runtime
+# and the log entries simply appear in the error.log
+#
+[mysqld]
+slow_query_log                = off
+slow_query_log_file           = /var/lib/mysql/error.log
+long_query_time               = 3
+log_queries_not_using_indexes = on
