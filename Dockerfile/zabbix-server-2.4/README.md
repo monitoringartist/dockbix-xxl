@@ -24,7 +24,6 @@ docker run -d -v /var/lib/mysql --name zabbix-db-storage busybox:latest
 docker run \
     -d \
     --name zabbix-db \
-    -p 3306:3306 \
     -v /backups:/backups \
     --volumes-from zabbix-db-storage \
     --env="MARIADB_USER=zabbix" \
@@ -50,11 +49,12 @@ docker exec \
     -ti zabbix-db \
     /zabbix-backup/zabbix-mariadb-dump -u zabbix -p my_password -o /backups
     
-# Full backup of Zabbix
+# Full DB backup of Zabbix
 docker exec \
     -ti zabbix-db \
-    mysqldump -u zabbix -p my_password zabbix | \
-    bzip2 -c > /backups/zabbix_db_dump_$(date +%Y-%m-%d-%H.%M.%S).sql.bz2 
+    bash -c "\
+    mysqldump -u zabbix -pmy_password zabbix | \
+    bzip2 -cq9 > /backups/zabbix_db_dump_$(date +%Y-%m-%d-%H.%M.%S).sql.bz2" 
 ```
 
 ### Zabbix database as Docker container
