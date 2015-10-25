@@ -1,7 +1,13 @@
-Zabbix DB - MariaDB 10.0
-========================
+Zabbix Community Dockerfiles
+============================
 
-[![](https://badge.imagelayers.io/zabbix/zabbix-db-mariadb:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-db-mariadb:latest)
+[Zabbix Github repo](https://github.com/zabbix/zabbix-community-docker) is 
+intended as a source for [Zabbix Docker registry](https://registry.hub.docker.com/repos/zabbix/).
+Please use these community Zabbix Docker images, if you want to 
+[build/ship your own Zabbix Docker image](https://github.com/zabbix/zabbix-community-docker#how-to-build-own-docker-image).
+
+Zabbix DB - MariaDB 10.0 [![](https://badge.imagelayers.io/zabbix/zabbix-db-mariadb:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-db-mariadb:latest)
+========================
 
 This is a MariaDB 10.0 Docker [zabbix/zabbix-db-mariadb]
 (https://hub.docker.com/r/zabbix/zabbix-db-mariadb/) 

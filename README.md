@@ -10,7 +10,7 @@ Please use these community Zabbix Docker images, if you want to
 Available images
 ================
 
-### 1. [Docker image zabbix-server-2.4](https://registry.hub.docker.com/u/zabbix/zabbix-server-2.4/) [![Circle CI](https://circleci.com/gh/zabbix/zabbix-community-docker/tree/master.svg?style=svg&circle-token=930b0a85da051123bf3f2c9c28ede5b29c607665)](https://circleci.com/gh/zabbix/zabbix-community-docker/tree/master) [![](https://badge.imagelayers.io/zabbix/zabbix-server-2.4:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-server-2.4:latest)
+### 1. [Docker image zabbix-server-2.4](https://registry.hub.docker.com/u/zabbix/zabbix-server-2.4/) [![](https://badge.imagelayers.io/zabbix/zabbix-server-2.4:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-server-2.4:latest) [![Circle CI](https://circleci.com/gh/zabbix/zabbix-community-docker/tree/master.svg?style=svg&circle-token=930b0a85da051123bf3f2c9c28ede5b29c607665)](https://circleci.com/gh/zabbix/zabbix-community-docker/tree/master)
 
 See [README of zabbix-server-2.4]
 (https://github.com/zabbix/zabbix-community-docker/tree/master/Dockerfile/zabbix-server-2.4) 
