@@ -41,7 +41,7 @@ docker run \
     --env="ZS_DBHost=zabbix.db" \
     --env="ZS_DBUser=zabbix" \
     --env="ZS_DBPassword=my_password" \
-    zabbix/zabbix-server-2.4    
+    zabbix/zabbix-server-2.4
 # wait ~60 seconds for Zabbix server initialization
 # Zabbix web will be available on the port 80, Zabbix server on the port 10051
 

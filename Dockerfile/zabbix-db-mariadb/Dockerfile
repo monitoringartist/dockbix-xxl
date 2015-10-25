@@ -4,7 +4,7 @@ FROM centos:centos7
 MAINTAINER Jan Garaj info@monitoringartist.com
 
 ENV \
-  DB_max_allowed_packet=16M \	
+  DB_max_allowed_packet=64M \	
   DB_query_cache_size=0 \
   DB_query_cache_type=0 \
   DB_sync_binlog=0 \	
@@ -20,7 +20,10 @@ RUN \
     yum update -y && \
     cp /tmp/etc/yum.repos.d/* /etc/yum.repos.d/ && \
     yum install -y epel-release && \
-    yum install -y MariaDB-server hostname net-tools pwgen && \
+    yum install -y MariaDB-server hostname net-tools pwgen git bind-utils bzip2 && \
+    git clone https://github.com/maxhq/zabbix-backup && \
+    mv /zabbix-backup/zabbix-mysql-dump /zabbix-backup/zabbix-mariadb-dump && \
+    yum autoremove -y git && \
     yum clean all && \
     cp -f -r /tmp/etc/* /etc/ && \
     cp -f /tmp/*.sh / && \

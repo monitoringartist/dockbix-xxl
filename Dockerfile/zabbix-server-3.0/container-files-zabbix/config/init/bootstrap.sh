@@ -142,27 +142,63 @@ update_config() {
 
 }
 ####################### End of default settings #######################
-# Zabbix default sql files 
+# Zabbix default sql files
 ZABBIX_SQL_DIR="/usr/local/src/zabbix/database/mysql"
+# load DB config from custom config file if exist
+if [ -f /etc/custom-config/zabbix_server.conf ]; then
+  FZS_DBPassword=$(grep ^DBPassword= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')
+  if [ ! -z "$VAR" ]; then
+    export ZS_DBPassword=$FZS_DBPassword
+  fi
+  FZS_DBUser=$(grep ^DBUser= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')
+  if [ ! -z "$FZS_DBUser" ]; then
+    export ZS_DBUser=$FZS_DBUser
+  fi
+  FZS_DBHost=$(grep ^DBHost= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')
+  if [ ! -z "$FZS_DBHost" ]; then
+    export ZS_DBHost=$FZS_DBHost
+  fi
+  FZS_DBPort=$(grep ^DBPort= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')
+  if [ ! -z "$FZS_DBPort" ]; then
+    export ZS_DBPort=$FZS_DBPort
+  fi
+  FZS_DBName=$(grep ^ZS_DBName= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')
+  if [ ! -z "$FZS_DBName" ]; then
+    export ZS_DBName=$FZS_DBName
+  fi
+fi
 log "Preparing server configuration"
 update_config
 log "Config updated."
-log "Enabling Logging and pid management."
+log "Enabling logging and pid management"
 logging
 system_pids
 fix_permissions
 log "Done"
-log "Checking if Database exists or fresh install"
-if ! mysql -u ${ZS_DBUser} -p${ZS_DBPassword} -h ${ZS_DBHost} -P ${ZS_DBPort} -e "use zabbix;"; then
-  warning "Zabbix DB doesn't exists. Installing and importing default settings"
+
+# wait 120sec for DB
+retry=24
+until mysql -u ${ZS_DBUser} -p${ZS_DBPassword} -h ${ZS_DBHost} -P ${ZS_DBPort} -e "exit" &>/dev/null
+do
+  log "Waiting for database, it's still not available"
+  retry=`expr $retry - 1`
+  if [ $retry -eq 0 ]; then
+    error "Database is not available!"
+    exit 1
+  fi
+  sleep 5
+done
+
+log "Checking if database exists or fresh install is required"
+if ! mysql -u ${ZS_DBUser} -p${ZS_DBPassword} -h ${ZS_DBHost} -P ${ZS_DBPort} -e "use ${ZS_DBName};" &>/dev/null; then
+  warning "Zabbix database doesn't exists. Installing and importing default settings"
   log `create_db`
-  log "Database and user created. Importing Default SQL"
+  log "Database and user created, importing default SQL"
   log `import_zabbix_db`
-  log "Import Finished. Starting"
-else 
-  log "Zabbix DB Exists. Starting server."
+  log "Import finished, starting"
+else
+  log "Zabbix database exists, starting server"
 fi
-# TODO wait for zabbix-server start
+# TODO wait for zabbix-server start with API actions
 #python /config/pyzabbix.py 2>/dev/null
 zabbix_agentd -c /usr/local/etc/zabbix_agentd.conf
-

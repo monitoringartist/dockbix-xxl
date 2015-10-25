@@ -24,7 +24,8 @@ node with less memory, it will fail.
 ## Usage
 
 Run the image as daemon and bind it to port 3306:
-  
+
+```  
 	docker run \
 		-d \
 		--name zabbix-db \
@@ -33,15 +34,15 @@ Run the image as daemon and bind it to port 3306:
 		--env="MARIADB_PASS=my_password" \
         --env="DB_innodb_buffer_pool_size=768M" \
 		zabbix/zabbix-db-mariadb
+```        
         
 ## Environmental variables
-In this Image you can use environmental variables to config MariaDB. Available 
-variables:
+You can use environmental variables to config MariaDB. Available variables:
 
 
 | Variable | Default value |
 | -------- | ------------- |
-|DB_max_allowed_packet | 16M |
+|DB_max_allowed_packet | 64M |
 |DB_query_cache_size | 0 |
 |DB_query_cache_type | 0 |
 |DB_sync_binlog | 0 |
