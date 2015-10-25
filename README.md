@@ -21,13 +21,24 @@ Curl, Ipmi, fping) and Zabbix web UI based on CentOS 7, Supervisor, Nginx, PHP.
 Image requires external MySQL database (you can run MySQL also as Docker 
 container).
 
-### 2. [Docker image zabbix-db-mariadb](https://registry.hub.docker.com/u/zabbix/zabbix-db-mariadb/) [![](https://badge.imagelayers.io/zabbix/zabbix-server-2.4:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-db-mariadb:latest)
+### 2. [Docker image zabbix-db-mariadb](https://registry.hub.docker.com/u/zabbix/zabbix-db-mariadb/) [![](https://badge.imagelayers.io/zabbix/zabbix-db-mariadb:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-db-mariadb:latest)
 
 See [README of zabbix-db-mariadb]
 (https://github.com/zabbix/zabbix-community-docker/tree/master/Dockerfile/zabbix-db-mariadb) 
 for more details.
 
 MariaDB container customized for Zabbix.
+
+### 3. [Docker image zabbix-server-3.0](https://registry.hub.docker.com/u/zabbix/zabbix-server-3.0/) [![](https://badge.imagelayers.io/zabbix/zabbix-server-3.0:dev.svg)](https://imagelayers.io/?images=zabbix/zabbix-server-3.0:dev)
+
+See [README of zabbix-server-3.0]
+(https://github.com/zabbix/zabbix-community-docker/tree/master/Dockerfile/zabbix-server-3.0) 
+for more details.
+
+NOT FOR PRODUCTION - Compiled zabbix-server with almost all features 
+(MySQL support, Java, SNMP, Curl, Ipmi, fping) and Zabbix web UI based on 
+CentOS 7, Supervisor, Nginx, PHP. Image requires external MySQL database 
+(you can run MySQL also as Docker container).
 
 Docker troubleshooting
 ======================

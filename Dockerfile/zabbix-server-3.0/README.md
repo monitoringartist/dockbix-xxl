@@ -5,14 +5,14 @@ ZABBIX 3.0 IS NOT PRODUCTION READY - TESTING ONLY
 =================================================
 
 Only dev tag is available
-========================
+=========================
  
 [Zabbix Github repo](https://github.com/zabbix/zabbix-community-docker) is 
 intended as a source for [Zabbix Docker registry](https://registry.hub.docker.com/repos/zabbix/).
 Please use these community Zabbix Docker images, if you want to 
 [build/ship your own Zabbix Docker image](https://github.com/zabbix/zabbix-community-docker#how-to-build-own-docker-image).
 
-zabbix-server-3.0[![](https://badge.imagelayers.io/zabbix/zabbix-server-3.0:dev.svg)](https://imagelayers.io/?images=zabbix/zabbix-server-3.0:dev)
+zabbix-server-3.0 [![](https://badge.imagelayers.io/zabbix/zabbix-server-3.0:dev.svg)](https://imagelayers.io/?images=zabbix/zabbix-server-3.0:dev)
 =================
 
 Compiled zabbix-server with almost all features (MySQL support, Java, SNMP, 
