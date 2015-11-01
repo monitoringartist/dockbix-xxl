@@ -4,8 +4,8 @@ Zabbix Community Dockerfiles
 ZABBIX 3.0 IS NOT PRODUCTION READY!!!
 =====================================
 
-Only dev tag is available
-=========================
+Only dev tag (equivalent of nightly build) is available
+=======================================================
  
 [Zabbix Github repo](https://github.com/zabbix/zabbix-community-docker) is 
 intended as a source for [Zabbix Docker registry](https://registry.hub.docker.com/repos/zabbix/).
