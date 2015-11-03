@@ -1,0 +1,26 @@
+zabbix-db-storage:
+  image: busybox:latest
+  volumes:
+    - /var/lib/mysql
+
+zabbix-db:
+  image: zabbix/zabbix-db-mariadb
+  volumes:
+    - /backups:/backups
+  volumes_from:
+    - zabbix-db-storage
+  environment:
+    - MARIADB_USER=zabbix
+    - MARIADB_PASS=my_password
+
+zabbix-server:
+  image: zabbix/zabbix-server-3.0:dev
+  ports:
+    - "80:80"
+    - "10051:10051"
+  links:
+    - zabbix-db:zabbix.db
+  environment:
+    - ZS_DBHost=zabbix.db
+    - ZS_DBUser=zabbix
+    - ZS_DBPassword=my_password

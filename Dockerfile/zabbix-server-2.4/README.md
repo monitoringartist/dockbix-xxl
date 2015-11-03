@@ -1,23 +1,23 @@
 Zabbix Community Dockerfiles
 ============================
 
-[Zabbix Github repo](https://github.com/zabbix/zabbix-community-docker) is 
+[Zabbix Github repo](https://github.com/zabbix/zabbix-community-docker) is
 intended as a source for [Zabbix Docker registry](https://registry.hub.docker.com/repos/zabbix/).
-Please use these community Zabbix Docker images, if you want to 
+Please use these community Zabbix Docker images, if you want to
 [build/ship your own Zabbix Docker image](https://github.com/zabbix/zabbix-community-docker#how-to-build-own-docker-image).
 
 zabbix-server-2.4 [![](https://badge.imagelayers.io/zabbix/zabbix-server-2.4:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-server-2.4:latest) [![Circle CI](https://circleci.com/gh/zabbix/zabbix-community-docker/tree/master.svg?style=svg&circle-token=930b0a85da051123bf3f2c9c28ede5b29c607665)](https://circleci.com/gh/zabbix/zabbix-community-docker/tree/master)
 =================
 
-Compiled zabbix-server with almost all features (MySQL support, Java, SNMP, 
-Curl, IPMI, IPv6, Jabber, fping) and Zabbix web UI based on CentOS 7, 
-Supervisor, Nginx, PHP. Image requires external MySQL/MariaDB database (you can 
+Compiled zabbix-server with almost all features (MySQL support, Java, SNMP,
+Curl, IPMI, IPv6, Jabber, fping) and Zabbix web UI based on CentOS 7,
+Supervisor, Nginx, PHP. Image requires external MySQL/MariaDB database (you can
 run MySQL/MariaDB also as Docker container).
 
-#### Standard Dockerized Zabbix server deployement 
+#### Standard Dockerized Zabbix server deployement
 
 ```
-# create /var/lib/mysql as persistent volume storage 
+# create /var/lib/mysql as persistent volume storage
 docker run -d -v /var/lib/mysql --name zabbix-db-storage busybox:latest
 
 # start DB for zabbix server - default 1GB innodb_buffer_pool_size is used
@@ -29,7 +29,7 @@ docker run \
     --env="MARIADB_USER=zabbix" \
     --env="MARIADB_PASS=my_password" \
     zabbix/zabbix-db-mariadb
-    
+
 # start Zabbix server linked to started DB    
 docker run \
     -d \
@@ -48,22 +48,28 @@ docker run \
 docker exec \
     -ti zabbix-db \
     /zabbix-backup/zabbix-mariadb-dump -u zabbix -p my_password -o /backups
-    
+
 # Full DB backup of Zabbix
 docker exec \
     -ti zabbix-db \
     bash -c "\
     mysqldump -u zabbix -pmy_password zabbix | \
-    bzip2 -cq9 > /backups/zabbix_db_dump_$(date +%Y-%m-%d-%H.%M.%S).sql.bz2" 
+    bzip2 -cq9 > /backups/zabbix_db_dump_$(date +%Y-%m-%d-%H.%M.%S).sql.bz2"
+```
+
+#### Up and Running with Docker Compose
+
+```
+docker-compose up -d
 ```
 
 ### Zabbix database as Docker container
-To be able to connect to database we would need one to be running first. 
-Easiest way to do that is to use another docker image. For this purpose you 
+To be able to connect to database we would need one to be running first.
+Easiest way to do that is to use another docker image. For this purpose you
 can use [zabbix/zabbix-db-mariadb]
 (https://registry.hub.docker.com/u/zabbix/zabbix-db-mariadb) image as database.
 
-For more information about zabbix/zabbix-db-mariadb see 
+For more information about zabbix/zabbix-db-mariadb see
 [README of zabbix-db-mariadb]
 (https://github.com/zabbix/zabbix-community-docker/tree/master/Dockerfile/zabbix-db-mariadb).
 
@@ -80,7 +86,7 @@ Example:
 Remember to use the same credentials when deploying zabbix-server image.
 
 #### Environmental variables
-You can use environmental variables to config Zabbix server and PHP. Available 
+You can use environmental variables to config Zabbix server and PHP. Available
 variables:
 
 | Variable | Default value |
@@ -156,7 +162,7 @@ variables:
 | ZS_LoadModule | |
 
 #### Configuration from volume
-Full config files can be also used. Environment configs will be overriden by 
+Full config files can be also used. Environment configs will be overriden by
 values from config files in this case. You need only to add */etc/custom-config/*
  volume:
 
@@ -173,7 +179,7 @@ Available files:
 
 
 #### Zabbix server deployment
-Now when we have Zabbix database running we can deploy zabbix-server image with 
+Now when we have Zabbix database running we can deploy zabbix-server image with
 appropriate environmental variables set.
 
 Example:  
@@ -188,9 +194,9 @@ Example:
 		--env="ZS_DBUser=zabbix" \
 		--env="ZS_DBPassword=my_password" \
 		zabbix/zabbix-server-2.4
-        
-#### Access to Zabbix web interface 
-To log in into zabbix web interface for the first time use credentials 
+
+#### Access to Zabbix web interface
+To log in into zabbix web interface for the first time use credentials
 `Admin:zabbix`.  
 
 Access web interface under [http://docker_host_ip]()
@@ -198,7 +204,7 @@ Access web interface under [http://docker_host_ip]()
 Docker troubleshooting
 ======================
 
-Use docker command to see if all required containers are up and running: 
+Use docker command to see if all required containers are up and running:
 ```
 $ docker ps
 ```
@@ -209,14 +215,14 @@ $ docker logs zabbix-server
 ```
 
 Sometimes you might just want to review how things are deployed inside a running
- container, you can do this by executing a _bash shell_ through _docker's 
- exec_ command: 
+ container, you can do this by executing a _bash shell_ through _docker's
+ exec_ command:
 ```
 docker exec -ti zabbix-server /bin/bash
 ```
 
 History of an image and size of layers:
-``` 
+```
 docker history --no-trunc=true zabbix/zabbix-server-2.4 | tr -s ' ' | tail -n+2 | awk -F " ago " '{print $2}'
 ```
 
