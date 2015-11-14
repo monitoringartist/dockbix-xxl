@@ -143,9 +143,9 @@ RUN \
   ./autogen.sh && \
   ./configure --prefix=/usr/local --enable-ipv6 --enable-ipv4 && \
   make && \
-  make install && \
-  setcap cap_net_raw+ep /usr/local/sbin/fping && \
-  setcap cap_net_raw+ep /usr/local/sbin/fping6 && \
+  make install && \  
+  setcap cap_net_raw+ep /usr/local/sbin/fping || chmod u+s /usr/local/sbin/fping && \
+  setcap cap_net_raw+ep /usr/local/sbin/fping6 || chmod u+s /usr/local/sbin/fping6 && \
   cd .. && \
   cp -f /tmp/zabbix_agend.conf /usr/local/etc/ && \
   rm -rf fping-3.10 && \
