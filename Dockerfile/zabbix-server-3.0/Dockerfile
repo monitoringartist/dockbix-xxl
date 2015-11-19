@@ -146,8 +146,6 @@ RUN \
   make install && \
   setcap cap_net_raw+ep /usr/local/sbin/fping || echo 'Warning: setcap cap_net_raw+ep /usr/local/sbin/fping' && \
   setcap cap_net_raw+ep /usr/local/sbin/fping6 || echo 'Warning: setcap cap_net_raw+ep /usr/local/sbin/fping6' && \
-  chown root:zabbix /usr/local/sbin/fping && \
-  chown root:zabbix /usr/local/sbin/fping && \
   chmod 4710 /usr/local/sbin/fping && \
   chmod 4710 /usr/local/sbin/fping6 && \
   cd .. && \
