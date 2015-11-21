@@ -48,8 +48,8 @@ fix_permissions() {
   mkdir -p /usr/local/src/zabbix/frontends/php/conf/
   chmod 777 /usr/local/src/zabbix/frontends/php/conf/
   chmod u+s `which ping`
-  chown root:zabbix /usr/local/sbin/fping
-  chown root:zabbix /usr/local/sbin/fping6
+  chown root:zabbix /usr/sbin/fping
+  chown root:zabbix /usr/sbin/fping6
 }
 update_config() {
   sed -i 's#=ZS_ListenPort#='${ZS_ListenPort}'#g' /usr/local/etc/zabbix_server.conf

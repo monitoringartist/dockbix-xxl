@@ -141,13 +141,13 @@ RUN \
   tar -xvf 3.10.tar.gz && \
   cd fping-3.10/ && \
   ./autogen.sh && \
-  ./configure --prefix=/usr/local --enable-ipv6 --enable-ipv4 && \
+  ./configure --prefix=/usr --enable-ipv6 --enable-ipv4 && \
   make && \
   make install && \
-  setcap cap_net_raw+ep /usr/local/sbin/fping || echo 'Warning: setcap cap_net_raw+ep /usr/local/sbin/fping' && \
-  setcap cap_net_raw+ep /usr/local/sbin/fping6 || echo 'Warning: setcap cap_net_raw+ep /usr/local/sbin/fping6' && \
-  chmod 4710 /usr/local/sbin/fping && \
-  chmod 4710 /usr/local/sbin/fping6 && \
+  setcap cap_net_raw+ep /usr/sbin/fping || echo 'Warning: setcap cap_net_raw+ep /usr/sbin/fping' && \
+  setcap cap_net_raw+ep /usr/sbin/fping6 || echo 'Warning: setcap cap_net_raw+ep /usr/sbin/fping6' && \
+  chmod 4710 /usr/sbin/fping && \
+  chmod 4710 /usr/sbin/fping6 && \
   cd .. && \
   cp -f /tmp/zabbix_agend.conf /usr/local/etc/ && \
   rm -rf fping-3.10 && \
