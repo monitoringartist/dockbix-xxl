@@ -118,7 +118,7 @@ RUN \
               java-1.8.0-openjdk-devel mariadb-devel libxml2-devel gettext \
               libcurl-devel OpenIPMI-devel mysql iksemel-devel libssh2-devel \
               unixODBC unixODBC-devel mysql-connector-odbc postgresql-odbc \
-              openldap-devel net-tools snmptt sudo && \
+              openldap-devel net-tools snmptt sudo rubygems && \
  `# reinstall glibc for locales` \
   yum -y -q reinstall glibc-common && \
   cp /usr/local/etc/zabbix_agend.conf /tmp && \
@@ -134,6 +134,8 @@ RUN \
               --enable-ipv6 --with-jabber --with-openssl --with-ssh2 \
               --with-ldap  --with-unixodbc && \
   make dbschema && \
+  gem install sass && \
+  make css && \
   make install && \
   cp /usr/local/etc/web/zabbix.conf.php /usr/local/src/zabbix/frontends/php/conf/ && \
   pip install py-zabbix && \
@@ -156,7 +158,7 @@ RUN \
   locale/make_mo.sh && \
   yum autoremove -y gettext python-pip tar svn gcc automake mariadb-devel \
                     java-1.8.0-openjdk-devel libxml2-devel libcurl-devel \
-                    OpenIPMI-devel iksemel-devel && \
+                    OpenIPMI-devel iksemel-devel rubygems && \
   yum install -y OpenIPMI-libs && \
   chmod +x /config/bootstrap.sh && \
   chmod +x /config/ds.sh && \
