@@ -5,6 +5,9 @@ MAINTAINER Jan Garaj info@monitoringartist.com
 
 ENV \
   ZABBIX_VERSION=trunk \
+  ZS_disabled=false \
+  ZA_disabled=false \
+  ZW_disabled=false \
   STATUS_PAGE_ALLOWED_IP=127.0.0.1 \
   JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk/bin/java \
   JAVA=/usr/lib/jvm/java-1.8.0-openjdk/bin/java \
