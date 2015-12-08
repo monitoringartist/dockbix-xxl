@@ -50,6 +50,8 @@ fix_permissions() {
   chmod u+s `which ping`
   chown root:zabbix /usr/sbin/fping
   chown root:zabbix /usr/sbin/fping6
+  chmod 4710 /usr/sbin/fping
+  chmod 4710 /usr/sbin/fping6
 }
 update_config() {
   sed -i 's#=ZS_ListenPort#='${ZS_ListenPort}'#g' /usr/local/etc/zabbix_server.conf
