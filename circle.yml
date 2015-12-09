@@ -18,7 +18,7 @@ dependencies:
 test:
   override:
     - while true; do if grep "You can now connect to this MariaDB Server" -a ${CIRCLE_ARTIFACTS}/db.log; then break; else sleep 1; fi done
-    - docker run -d --name zabbix --link db:zabbix.db -p 80:80 -p 10051:10051 --env="DB_ADDRESS=zabbix.db" --env="DB_USER=$DB_USER" --env="DB_PASS=$DB_PASS" million12/zabbix-server-base:test
+    - docker run -d --name zabbix --link db:zabbix.db -p 80:80 -p 10051:10051 --env="ZS_DBHost=zabbix.db" --env="ZS_DBUser=$DB_USER" --env="ZS_DBPassword=$DB_PASS" million12/zabbix-server-base:test
     - docker logs -f zabbix | tee -a ${CIRCLE_ARTIFACTS}/zabbix.log:
         background: true
     - while true; do if grep "nginx entered RUNNING state" -a ${CIRCLE_ARTIFACTS}/zabbix.log; then break; else sleep 1; fi done
