@@ -118,7 +118,7 @@ RUN \
               java-1.8.0-openjdk-devel mariadb-devel libxml2-devel gettext \
               libcurl-devel OpenIPMI-devel mysql iksemel-devel libssh2-devel \
               unixODBC unixODBC-devel mysql-connector-odbc postgresql-odbc \
-              openldap-devel net-tools snmptt sudo && \
+              openldap-devel telnet net-tools snmptt sudo && \
  `# reinstall glibc for locales` \
   yum -y -q reinstall glibc-common && \
   cp /usr/local/etc/zabbix_agend.conf /tmp && \
@@ -160,14 +160,16 @@ RUN \
   yum install -y OpenIPMI-libs && \
   chmod +x /config/bootstrap.sh && \
   chmod +x /config/ds.sh && \
+  chmod +x /usr/local/src/zabbix/misc/snmptrap/zabbix_trap_receiver.pl && \
   yum clean all && \
   mkdir -p /usr/local/share/ssl/certs && \
   mkdir -p /usr/local/share/ssl/keys && \
   mkdir -p /usr/lib/zabbix/modules && \
+  mkdir -p /etc/zabbix/snmp/mibs && \
   rm -rf /tmp/*
 
 CMD ["/config/bootstrap.sh"]
 
-VOLUME ["/etc/custom-config/", "/usr/local/share/zabbix/externalscripts", "/usr/local/share/zabbix/ssl/certs", "/usr/local/share/zabbix/ssl/keys", "/usr/lib/zabbix/modules"]
+VOLUME ["/etc/custom-config", "/usr/local/share/zabbix/externalscripts", "/usr/local/share/zabbix/ssl/certs", "/usr/local/share/zabbix/ssl/keys", "/usr/lib/zabbix/modules", "/usr/share/snmp/mibs", "/etc/snmp"]
 
-EXPOSE 10051 10052 80
+EXPOSE 80 162/udp 10051 10052
