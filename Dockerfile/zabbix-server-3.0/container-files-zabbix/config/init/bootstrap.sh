@@ -47,7 +47,7 @@ fix_permissions() {
   chown -R zabbix:zabbix /usr/local/src/zabbix/
   mkdir -p /usr/local/src/zabbix/frontends/php/conf/
   chmod 777 /usr/local/src/zabbix/frontends/php/conf/
-  chmod u+s `which ping`
+  chmod u+s /usr/bin/ping
   chown root:zabbix /usr/sbin/fping
   chown root:zabbix /usr/sbin/fping6
   chmod 4710 /usr/sbin/fping
