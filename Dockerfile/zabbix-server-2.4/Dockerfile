@@ -4,7 +4,7 @@ MAINTAINER Jan Garaj info@monitoringartist.com
 # ZABBIX_VERSION= trunk tags/2.4.7 branches/dev/ZBXNEXT-1263-1
 
 ENV \
-  ZABBIX_VERSION=tags/2.4.0rc3 \
+  ZABBIX_VERSION=tags/2.4.1 \
   STATUS_PAGE_ALLOWED_IP=127.0.0.1 \
   JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk/bin/java \
   JAVA=/usr/lib/jvm/java-1.8.0-openjdk/bin/java \
