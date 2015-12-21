@@ -161,14 +161,13 @@ RUN \
   chmod +x /config/bootstrap.sh && \
   chmod +x /config/ds.sh && \
   chmod +x /usr/local/src/zabbix/misc/snmptrap/zabbix_trap_receiver.pl && \
+  chmod +x /usr/share/snmptt/snmptthandler-embedded && \
   yum clean all && \
   mkdir -p /usr/local/share/ssl/certs && \
   mkdir -p /usr/local/share/ssl/keys && \
   mkdir -p /usr/lib/zabbix/modules && \
   mkdir -p /etc/zabbix/snmp/mibs && \
   rm -rf /tmp/*
-  
-# TODO apply http://geofrogger.net/review/snmptt-hide-generic-part.patch
 
 CMD ["/config/bootstrap.sh"]
 
