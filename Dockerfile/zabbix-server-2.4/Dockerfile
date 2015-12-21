@@ -169,6 +169,8 @@ RUN \
   mkdir -p /etc/zabbix/snmp/mibs && \
   rm -rf /tmp/*
 
+  # TODO apply http://geofrogger.net/review/snmptt-hide-generic-part.patch
+
 CMD ["/config/bootstrap.sh"]
 
 VOLUME ["/etc/custom-config", "/usr/local/share/zabbix/externalscripts", "/usr/local/share/zabbix/ssl/certs", "/usr/local/share/zabbix/ssl/keys", "/usr/lib/zabbix/modules", "/usr/share/snmp/mibs", "/etc/snmp"]
