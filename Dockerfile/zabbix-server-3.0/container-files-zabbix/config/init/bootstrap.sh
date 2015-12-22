@@ -49,7 +49,7 @@ fix_permissions() {
   chown -R zabbix:zabbix /usr/local/src/zabbix/
   mkdir -p /usr/local/src/zabbix/frontends/php/conf/
   chmod 777 /usr/local/src/zabbix/frontends/php/conf/
-  chmod u+s `which ping`
+  chmod u+s /usr/bin/ping
   chown root:zabbix /usr/sbin/fping
   chown root:zabbix /usr/sbin/fping6
 }
@@ -181,7 +181,7 @@ fix_permissions
 log "Done"
 
 # skip if ZS_disabled=true
-if ! ZS_disabled; then
+if ! $ZS_disabled; then
   # wait 120sec for DB server initialization
   retry=24
   log "Waiting for database server"
@@ -211,20 +211,33 @@ if ! ZS_disabled; then
   #python /config/pyzabbix.py 2>/dev/null
 else
   # Zabbix server is disabled
+  supervisorctl stop zabbix-server
+  supervisorctl remove zabbix-server
   rm -rf /etc/supervisor.d/zabbix-server.conf
 fi  
 
 # skip if ZA_disabled=true
-if ! ZA_disabled; then
+if ! $ZA_disabled; then
   zabbix_agentd -c /usr/local/etc/zabbix_agentd.conf
 else
   # Zabbix agent is disabled
   rm -rf /etc/supervisor.d/zabbix-agent.conf
 fi
 
-if ! ZW_disabled; then
+if ! $ZW_disabled; then
   # Zabbix web UI is disabled
+  supervisorctl stop php-fpm
+  supervisorctl remove php-fpm
   rm -rf /etc/supervisor.d/nginx.conf
+fi
+
+
+if ! $SNMPTRAP_disabled; then
+  # SNMP trap process is disabled
+  echo 'rm -rf /etc/supervisor.d/snmptrapd.conf'
+  supervisorctl stop snmptrapd
+  supervisorctl remove snmptrapd
+  rm -rf /etc/supervisor.d/snmptrapd.conf
 fi
 
 # Zabbix version detection

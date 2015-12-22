@@ -8,6 +8,7 @@ ENV \
   ZS_disabled=false \
   ZA_disabled=false \
   ZW_disabled=false \
+  SNMPTRAP_disabled=true \
   STATUS_PAGE_ALLOWED_IP=127.0.0.1 \
   JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk/bin/java \
   JAVA=/usr/lib/jvm/java-1.8.0-openjdk/bin/java \
@@ -121,7 +122,7 @@ RUN \
               java-1.8.0-openjdk-devel mariadb-devel libxml2-devel gettext \
               libcurl-devel OpenIPMI-devel mysql iksemel-devel libssh2-devel \
               unixODBC unixODBC-devel mysql-connector-odbc postgresql-odbc \
-              openldap-devel net-tools snmptt sudo rubygems && \
+              openldap-devel telnet net-tools snmptt sudo rubygems && \
  `# reinstall glibc for locales` \
   yum -y -q reinstall glibc-common && \
   cp /usr/local/etc/zabbix_agend.conf /tmp && \
@@ -165,14 +166,19 @@ RUN \
   yum install -y OpenIPMI-libs && \
   chmod +x /config/bootstrap.sh && \
   chmod +x /config/ds.sh && \
+  chmod +x /usr/local/src/zabbix/misc/snmptrap/zabbix_trap_receiver.pl && \
+  chmod +x /usr/share/snmptt/snmptthandler-embedded && \
   yum clean all && \
   mkdir -p /usr/local/share/ssl/certs && \
   mkdir -p /usr/local/share/ssl/keys && \
   mkdir -p /usr/lib/zabbix/modules && \
+  mkdir -p /etc/zabbix/snmp/mibs && \
   rm -rf /tmp/*
+
+# TODO apply http://geofrogger.net/review/snmptt-hide-generic-part.patch
 
 CMD ["/config/bootstrap.sh"]
 
-VOLUME ["/etc/custom-config/", "/usr/local/share/zabbix/externalscripts", "/usr/local/share/zabbix/ssl/certs", "/usr/local/share/zabbix/ssl/keys", "/usr/lib/zabbix/modules"]
+VOLUME ["/etc/custom-config", "/usr/local/share/zabbix/externalscripts", "/usr/local/share/zabbix/ssl/certs", "/usr/local/share/zabbix/ssl/keys", "/usr/lib/zabbix/modules", "/usr/share/snmp/mibs", "/etc/snmp"] 
 
-EXPOSE 10051 10052 80
+EXPOSE 80 162/udp 10051 10052

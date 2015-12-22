@@ -177,6 +177,20 @@ Available files:
 | php-zabbix.ini | PHP configuration file |
 | zabbix_server.conf | Zabbix server configuration file |
 
+Zabbix role environment variables:
+
+| Variable | Default value | Description |
+| -------- | ------------- | ----------- |
+| ZS_disabled | false | Zabbix Server disabling, DB operations are disabled as well |
+| ZA_disabled | false | Zabbix Agent disabling, DB operations are disabled as well |
+| ZW_disabled | false | Zabbix Web UI disabling, DB operations are disabled as well |
+| SNMPTRAP_disable=true | true | SNMP trap process (port 162) dissabling |
+
+All Zabbix components are enabled by default except SNMP traps proccessing. However users
+want to run dedicated Zabbix component per container. Typical use case is Zabbix
+web UI. Thanks to role environemnt variables are users able to execute many web
+UI containers, which helps to scale Zabbix as a service.
+
 
 #### Zabbix server deployment
 Now when we have Zabbix database running we can deploy zabbix-server image with
