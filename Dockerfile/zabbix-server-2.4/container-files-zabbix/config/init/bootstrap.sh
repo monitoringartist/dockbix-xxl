@@ -223,12 +223,14 @@ fi
 if ! $ZW_enabled; then
   # Zabbix web UI is disabled
   rm -rf /etc/supervisor.d/nginx.conf
+  rm -rf /etc/supervisor.d/php-fpm.conf
 fi
 
 
 if ! $SNMPTRAP_enabled; then
   # SNMP trap process is disabled
   rm -rf /etc/supervisor.d/snmptrapd.conf
+  rm -rf /etc/logrotate.d/zabbix-traps
 fi
 
 # Zabbix version detection
