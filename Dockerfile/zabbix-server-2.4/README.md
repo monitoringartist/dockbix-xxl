@@ -181,10 +181,10 @@ Zabbix role environment variables:
 
 | Variable | Default value | Description |
 | -------- | ------------- | ----------- |
-| ZS_disabled | false | Zabbix Server disabling, DB operations are disabled as well |
-| ZA_disabled | false | Zabbix Agent disabling, DB operations are disabled as well |
-| ZW_disabled | false | Zabbix Web UI disabling, DB operations are disabled as well |
-| SNMPTRAP_disable=true | true | SNMP trap process (port 162) dissabling |
+| ZS_enabled | true | Zabbix Server enablement, DB operations will be enabled as well |
+| ZA_enabled | true | Zabbix Agent enablement, DB operations will be enabled as well |
+| ZW_enabled | true | Zabbix Web UI enablement, DB operations will be enabled as well |
+| SNMPTRAP_enable | false | SNMP trap process (port 162) enablement |
 
 All Zabbix components are enabled by default except SNMP traps proccessing. However users
 want to run dedicated Zabbix component per container. Typical use case is Zabbix
