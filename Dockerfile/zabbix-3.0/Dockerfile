@@ -1,14 +1,14 @@
 FROM centos:centos7
 MAINTAINER Jan Garaj info@monitoringartist.com
 
-# ZABBIX_VERSION= trunk tags/2.4.6 branches/dev/ZBXNEXT-1263-1
+# ZABBIX_VERSION=trunk tags/2.4.7 branches/dev/ZBXNEXT-1263-1
 
 ENV \
   ZABBIX_VERSION=trunk \
-  ZS_disabled=false \
-  ZA_disabled=false \
-  ZW_disabled=false \
-  SNMPTRAP_disabled=true \
+  ZS_enabled=true \
+  ZA_enabled=true \
+  ZW_enabled=true \
+  SNMPTRAP_enabled=false \
   STATUS_PAGE_ALLOWED_IP=127.0.0.1 \
   JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk/bin/java \
   JAVA=/usr/lib/jvm/java-1.8.0-openjdk/bin/java \
@@ -136,7 +136,7 @@ RUN \
   ./configure --enable-server --enable-agent --with-mysql --enable-java \
               --with-net-snmp --with-libcurl --with-libxml2 --with-openipmi \
               --enable-ipv6 --with-jabber --with-openssl --with-ssh2 \
-              --with-ldap  --with-unixodbc && \
+              --with-ldap --with-unixodbc && \
   make dbschema && \
   gem install sass && \
   make css && \
@@ -149,7 +149,7 @@ RUN \
   ./autogen.sh && \
   ./configure --prefix=/usr --enable-ipv6 --enable-ipv4 && \
   make && \
-  make install && \
+  make install && \  
   setcap cap_net_raw+ep /usr/sbin/fping || echo 'Warning: setcap cap_net_raw+ep /usr/sbin/fping' && \
   setcap cap_net_raw+ep /usr/sbin/fping6 || echo 'Warning: setcap cap_net_raw+ep /usr/sbin/fping6' && \
   chmod 4710 /usr/sbin/fping && \
@@ -175,10 +175,10 @@ RUN \
   mkdir -p /etc/zabbix/snmp/mibs && \
   rm -rf /tmp/*
 
-# TODO apply http://geofrogger.net/review/snmptt-hide-generic-part.patch
+  # TODO apply http://geofrogger.net/review/snmptt-hide-generic-part.patch
 
 CMD ["/config/bootstrap.sh"]
 
-VOLUME ["/etc/custom-config", "/usr/local/share/zabbix/externalscripts", "/usr/local/share/zabbix/ssl/certs", "/usr/local/share/zabbix/ssl/keys", "/usr/lib/zabbix/modules", "/usr/share/snmp/mibs", "/etc/snmp"] 
+VOLUME ["/etc/custom-config", "/usr/local/share/zabbix/externalscripts", "/usr/local/share/zabbix/ssl/certs", "/usr/local/share/zabbix/ssl/keys", "/usr/lib/zabbix/modules", "/usr/share/snmp/mibs", "/etc/snmp"]
 
 EXPOSE 80 162/udp 10051 10052

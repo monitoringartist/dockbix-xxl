@@ -1,7 +1,7 @@
 FROM centos:centos7
 MAINTAINER Jan Garaj info@monitoringartist.com
 
-# ZABBIX_VERSION= trunk tags/2.4.7 branches/dev/ZBXNEXT-1263-1
+# ZABBIX_VERSION=trunk tags/2.4.7 branches/dev/ZBXNEXT-1263-1
 
 ENV \
   ZABBIX_VERSION=tags/2.4.7 \
@@ -136,7 +136,7 @@ RUN \
   ./configure --enable-server --enable-agent --with-mysql --enable-java \
               --with-net-snmp --with-libcurl --with-libxml2 --with-openipmi \
               --enable-ipv6 --with-jabber --with-openssl --with-ssh2 \
-              --with-ldap  --with-unixodbc && \
+              --with-ldap --with-unixodbc && \
   make dbschema && \
   make install && \
   cp /usr/local/etc/web/zabbix.conf.php /usr/local/src/zabbix/frontends/php/conf/ && \
