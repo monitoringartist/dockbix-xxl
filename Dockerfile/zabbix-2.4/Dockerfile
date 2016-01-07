@@ -81,6 +81,9 @@ ENV \
   ZS_SSLCALocation="" \
   ZS_LoadModulePath=/usr/lib/zabbix/modules \
   ZS_LoadModule="" \
+  ZW_ZBX_SERVER=localhost \
+  ZW_ZBX_SERVER_PORT=10051 \
+  ZW_ZBX_SERVER_NAME="Zabbix Server" \
   TERM=xterm
 
 # Layer: base
