@@ -147,7 +147,8 @@ RUN \
   ./autogen.sh && \
   ./configure --prefix=/usr --enable-ipv6 --enable-ipv4 && \
   make && \
-  make install && \  
+  make install && \
+  mv /health/ /usr/local/src/zabbix/frontends/php/ && \
   setcap cap_net_raw+ep /usr/sbin/fping || echo 'Warning: setcap cap_net_raw+ep /usr/sbin/fping' && \
   setcap cap_net_raw+ep /usr/sbin/fping6 || echo 'Warning: setcap cap_net_raw+ep /usr/sbin/fping6' && \
   chmod 4710 /usr/sbin/fping && \
