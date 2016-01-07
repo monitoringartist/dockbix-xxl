@@ -144,6 +144,7 @@ RUN \
   gem install sass && \
   make css && \
   make install && \
+  mv /health/ /usr/local/src/zabbix/frontends/php/ && \
   cp /usr/local/etc/web/zabbix.conf.php /usr/local/src/zabbix/frontends/php/conf/ && \
   pip install py-zabbix && \
   wget https://github.com/schweikert/fping/archive/3.10.tar.gz && \
