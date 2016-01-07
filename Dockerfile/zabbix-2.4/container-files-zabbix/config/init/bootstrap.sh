@@ -129,6 +129,9 @@ update_config() {
   sed -i 's#ZS_DBPassword#'${ZS_DBPassword}'#g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
   sed -i 's#ZS_DBPort#'${ZS_DBPort}'#g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
   sed -i 's#ZS_DBName#'${ZS_DBName}'#g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
+  sed -i 's#ZW_ZBX_SERVER#'${ZW_ZBX_SERVER}'#g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
+  sed -i 's#ZW_ZBX_SERVER_PORT#'${ZW_ZBX_SERVER_PORT}'#g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
+  sed -i 's#ZW_ZBX_SERVER_NAME#'${ZW_ZBX_SERVER_NAME}'#g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php    
 
   sed -i 's#PHP_date_timezone#'${PHP_date_timezone}'#g' /etc/php.d/zz-zabbix.ini
   sed -i 's#PHP_max_execution_time#'${PHP_max_execution_time}'#g' /etc/php.d/zz-zabbix.ini

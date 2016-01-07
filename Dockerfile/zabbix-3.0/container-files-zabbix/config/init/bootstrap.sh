@@ -124,17 +124,20 @@ update_config() {
   if [ "$ZS_LoadModule" != "" ]; then
     echo LoadModule=${ZS_LoadModule} >> /usr/local/etc/zabbix_server.conf
   fi
-  sed -i 's/ZS_DBHost/'${ZS_DBHost}'/g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
-  sed -i 's/ZS_DBUser/'${ZS_DBUser}'/g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
-  sed -i 's/ZS_DBPassword/'${ZS_DBPassword}'/g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
-  sed -i 's/ZS_DBPort/'${ZS_DBPort}'/g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
-  sed -i 's/ZS_DBName/'${ZS_DBName}'/g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
+  sed -i 's#ZS_DBHost#'${ZS_DBHost}'#g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
+  sed -i 's#ZS_DBUser#'${ZS_DBUser}'#g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
+  sed -i 's#ZS_DBPassword#'${ZS_DBPassword}'#g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
+  sed -i 's#ZS_DBPort#'${ZS_DBPort}'#g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
+  sed -i 's#ZS_DBName#'${ZS_DBName}'#g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
+  sed -i 's#ZW_ZBX_SERVER#'${ZW_ZBX_SERVER}'#g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
+  sed -i 's#ZW_ZBX_SERVER_PORT#'${ZW_ZBX_SERVER_PORT}'#g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
+  sed -i 's#ZW_ZBX_SERVER_NAME#'${ZW_ZBX_SERVER_NAME}'#g' /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php    
 
-  sed -i 's/PHP_date_timezone/'${PHP_date_timezone}'/g' /etc/php.d/zz-zabbix.ini
-  sed -i 's/PHP_max_execution_time/'${PHP_max_execution_time}'/g' /etc/php.d/zz-zabbix.ini
-  sed -i 's/PHP_max_input_time/'${PHP_max_input_time}'/g' /etc/php.d/zz-zabbix.ini
-  sed -i 's/PHP_memory_limit/'${PHP_memory_limit}'/g' /etc/php.d/zz-zabbix.ini
-  sed -i 's/PHP_error_reporting/'${PHP_error_reporting}'/g' /etc/php.d/zz-zabbix.ini
+  sed -i 's#PHP_date_timezone#'${PHP_date_timezone}'#g' /etc/php.d/zz-zabbix.ini
+  sed -i 's#PHP_max_execution_time#'${PHP_max_execution_time}'#g' /etc/php.d/zz-zabbix.ini
+  sed -i 's#PHP_max_input_time#'${PHP_max_input_time}'#g' /etc/php.d/zz-zabbix.ini
+  sed -i 's#PHP_memory_limit#'${PHP_memory_limit}'#g' /etc/php.d/zz-zabbix.ini
+  sed -i 's#PHP_error_reporting#'${PHP_error_reporting}'#g' /etc/php.d/zz-zabbix.ini
 
   if [ -f /etc/custom-config/php-zabbix.ini ]; then
     cp -f /etc/custom-config/php-zabbix.ini /etc/php.d/zz-zabbix.ini
@@ -180,8 +183,7 @@ system_pids
 fix_permissions
 log "Done"
 
-# skip if ZS_disabled=true
-if ! $ZS_disabled; then
+if $ZS_enabled; then
   # wait 120sec for DB server initialization
   retry=24
   log "Waiting for database server"
@@ -211,33 +213,27 @@ if ! $ZS_disabled; then
   #python /config/pyzabbix.py 2>/dev/null
 else
   # Zabbix server is disabled
-  supervisorctl stop zabbix-server
-  supervisorctl remove zabbix-server
   rm -rf /etc/supervisor.d/zabbix-server.conf
 fi  
 
-# skip if ZA_disabled=true
-if ! $ZA_disabled; then
+if $ZA_enabled; then
   zabbix_agentd -c /usr/local/etc/zabbix_agentd.conf
 else
   # Zabbix agent is disabled
   rm -rf /etc/supervisor.d/zabbix-agent.conf
 fi
 
-if ! $ZW_disabled; then
+if ! $ZW_enabled; then
   # Zabbix web UI is disabled
-  supervisorctl stop php-fpm
-  supervisorctl remove php-fpm
   rm -rf /etc/supervisor.d/nginx.conf
+  rm -rf /etc/supervisor.d/php-fpm.conf
 fi
 
 
-if ! $SNMPTRAP_disabled; then
+if ! $SNMPTRAP_enabled; then
   # SNMP trap process is disabled
-  echo 'rm -rf /etc/supervisor.d/snmptrapd.conf'
-  supervisorctl stop snmptrapd
-  supervisorctl remove snmptrapd
   rm -rf /etc/supervisor.d/snmptrapd.conf
+  rm -rf /etc/logrotate.d/zabbix-traps
 fi
 
 # Zabbix version detection
