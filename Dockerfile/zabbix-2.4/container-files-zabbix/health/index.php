@@ -1,4 +1,4 @@
-?php
+<?php
 // (Micro)service healthcheck
 // Used for loadabalancer healthcheck
 // You can implement more advance version, eg. test DB connectivity, ...
