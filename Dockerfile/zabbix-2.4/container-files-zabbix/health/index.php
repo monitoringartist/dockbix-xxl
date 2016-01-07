@@ -3,7 +3,7 @@
 // Used for loadabalancer healthcheck
 // You can implement more advance version, eg. test DB connectivity, ...
  
-print "{
+print '{
   "Name": "zabbix-frontend",
   "Description": "Zabbix PHP web UI.",
   "ServiceOK": true,
@@ -21,6 +21,6 @@ print "{
       "OK": true
     }
   ]
-}";
+}';
 
 ?>
