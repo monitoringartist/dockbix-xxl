@@ -1,0 +1,11 @@
+2.4 diff:
+> unknown parameter "HistoryTextCacheSize" in config file "/usr/local/etc/zabbix_server.conf", line 400
+Delete HistoryTextCacheSize in zabbix_server.conf?
+
+> compilation needs 
+yum install -y rubygems
+...
+  gem install sass
+  make css
+...
+yum autoremove -y rubygems 
