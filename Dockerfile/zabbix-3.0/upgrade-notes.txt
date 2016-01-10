@@ -1,6 +1,8 @@
 2.4 diff:
 > unknown parameter "HistoryTextCacheSize" in config file "/usr/local/etc/zabbix_server.conf", line 400
-Delete HistoryTextCacheSize in zabbix_server.conf?
+ZBXNEXT-3071
+Delete HistoryTextCacheSize
+Add HistoryIndexSize
 
 > compilation needs 
 yum install -y rubygems
