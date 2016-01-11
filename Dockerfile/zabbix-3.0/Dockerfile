@@ -10,8 +10,8 @@ ENV \
   ZW_enabled=true \
   SNMPTRAP_enabled=false \
   STATUS_PAGE_ALLOWED_IP=127.0.0.1 \
-  JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk/bin/java \
-  JAVA=/usr/lib/jvm/java-1.8.0-openjdk/bin/java \
+  JAVA_HOME=/usr/bin/java \
+  JAVA=/usr/bin/java \
   PHP_date_timezone=UTC \
   PHP_max_execution_time=300 \
   PHP_max_input_time=300 \
