@@ -10,8 +10,8 @@ ENV \
   ZW_enabled=true \
   SNMPTRAP_enabled=false \
   STATUS_PAGE_ALLOWED_IP=127.0.0.1 \
-  JAVA_HOME=/usr/bin/java \
-  JAVA=/usr/bin/java \
+  JAVA_HOME=/usr/lib/jvm/jre \
+  JAVA=/usr/lib/jvm/jre/bin \
   PHP_date_timezone=UTC \
   PHP_max_execution_time=300 \
   PHP_max_input_time=300 \
@@ -83,7 +83,7 @@ ENV \
   ZS_LoadModule="" \
   ZW_ZBX_SERVER=localhost \
   ZW_ZBX_SERVER_PORT=10051 \
-  ZW_ZBX_SERVER_NAME="Zabbix Server" \  
+  ZW_ZBX_SERVER_NAME="Zabbix Server" \
   TERM=xterm
 
 # Layer: base
@@ -153,7 +153,7 @@ RUN \
   ./autogen.sh && \
   ./configure --prefix=/usr --enable-ipv6 --enable-ipv4 && \
   make && \
-  make install && \  
+  make install && \
   setcap cap_net_raw+ep /usr/sbin/fping || echo 'Warning: setcap cap_net_raw+ep /usr/sbin/fping' && \
   setcap cap_net_raw+ep /usr/sbin/fping6 || echo 'Warning: setcap cap_net_raw+ep /usr/sbin/fping6' && \
   chmod 4710 /usr/sbin/fping && \
