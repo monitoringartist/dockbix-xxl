@@ -11,7 +11,7 @@ ENV \
   SNMPTRAP_enabled=false \
   STATUS_PAGE_ALLOWED_IP=127.0.0.1 \
   JAVA_HOME=/usr/lib/jvm/jre \
-  JAVA=/usr/lib/jvm/jre/bin \
+  JAVA=/usr/bin/java \
   PHP_date_timezone=UTC \
   PHP_max_execution_time=300 \
   PHP_max_input_time=300 \
