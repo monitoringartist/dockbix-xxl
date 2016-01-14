@@ -53,19 +53,20 @@ fix_permissions() {
   chown root:zabbix /usr/sbin/fping
   chown root:zabbix /usr/sbin/fping6
 }
-update_config() {  
-  # ^ZS_: /usr/local/etc/zabbix_server.conf 
+update_config() {
+  # ^ZS_: /usr/local/etc/zabbix_server.conf
   for i in $( set -o posix ; set | grep ^ZS_ | grep -v ^ZS_Include | grep -v ^ZS_LoadModule | grep -v ^ZS_SourceIP | sort -rn ); do
     reg=$(echo ${i} | awk -F'=' '{print $1}')
     val=$(echo ${i} | awk -F'=' '{print $2}')
-    sed -i "s#=${reg}\$#=${val}#g" /usr/local/etc/zabbix_server.conf    
+    sed -i "s#=${reg}\$#=${val}#g" /usr/local/etc/zabbix_server.conf
+    sed -i "s#=${reg}\$#=${val}#g" /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
   done
   if [ "$ZS_SourceIP" != "" ]; then
     echo SourceIP=${ZS_SourceIP} >> /usr/local/etc/zabbix_server.conf
-  fi  
+  fi
   if [ "$ZS_Include" != "" ]; then
     echo Include=${ZS_Include} >> /usr/local/etc/zabbix_server.conf
-  fi  
+  fi
   if [ "$ZS_LoadModule" != "" ]; then
     echo LoadModule=${ZS_LoadModule} >> /usr/local/etc/zabbix_server.conf
   fi
@@ -74,16 +75,16 @@ update_config() {
   for i in $( set -o posix ; set | grep ^ZW_ | sort -rn ); do
     reg=$(echo ${i} | awk -F'=' '{print $1}')
     val=$(echo ${i} | awk -F'=' '{print $2}')
-    sed -i "s#=${reg}\$#=${val}#g" /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php    
+    sed -i "s#=${reg}\$#=${val}#g" /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
   done
-  
+
   # ^PHP_: /etc/php.d/zz-zabbix.ini
   for i in $( set -o posix ; set | grep ^PHP_ | sort -rn ); do
     reg=$(echo ${i} | awk -F'=' '{print $1}')
     val=$(echo ${i} | awk -F'=' '{print $2}')
-    sed -i "s#${reg}\$#${val}#g" /etc/php.d/zz-zabbix.ini    
-  done  
-  
+    sed -i "s#${reg}\$#${val}#g" /etc/php.d/zz-zabbix.ini
+  done
+
   if [ -f /etc/custom-config/php-zabbix.ini ]; then
     cp -f /etc/custom-config/php-zabbix.ini /etc/php.d/zz-zabbix.ini
   fi
@@ -155,7 +156,7 @@ if $ZS_enabled; then
 else
   # Zabbix server is disabled
   rm -rf /etc/supervisor.d/zabbix-server.conf
-fi  
+fi
 
 if $ZA_enabled; then
   zabbix_agentd -c /usr/local/etc/zabbix_agentd.conf
