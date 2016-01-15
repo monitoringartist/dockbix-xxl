@@ -59,7 +59,7 @@ update_config() {
     reg=$(echo ${i} | awk -F'=' '{print $1}')
     val=$(echo ${i} | awk -F'=' '{print $2}')
     sed -i "s#=${reg}\$#=${val}#g" /usr/local/etc/zabbix_server.conf
-    sed -i "s#=${reg}\$#=${val}#g" /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
+    sed -i "s#${reg}\$#${val}#g" /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
   done
   if [ "$ZS_SourceIP" != "" ]; then
     echo SourceIP=${ZS_SourceIP} >> /usr/local/etc/zabbix_server.conf
@@ -75,7 +75,7 @@ update_config() {
   for i in $( set -o posix ; set | grep ^ZW_ | sort -rn ); do
     reg=$(echo ${i} | awk -F'=' '{print $1}')
     val=$(echo ${i} | awk -F'=' '{print $2}')
-    sed -i "s#=${reg}\$#=${val}#g" /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
+    sed -i "s#${reg}\$#${val}#g" /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
   done
 
   # ^PHP_: /etc/php.d/zz-zabbix.ini
