@@ -4,21 +4,17 @@
 # Config DB
 #########################################################
 function config_db() {
-  sed -i 's#DB_max_allowed_packet#'${DB_max_allowed_packet}'#g' /etc/my.cnf.d/tuning.cnf
-  sed -i 's#DB_query_cache_size#'${DB_query_cache_size}'#g' /etc/my.cnf.d/tuning.cnf
-  sed -i 's#DB_query_cache_type#'${DB_query_cache_type}'#g' /etc/my.cnf.d/tuning.cnf
-  sed -i 's#DB_sync_binlog#'${DB_sync_binlog}'#g' /etc/my.cnf.d/tuning.cnf
-  sed -i 's#DB_innodb_buffer_pool_size#'${DB_innodb_buffer_pool_size}'#g' /etc/my.cnf.d/tuning.cnf
-  sed -i 's#DB_innodb_log_file_size#'${DB_innodb_log_file_size}'#g' /etc/my.cnf.d/tuning.cnf
-  sed -i 's#DB_innodb_flush_method#'${DB_innodb_flush_method}'#g' /etc/my.cnf.d/tuning.cnf
-  sed -i 's#DB_innodb_old_blocks_time#'${DB_innodb_old_blocks_time}'#g' /etc/my.cnf.d/tuning.cnf
-  sed -i 's#DB_innodb_flush_log_at_trx_commit#'${DB_innodb_flush_log_at_trx_commit}'#g' /etc/my.cnf.d/tuning.cnf
-
+  # ^DB_: /etc/my.cnf.d/tuning.cnf
+  for i in $( set -o posix ; set | grep ^DB_ | sort -rn ); do
+    reg=$(echo ${i} | awk -F'=' '{print $1}')
+    val=$(echo ${i} | awk -F'=' '{print $2}')
+    sed -i "s#=${reg}\$#=${val}#g" /etc/my.cnf.d/tuning.cnf
+  done
+  
   if [ -f /etc/custom-config/mariadb-tuning.cnf ]; then
     cp -f /etc/custom-config/mariadb-tuning.cnf /etc/my.cnf.d/tuning.cnf
   fi
 }
-
 
 #########################################################
 # Check in the loop (every 1s) if the database backend
@@ -39,7 +35,6 @@ function wait_for_db() {
   set -e
 }
 
-
 #########################################################
 # Check in the loop (every 1s) if the database backend
 # service is already available for connections.
@@ -53,7 +48,6 @@ function terminate_db() {
     if tail $ERROR_LOG | grep -s -E "mysqld .+? ended" $ERROR_LOG; then break; else sleep 0.5; fi
   done
 }
-
 
 #########################################################
 # Cals `mysql_install_db` if empty volume is detected.
