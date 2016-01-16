@@ -73,7 +73,7 @@ update_config() {
 
   # ^ZW_: /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
   export ZW_ZBX_SERVER_NAME_e=$(echo ${ZW_ZBX_SERVER_NAME} | sed -e 's/ /\\\ /g')
-  sed -i "s#ZW_ZBX_SERVER_NAME#'${ZW_ZBX_SERVER_NAME_e}'#g" /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
+  sed -i "s#ZW_ZBX_SERVER_NAME#${ZW_ZBX_SERVER_NAME_e}#g" /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
   unset ZW_ZBX_SERVER_NAME_e
   for i in $( set -o posix ; set | grep ^ZW_ | grep -v ^ZW_ZBX_SERVER_NAME | sort -rn ); do
     reg=$(echo ${i} | awk -F'=' '{print $1}')
