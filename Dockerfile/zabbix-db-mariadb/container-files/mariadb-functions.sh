@@ -8,7 +8,7 @@ function config_db() {
   for i in $( set -o posix ; set | grep ^DB_ | sort -rn ); do
     reg=$(echo ${i} | awk -F'=' '{print $1}')
     val=$(echo ${i} | awk -F'=' '{print $2}')
-    sed -i "s#=${reg}\$#=${val}#g" /etc/my.cnf.d/tuning.cnf
+    sed -i "s#${reg}\$#${val}#g" /etc/my.cnf.d/tuning.cnf
   done
   
   if [ -f /etc/custom-config/mariadb-tuning.cnf ]; then
