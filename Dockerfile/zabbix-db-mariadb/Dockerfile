@@ -1,23 +1,22 @@
-# docker build --rm=true -t jangaraj/zabbix-db-mariadb .
-
 FROM centos:centos7
 MAINTAINER Jan Garaj info@monitoringartist.com
 
 ENV \
-  DB_max_allowed_packet=64M \	
+  DB_max_allowed_packet=64M \
   DB_query_cache_size=0 \
   DB_query_cache_type=0 \
-  DB_sync_binlog=0 \	
+  DB_sync_binlog=0 \
   DB_innodb_buffer_pool_size=768M \
   DB_innodb_log_file_size=128M \
   DB_innodb_flush_method=O_DIRECT \
   DB_innodb_old_blocks_time=1000 \
-  DB_innodb_flush_log_at_trx_commit=0
+  DB_innodb_flush_log_at_trx_commit=0 \
+  DB_open_files_limit=4096 \
+  DB_max_connections=300
 
 COPY container-files/ /tmp/
 
 RUN \
-    yum update -y && \
     cp /tmp/etc/yum.repos.d/* /etc/yum.repos.d/ && \
     yum install -y epel-release && \
     yum install -y MariaDB-server hostname net-tools pwgen git bind-utils bzip2 && \

@@ -2,6 +2,8 @@
 
 [mysqld]
 max_allowed_packet = DB_max_allowed_packet
+open_files_limit = DB_open_files_limit
+max_connections = DB_max_connections
 
 # Sort buffer is used to perform sorts for some ORDER BY and GROUP BY
 # queries. If sorted data does not fit into the sort buffer, a disk
