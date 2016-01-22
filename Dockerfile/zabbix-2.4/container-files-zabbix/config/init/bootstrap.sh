@@ -52,6 +52,8 @@ fix_permissions() {
   chmod u+s /usr/bin/ping
   chown root:zabbix /usr/sbin/fping
   chown root:zabbix /usr/sbin/fping6
+  chmod 4710 /usr/sbin/fping
+  chmod 4710 /usr/sbin/fping6
 }
 update_config() {
   # ^ZS_: /usr/local/etc/zabbix_server.conf

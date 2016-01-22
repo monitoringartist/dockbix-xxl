@@ -11,3 +11,5 @@ yum install -y rubygems
   make css
 ...
 yum autoremove -y rubygems 
+
+zabbix-server zabbix-agentd bootstrap conf - TLS configs
