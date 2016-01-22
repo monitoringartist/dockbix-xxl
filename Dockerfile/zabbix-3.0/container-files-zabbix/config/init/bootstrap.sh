@@ -45,17 +45,19 @@ system_pids() {
 fix_permissions() {
   getent group zabbix || groupadd zabbix
   getent passwd zabbix || useradd -g zabbix -M zabbix
-  chown -R zabbix:zabbix /usr/local/etc/
-  chown -R zabbix:zabbix /usr/local/src/zabbix/
+  chown -R $ZS_User:$ZS_User /usr/local/etc/
+  chown -R $ZS_User:$ZS_User /usr/local/src/zabbix/
   mkdir -p /usr/local/src/zabbix/frontends/php/conf/
   chmod 777 /usr/local/src/zabbix/frontends/php/conf/
   chmod u+s /usr/bin/ping
-  chown root:zabbix /usr/sbin/fping
-  chown root:zabbix /usr/sbin/fping6
+  chown root:$ZS_User /usr/sbin/fping
+  chown root:$ZS_User /usr/sbin/fping6
+  chmod 4710 /usr/sbin/fping
+  chmod 4710 /usr/sbin/fping6
 }
 update_config() {
   # ^ZS_: /usr/local/etc/zabbix_server.conf
-  for i in $( set -o posix ; set | grep ^ZS_ | grep -v ^ZS_Include | grep -v ^ZS_LoadModule | grep -v ^ZS_SourceIP | sort -rn ); do
+  for i in $( set -o posix ; set | grep ^ZS_ | grep -v ^ZS_Include | grep -v ^ZS_LoadModule | grep -v ^ZS_SourceIP | grep -v ^ZS_TLS | sort -rn ); do
     reg=$(echo ${i} | awk -F'=' '{print $1}')
     val=$(echo ${i} | awk -F'=' '{print $2}')
     sed -i "s#=${reg}\$#=${val}#g" /usr/local/etc/zabbix_server.conf
@@ -69,6 +71,73 @@ update_config() {
   fi
   if [ "$ZS_LoadModule" != "" ]; then
     echo LoadModule=${ZS_LoadModule} >> /usr/local/etc/zabbix_server.conf
+  fi
+  if [ "$ZS_TLSCAFile" != "" ]; then
+    echo TLSCAFile=${ZS_TLSCAFile} >> /usr/local/etc/zabbix_server.conf
+  fi
+  if [ "$ZS_TLSCRLFile" != "" ]; then
+    echo TLSCRLFile=${ZS_TLSCRLFile} >> /usr/local/etc/zabbix_server.conf
+  fi
+  if [ "$ZS_TLSCertFile" != "" ]; then
+    echo TLSCertFile=${ZS_TLSCertFile} >> /usr/local/etc/zabbix_server.conf
+  fi
+  if [ "$ZS_TLSCAFile" != "" ]; then
+    echo TLSKeyFile=${ZS_TLSKeyFile} >> /usr/local/etc/zabbix_server.conf
+  fi
+
+  # ^ZA_: /usr/local/etc/zabbix_agentd.conf
+  export ZA_Hostname_e=$(echo ${ZA_Hostname} | sed -e 's/ /\\\ /g')
+  sed -i "s#ZA_Hostname#${ZA_Hostname_e}#g" /usr/local/etc/zabbix_agentd.conf
+  unset ZA_Hostname_e
+  for i in $( set -o posix ; set | grep ^ZA_ | sort -rn ); do
+    reg=$(echo ${i} | awk -F'=' '{print $1}')
+    val=$(echo ${i} | awk -F'=' '{print $2}')
+    sed -i "s#=${reg}\$#=${val}#g" /usr/local/etc/zabbix_agentd.conf
+  done
+  if [ "$ZA_TLSCAFile" != "" ]; then
+    echo TLSCAFile=${ZA_TLSCAFile} >> /usr/local/etc/zabbix_agentd.conf
+  fi
+  if [ "$ZA_TLSCRLFile" != "" ]; then
+    echo TLSCRLFile=${ZA_TLSCRLFile} >> /usr/local/etc/zabbix_agentd.conf
+  fi
+  if [ "$ZA_TLSServerCertIssuer" != "" ]; then
+    echo TLSServerCertIssuer=${ZA_TLSServerCertIssuer} >> /usr/local/etc/zabbix_agentd.conf
+  fi
+  if [ "$ZA_TLSServerCertSubject" != "" ]; then
+    echo TLSServerCertSubject=${ZA_TLSServerCertSubject} >> /usr/local/etc/zabbix_agentd.conf
+  fi
+  if [ "$ZA_TLSCertFile" != "" ]; then
+    echo TLSCertFile=${ZA_TLSCertFile} >> /usr/local/etc/zabbix_agentd.conf
+  fi
+  if [ "$ZA_TLSKeyFile" != "" ]; then
+    echo TLSKeyFile=${ZA_TLSKeyFile} >> /usr/local/etc/zabbix_agentd.conf
+  fi
+  if [ "$ZA_TLSPSKIdentity" != "" ]; then
+    echo TLSPSKIdentity=${ZA_TLSPSKIdentity} >> /usr/local/etc/zabbix_agentd.conf
+  fi
+  if [ "$ZA_TLSPSKFile" != "" ]; then
+    echo TLSPSKFile=${ZA_TLSPSKFile} >> /usr/local/etc/zabbix_agentd.conf
+  fi
+  if [ "$ZA_SourceIP" != "" ]; then
+    echo SourceIP=${ZA_SourceIP} >> /usr/local/etc/zabbix_agentd.conf
+  fi
+  if [ "$ZA_LoadModulePath" != "" ]; then
+    echo LoadModulePath=${ZA_LoadModulePath} >> /usr/local/etc/zabbix_agentd.conf
+  fi
+  if [ "$ZA_UserParameter" != "" ]; then
+    echo UserParameter=${ZA_UserParameter} >> /usr/local/etc/zabbix_agentd.conf
+  fi
+  if [ "$ZA_HostMetadata" != "" ]; then
+    echo HostMetadata=${ZA_HostMetadata} >> /usr/local/etc/zabbix_agentd.conf
+  fi
+  if [ "$ZA_Include" != "" ]; then
+    echo Include=${ZA_Include} >> /usr/local/etc/zabbix_agentd.conf
+  fi
+  if [ "$ZA_Hostname" != "" ]; then
+    echo Hostname=${ZA_Hostname} >> /usr/local/etc/zabbix_agentd.conf
+  fi
+  if [ "$ZA_HostnameItem" != "" ]; then
+    echo HostnameItem=${ZA_HostnameItem} >> /usr/local/etc/zabbix_agentd.conf
   fi
 
   # ^ZW_: /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
@@ -161,9 +230,7 @@ else
   rm -rf /etc/supervisor.d/zabbix-server.conf
 fi
 
-if $ZA_enabled; then
-  zabbix_agentd -c /usr/local/etc/zabbix_agentd.conf
-else
+if ! $ZA_enabled; then
   # Zabbix agent is disabled
   rm -rf /etc/supervisor.d/zabbix-agent.conf
 fi
