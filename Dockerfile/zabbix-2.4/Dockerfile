@@ -128,7 +128,7 @@ RUN \
               openldap-devel telnet net-tools snmptt sudo && \
  `# reinstall glibc for locales` \
   yum -y -q reinstall glibc-common && \
-  cp /usr/local/etc/zabbix_agend.conf /tmp && \
+  cp /usr/local/etc/zabbix_agentd.conf /tmp && \
   svn co svn://svn.zabbix.com/${ZABBIX_VERSION} /usr/local/src/zabbix && \
   cd /usr/local/src/zabbix && \
   DATE=`date +%Y-%m-%d` && \
@@ -157,7 +157,7 @@ RUN \
   chmod 4710 /usr/sbin/fping && \
   chmod 4710 /usr/sbin/fping6 && \
   cd .. && \
-  cp -f /tmp/zabbix_agend.conf /usr/local/etc/ && \
+  cp -f /tmp/zabbix_agentd.conf /usr/local/etc/ && \
   rm -rf fping-3.10 && \
   rm -rf 3.10.tar.gz && \
   cd /usr/local/src/zabbix/frontends/php && \
