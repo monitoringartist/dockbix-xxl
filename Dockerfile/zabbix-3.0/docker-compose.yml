@@ -14,7 +14,7 @@ zabbix-db:
     - MARIADB_PASS=my_password
 
 zabbix-server:
-  image: zabbix/zabbix-server-3.0:dev
+  image: zabbix/zabbix-3.0:dev
   ports:
     - "80:80"
     - "10051:10051"
