@@ -12,8 +12,7 @@ Available images
 
 ### 1. [Docker image zabbix-2.4](https://registry.hub.docker.com/u/zabbix/zabbix-2.4/) [![](https://badge.imagelayers.io/zabbix/zabbix-2.4:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-2.4:latest) [![Circle CI](https://circleci.com/gh/zabbix/zabbix-community-docker/tree/master.svg?style=svg&circle-token=930b0a85da051123bf3f2c9c28ede5b29c607665)](https://circleci.com/gh/zabbix/zabbix-community-docker/tree/master)
 
-See [README of zabbix-2.4]
-(https://github.com/zabbix/zabbix-community-docker/tree/master/Dockerfile/zabbix-2.4) 
+See [README of zabbix-2.4](https://github.com/zabbix/zabbix-community-docker/tree/master/Dockerfile/zabbix-2.4) 
 for more details.
 
 Compiled Zabbix with almost all features (MySQL support, Java, SNMP, 
@@ -23,16 +22,14 @@ container).
 
 ### 2. [Docker image zabbix-db-mariadb](https://registry.hub.docker.com/u/zabbix/zabbix-db-mariadb/) [![](https://badge.imagelayers.io/zabbix/zabbix-db-mariadb:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-db-mariadb:latest)
 
-See [README of zabbix-db-mariadb]
-(https://github.com/zabbix/zabbix-community-docker/tree/master/Dockerfile/zabbix-db-mariadb) 
+See [README of zabbix-db-mariadb](https://github.com/zabbix/zabbix-community-docker/tree/master/Dockerfile/zabbix-db-mariadb) 
 for more details.
 
 MariaDB container customized for Zabbix.
 
 ### 3. [Docker image zabbix-3.0](https://registry.hub.docker.com/u/zabbix/zabbix-3.0/) [![](https://badge.imagelayers.io/zabbix/zabbix-3.0:dev.svg)](https://imagelayers.io/?images=zabbix/zabbix-3.0:dev)
 
-See [README of zabbix-3.0]
-(https://github.com/zabbix/zabbix-community-docker/tree/master/Dockerfile/zabbix-3.0)
+See [README of zabbix-3.0](https://github.com/zabbix/zabbix-community-docker/tree/master/Dockerfile/zabbix-3.0)
 for more details.
 
 NOT FOR PRODUCTION - Compiled Zabbix with almost all features 
