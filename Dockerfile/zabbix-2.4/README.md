@@ -9,6 +9,8 @@ Please use these community Zabbix Docker images, if you want to
 zabbix-2.4 [![](https://badge.imagelayers.io/zabbix/zabbix-2.4:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-2.4:latest) [![Circle CI](https://circleci.com/gh/zabbix/zabbix-community-docker/tree/master.svg?style=svg&circle-token=930b0a85da051123bf3f2c9c28ede5b29c607665)](https://circleci.com/gh/zabbix/zabbix-community-docker/tree/master)
 =================
 
+Zabbix 2.4 is not supported - please use 3.0 version - http://www.zabbix.com/life_cycle_and_release_policy.php
+
 Compiled zabbix with almost all features (MySQL support, Java, SNMP,
 Curl, IPMI, IPv6, Jabber, fping) and Zabbix web UI based on CentOS 7,
 Supervisor, Nginx, PHP. Image requires external MySQL/MariaDB database (you can

@@ -1,12 +1,6 @@
 Zabbix Community Dockerfiles
 ============================
 
-ZABBIX 3.0 IS NOT PRODUCTION READY!!!
-=====================================
-
-Only dev tag (equivalent of nightly build) is available
-=======================================================
-
 [Zabbix Github repo](https://github.com/zabbix/zabbix-community-docker) is
 intended as a source for [Zabbix Docker registry](https://registry.hub.docker.com/repos/zabbix/).
 Please use these community Zabbix Docker images, if you want to
@@ -46,7 +40,7 @@ docker run \
     --env="ZS_DBHost=zabbix.db" \
     --env="ZS_DBUser=zabbix" \
     --env="ZS_DBPassword=my_password" \
-    zabbix/zabbix-3.0:dev    
+    zabbix/zabbix-3.0:latest    
 # wait ~60 seconds for Zabbix initialization
 # Zabbix web will be available on the port 80, Zabbix server on the port 10051
 
@@ -220,7 +214,7 @@ Example:
 		--env="ZS_DBHost=zabbix.db" \
 		--env="ZS_DBUser=zabbix" \
 		--env="ZS_DBPassword=my_password" \
-		zabbix/zabbix-3.0:dev
+		zabbix/zabbix-3.0:latest
 
 #### Access to Zabbix web interface
 To log in into zabbix web interface for the first time use credentials
