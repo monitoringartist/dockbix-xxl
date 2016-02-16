@@ -22,9 +22,13 @@ do
     echo "Creating tags $t"
     git checkout master
     sed -i -e "s#^ ZABBIX_VERSION=.*# ZABBIX_VERSION=tags/$t \\\#" Dockerfile
+    sleep 5    
     git add Dockerfile
+    sleep 5
     git commit -m "Tag $t"
+    sleep 5
     git tag -a $t -m "Tag $t"
+    sleep 5
     last=$t        
 done
 git push origin master
