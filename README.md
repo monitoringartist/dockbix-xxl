@@ -24,7 +24,7 @@ MariaDB container customized for Zabbix.
 
 ### 3. [Docker image zabbix-2.4](https://registry.hub.docker.com/u/zabbix/zabbix-2.4/) [![](https://badge.imagelayers.io/zabbix/zabbix-2.4:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-2.4:latest)
 
-*Not supported version* - please use 3.0 version.
+**2.4 is not supported version** - please use 3.0 version.
 
 See [README of zabbix-2.4](https://github.com/zabbix/zabbix-community-docker/tree/master/Dockerfile/zabbix-2.4) 
 for more details.
