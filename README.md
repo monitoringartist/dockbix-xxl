@@ -84,9 +84,17 @@ example: if you want to use always the latest available version, then please use
 FROM zabbix/zabbix-3.0:latest
 ```
 
+Customized Zabbix images
+========================
+
 Recommended example how to build custom Zabbix server on top of base image is 
 [million12/docker-zabbix-server](https://github.com/million12/docker-zabbix-server). 
 It provides custom features, such as Push notification, Slack and SMTP auth.  
+
+Dockerized Grafana with Zabbix support
+======================================
+
+Visit another dockerised project [Grafana XXL], which includes also [Grafana Zabbix datasource](https://github.com/alexanderzobnin/grafana-zabbix).
 
 About Docker
 ============
