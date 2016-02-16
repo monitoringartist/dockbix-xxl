@@ -94,7 +94,7 @@ It provides custom features, such as Push notification, Slack and SMTP auth.
 Dockerized Grafana with Zabbix support
 ======================================
 
-Visit another dockerised project [Grafana XXL], which includes also [Grafana Zabbix datasource](https://github.com/alexanderzobnin/grafana-zabbix).
+Visit another dockerised project [Grafana XXL](https://github.com/monitoringartist/grafana-xxl), which includes also [Grafana Zabbix datasource](https://github.com/alexanderzobnin/grafana-zabbix).
 
 About Docker
 ============
