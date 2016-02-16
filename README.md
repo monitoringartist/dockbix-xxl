@@ -48,12 +48,6 @@ Check online logs of Zabbix container:
 $ docker logs zabbix
 ```
 
-Attach to running Zabbix container (to detach the tty without exiting the shell, 
-use the escape sequence Ctrl+p + Ctrl+q):
-```
-$ docker attach zabbix
-```
-
 Sometimes you might just want to review how things are deployed inside a running
  container, you can do this by executing a _bash shell_ through _docker's 
  exec_ command: 
