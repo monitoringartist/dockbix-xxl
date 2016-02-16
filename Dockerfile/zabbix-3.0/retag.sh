@@ -9,7 +9,6 @@ do
          continue
     fi
     echo "Deleting tags $t"
-    exit 1
     git tag -d $t
     git push origin :refs/tags/$t
     tags=("${tags[@]}" "$t")
