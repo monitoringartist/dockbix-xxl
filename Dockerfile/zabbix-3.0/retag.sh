@@ -21,7 +21,7 @@ for t in "${tags[@]}"
 do
     echo "Creating tags $t"
     git checkout master
-    sed -i -e "s#^ ZABBIX_VERSION=tags.*# ZABBIX_VERSION=tags/$t \\\#" Dockerfile
+    sed -i -e "s#^ ZABBIX_VERSION=.*# ZABBIX_VERSION=tags/$t \\\#" Dockerfile
     git add Dockerfile
     git commit -m "Tag $t"
     git tag -a $t -m "Tag $t"
