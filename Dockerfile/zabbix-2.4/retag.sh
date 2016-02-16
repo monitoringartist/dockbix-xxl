@@ -5,6 +5,9 @@
 tags=()
 for t in `git tag`
 do
+    if [[ "$t" != ^2.* ]]; then
+         continue
+    fi
     echo "Deleting tags $t"
     git tag -d $t
     git push origin :refs/tags/$t

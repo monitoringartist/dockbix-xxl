@@ -5,7 +5,11 @@
 tags=()
 for t in `git tag`
 do
+    if [[ "$t" != ^3.* ]]; then
+         continue
+    fi
     echo "Deleting tags $t"
+    exit 1
     git tag -d $t
     git push origin :refs/tags/$t
     tags=("${tags[@]}" "$t")
