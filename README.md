@@ -3,8 +3,8 @@ Zabbix Community Dockerfiles
 
 [Zabbix Github repo](https://github.com/zabbix/zabbix-community-docker) is intended as a source for [Zabbix Docker registry](https://hub.docker.com/u/zabbix/). Please use these community Zabbix Docker images, if you want to [build/ship your own Zabbix Docker image](https://github.com/zabbix/zabbix-community-docker#how-to-build-own-docker-image).
 
-Available images
-================
+Available Docker images
+=======================
 
 ### 1. [Docker image zabbix-3.0](https://registry.hub.docker.com/u/zabbix/zabbix-3.0/) [![](https://badge.imagelayers.io/zabbix/zabbix-3.0:dev.svg)](https://imagelayers.io/?images=zabbix/zabbix-3.0:dev)
 
@@ -84,17 +84,18 @@ example: if you want to use always the latest available version, then please use
 FROM zabbix/zabbix-3.0:latest
 ```
 
-Customized Zabbix images
-========================
+Customized Zabbix Docker images
+===============================
 
 Recommended example how to build custom Zabbix server on top of base image is 
 [million12/docker-zabbix-server](https://github.com/million12/docker-zabbix-server). 
 It provides custom features, such as Push notification, Slack and SMTP auth.  
 
-Dockerized Grafana with Zabbix support
+Related Zabbix Docker projects
 ======================================
 
-Visit another dockerised project [Grafana XXL](https://github.com/monitoringartist/grafana-xxl), which includes also [Grafana Zabbix datasource](https://github.com/alexanderzobnin/grafana-zabbix).
+* Dockerised project [Grafana XXL](https://github.com/monitoringartist/grafana-xxl), which includes also [Grafana Zabbix datasource](https://github.com/alexanderzobnin/grafana-zabbix)
+* Scale your Dockerised [Zabbix with Kubernetes](https://github.com/monitoringartist/kubernetes-zabbix)
 
 About Docker
 ============
