@@ -6,7 +6,7 @@ Zabbix Community Dockerfiles
 Available Docker images
 =======================
 
-### 1. [Docker image zabbix-3.0](https://registry.hub.docker.com/u/zabbix/zabbix-3.0/) [![](https://badge.imagelayers.io/zabbix/zabbix-3.0:dev.svg)](https://imagelayers.io/?images=zabbix/zabbix-3.0:dev)
+### 1. [Docker image zabbix-3.0](https://registry.hub.docker.com/u/zabbix/zabbix-3.0/) [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/zabbix/zabbix-community-docker/tree/master/Dockerfile/zabbix-3.0/) [![](https://badge.imagelayers.io/zabbix/zabbix-3.0:dev.svg)](https://imagelayers.io/?images=zabbix/zabbix-3.0:dev)
 
 See [README of zabbix-3.0](https://github.com/zabbix/zabbix-community-docker/tree/master/Dockerfile/zabbix-3.0)
 for more details.
@@ -22,7 +22,7 @@ for more details.
 
 MariaDB container customized for Zabbix.
 
-### 3. [Docker image zabbix-2.4](https://registry.hub.docker.com/u/zabbix/zabbix-2.4/) [![](https://badge.imagelayers.io/zabbix/zabbix-2.4:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-2.4:latest)
+### 3. [Docker image zabbix-2.4](https://registry.hub.docker.com/u/zabbix/zabbix-2.4/) [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/zabbix/zabbix-community-docker/tree/master/Dockerfile/zabbix-2.4/) [![](https://badge.imagelayers.io/zabbix/zabbix-2.4:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-2.4:latest)
 
 **2.4 is not supported version** - please use 3.0 version.
 
