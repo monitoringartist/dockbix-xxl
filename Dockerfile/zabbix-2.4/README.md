@@ -6,7 +6,7 @@ intended as a source for [Zabbix Docker registry](https://registry.hub.docker.co
 Please use these community Zabbix Docker images, if you want to
 [build/ship your own Zabbix Docker image](https://github.com/zabbix/zabbix-community-docker#how-to-build-own-docker-image).
 
-zabbix-2.4 [![](https://badge.imagelayers.io/zabbix/zabbix-2.4:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-2.4:latest)
+zabbix-2.4 [![](https://badge.imagelayers.io/zabbix/zabbix-2.4:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-2.4:latest) [![Deploy to Tutum](https://s.tutum.co/deploy-to-tutum.svg)](https://dashboard.tutum.co/stack/deploy/)
 =================
 
 **Zabbix 2.4 is not supported** - please use 3.0 version - http://www.zabbix.com/life_cycle_and_release_policy.php
