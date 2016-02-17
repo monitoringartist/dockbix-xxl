@@ -6,7 +6,7 @@ intended as a source for [Zabbix Docker registry](https://registry.hub.docker.co
 Please use these community Zabbix Docker images, if you want to
 [build/ship your own Zabbix Docker image](https://github.com/zabbix/zabbix-community-docker#how-to-build-own-docker-image).
 
-zabbix-3.0 [![](https://badge.imagelayers.io/zabbix/zabbix-3.0:dev.svg)](https://imagelayers.io/?images=zabbix/zabbix-3.0:dev)
+zabbix-3.0 [![](https://badge.imagelayers.io/zabbix/zabbix-3.0:dev.svg)](https://imagelayers.io/?images=zabbix/zabbix-3.0:dev) [![Deploy to Tutum](https://s.tutum.co/deploy-to-tutum.svg)](https://dashboard.tutum.co/stack/deploy/)
 =================
 
 Compiled Zabbix with almost all features (MySQL support, Java, SNMP,
