@@ -67,6 +67,7 @@ Run specific Zabbix version, e.g. 3.0.0 - just specify 3.0.0 tag for image:
 		--name zabbix \
 		-p 80:80 \
 		-p 10051:10051 \
+    -v /etc/localtime:/etc/localtime:ro \
 		--env="ZS_DBHost=database_ip" \
 		--env="ZS_DBUser=username" \
 		--env="ZS_DBPassword=my_password" \

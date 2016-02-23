@@ -7,6 +7,7 @@ zabbix-db:
   image: zabbix/zabbix-db-mariadb
   volumes:
     - /backups:/backups
+    - /etc/localtime:/etc/localtime:ro
   volumes_from:
     - zabbix-db-storage
   environment:
@@ -18,6 +19,8 @@ zabbix-server:
   ports:
     - "80:80"
     - "10051:10051"
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
   links:
     - zabbix-db:zabbix.db
   environment:

@@ -27,17 +27,19 @@ docker run \
     -d \
     --name zabbix-db \
     -v /backups:/backups \
+    -v /etc/localtime:/etc/localtime:ro \
     --volumes-from zabbix-db-storage \
     --env="MARIADB_USER=zabbix" \
     --env="MARIADB_PASS=my_password" \
     zabbix/zabbix-db-mariadb
 
-# start Zabbix linked to started DB    
+# start Zabbix linked to started DB
 docker run \
     -d \
     --name zabbix \
     -p 80:80 \
     -p 10051:10051 \
+    -v /etc/localtime:/etc/localtime:ro \
     --link zabbix-db:zabbix.db \
     --env="ZS_DBHost=zabbix.db" \
     --env="ZS_DBUser=zabbix" \
@@ -81,6 +83,7 @@ Example:
 		-d \
 		--name zabbix-db \
 		-p 3306:3306 \
+    -v /etc/localtime:/etc/localtime:ro \
 		--env="MARIADB_USER=zabbix" \
 		--env="MARIADB_PASS=my_password" \
 		zabbix/zabbix-db-mariadb
@@ -201,14 +204,15 @@ UI containers, which helps to scale Zabbix as a service.
 Now when we have Zabbix database running we can deploy zabbix image with
 appropriate environmental variables set.
 
-Example:  
+Example:
 
 	docker run \
 		-d \
 		--name zabbix \
 		-p 80:80 \
 		-p 10051:10051 \
-        --link zabbix-db:zabbix.db \
+    -v /etc/localtime:/etc/localtime:ro \
+    --link zabbix-db:zabbix.db \
 		--env="ZS_DBHost=zabbix.db" \
 		--env="ZS_DBUser=zabbix" \
 		--env="ZS_DBPassword=my_password" \
@@ -216,7 +220,7 @@ Example:
 
 #### Access to Zabbix web interface
 To log in into zabbix web interface for the first time use credentials
-`Admin:zabbix`.  
+`Admin:zabbix`.
 
 Access web interface under [http://docker_host_ip]()
 
@@ -252,7 +256,8 @@ Run specific Zabbix version, e.g. 2.4.4 - just specify 2.4.4 tag for image:
 		--name zabbix \
 		-p 80:80 \
 		-p 10051:10051 \
-        --link zabbix-db:zabbix.db \
+    -v /etc/localtime:/etc/localtime:ro \
+    --link zabbix-db:zabbix.db \
 		--env="ZS_DBHost=zabbix.db" \
 		--env="ZS_DBUser=zabbix" \
 		--env="ZS_DBPassword=my_password" \
