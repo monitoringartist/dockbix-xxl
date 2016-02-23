@@ -81,7 +81,7 @@ Example:
 		-d \
 		--name zabbix-db \
 		-p 3306:3306 \
-    -v /etc/localtime:/etc/localtime:ro \
+    		-v /etc/localtime:/etc/localtime:ro \
 		--env="MARIADB_USER=zabbix" \
 		--env="MARIADB_PASS=my_password" \
 		zabbix/zabbix-db-mariadb
