@@ -83,7 +83,7 @@ Example:
 		-d \
 		--name zabbix-db \
 		-p 3306:3306 \
-    -v /etc/localtime:/etc/localtime:ro \
+		-v /etc/localtime:/etc/localtime:ro \
 		--env="MARIADB_USER=zabbix" \
 		--env="MARIADB_PASS=my_password" \
 		zabbix/zabbix-db-mariadb
@@ -211,8 +211,8 @@ Example:
 		--name zabbix \
 		-p 80:80 \
 		-p 10051:10051 \
-    -v /etc/localtime:/etc/localtime:ro \
-    --link zabbix-db:zabbix.db \
+		-v /etc/localtime:/etc/localtime:ro \
+		--link zabbix-db:zabbix.db \
 		--env="ZS_DBHost=zabbix.db" \
 		--env="ZS_DBUser=zabbix" \
 		--env="ZS_DBPassword=my_password" \
@@ -256,8 +256,8 @@ Run specific Zabbix version, e.g. 2.4.4 - just specify 2.4.4 tag for image:
 		--name zabbix \
 		-p 80:80 \
 		-p 10051:10051 \
-    -v /etc/localtime:/etc/localtime:ro \
-    --link zabbix-db:zabbix.db \
+		-v /etc/localtime:/etc/localtime:ro \
+		--link zabbix-db:zabbix.db \
 		--env="ZS_DBHost=zabbix.db" \
 		--env="ZS_DBUser=zabbix" \
 		--env="ZS_DBPassword=my_password" \
