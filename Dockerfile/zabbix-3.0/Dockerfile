@@ -1,7 +1,7 @@
 FROM centos:centos7
 MAINTAINER Jan Garaj info@monitoringartist.com
 
-# ZABBIX_VERSION=trunk tags/2.4.7 branches/dev/ZBXNEXT-1263-1
+# ZABBIX_VERSION=trunk tags/3.0.1 branches/dev/ZBXNEXT-1263-1
 
 ENV \
   ZABBIX_VERSION=trunk \

@@ -16,7 +16,7 @@ done
 git push origin master
 git push origin --tags
 
-tags=('3.0.0');
+tags=('3.0.0' '3.0.1');
 for t in "${tags[@]}"
 do
     echo "Creating tags $t"
