@@ -21,7 +21,7 @@ for t in "${tags[@]}"
 do
     echo "Creating tags $t"
     git checkout master
-    sed -i -e "s#^ ZABBIX_VERSION=.*# ZABBIX_VERSION=tags/$t \\\#" Dockerfile
+    sed -i -e "s#^[[:space:]]+ZABBIX_VERSION=.*# ZABBIX_VERSION=tags/$t \\\#" Dockerfile
     sleep 5    
     git add Dockerfile
     sleep 5
