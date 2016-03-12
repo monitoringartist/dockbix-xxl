@@ -228,7 +228,7 @@ Access web interface under [http://docker_host_ip]()
 
 #### HTTPS web interface
 
-Set up nginx (customize [default.conf](https://github.com/zabbix/zabbix-community-docker/blob/master/Dockerfile/zabbix-3.0/container-files-zabbix/etc/nginx/hosts.d/default.conf)
+Set up nginx - customize [default.conf](https://github.com/zabbix/zabbix-community-docker/blob/master/Dockerfile/zabbix-3.0/container-files-zabbix/etc/nginx/hosts.d/default.conf)
 and then use volume to mount custom nginx configuration (for example `-v /etc/https-zabbix-nginx.conf:/etc/nginx/hosts.d/default.conf`)
 + mount also certificates used in your custom nginx conf file.
 
