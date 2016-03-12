@@ -170,7 +170,7 @@ ZABBIX_SQL_DIR="/usr/local/src/zabbix/database/mysql"
 # load DB config from custom config file if exist
 if [ -f /etc/custom-config/zabbix_server.conf ]; then
   FZS_DBPassword=$(grep ^DBPassword= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')
-  if [ ! -z "$VAR" ]; then
+  if [ ! -z "$FZS_DBPassword" ]; then
     export ZS_DBPassword=$FZS_DBPassword
   fi
   FZS_DBUser=$(grep ^DBUser= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')

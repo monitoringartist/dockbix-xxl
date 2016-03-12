@@ -191,10 +191,10 @@ Zabbix role environment variables:
 
 | Variable | Default value | Description |
 | -------- | ------------- | ----------- |
-| ZS_disabled | false | Zabbix Server disabling, DB operations are disabled as well |
-| ZA_disabled | false | Zabbix Agent disabling, DB operations are disabled as well |
-| ZW_disabled | false | Zabbix Web UI disabling, DB operations are disabled as well |
-| SNMPTRAP_disable=true | true | SNMP trap process (port 162) dissabling |
+| ZS_enabled | true | Zabbix Server start |
+| ZA_enabled | true | Zabbix Agent start |
+| ZW_enabled | true | Zabbix Web UI start |
+| SNMPTRAP_enabled | false | SNMP trap process (port 162) start |
 
 All Zabbix components are enabled by default except SNMP traps proccessing. However users 
 want to run dedicated Zabbix component per container. Typical use case is Zabbix 
@@ -225,6 +225,12 @@ To log in into zabbix web interface for the first time use credentials
 `Admin:zabbix`.
 
 Access web interface under [http://docker_host_ip]()
+
+#### HTTPS web interface
+
+Set up nginx (customize [default.conf](https://github.com/zabbix/zabbix-community-docker/blob/master/Dockerfile/zabbix-3.0/container-files-zabbix/etc/nginx/hosts.d/default.conf)
+and then use volume to mount custom nginx configuration (for example `-v /etc/https-zabbix-nginx.conf:/etc/nginx/hosts.d/default.conf`)
++ mount also certificates used in your custom nginx conf file.
 
 Docker troubleshooting
 ======================
