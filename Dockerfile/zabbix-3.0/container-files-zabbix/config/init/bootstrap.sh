@@ -64,24 +64,31 @@ update_config() {
     sed -i "s#${reg}#${val}#g" /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
   done
   if [ "$ZS_SourceIP" != "" ]; then
+    sed -i -e \"\|^SourceIP=|d\" /usr/local/etc/zabbix_server.conf
     echo SourceIP=${ZS_SourceIP} >> /usr/local/etc/zabbix_server.conf
   fi
   if [ "$ZS_Include" != "" ]; then
+    sed -i -e \"\|^Include=|d\" /usr/local/etc/zabbix_server.conf
     echo Include=${ZS_Include} >> /usr/local/etc/zabbix_server.conf
   fi
   if [ "$ZS_LoadModule" != "" ]; then
+    sed -i -e \"\|^LoadModule=|d\" /usr/local/etc/zabbix_server.conf
     echo LoadModule=${ZS_LoadModule} >> /usr/local/etc/zabbix_server.conf
   fi
   if [ "$ZS_TLSCAFile" != "" ]; then
+    sed -i -e \"\|^TLSCAFile=|d\" /usr/local/etc/zabbix_server.conf
     echo TLSCAFile=${ZS_TLSCAFile} >> /usr/local/etc/zabbix_server.conf
   fi
   if [ "$ZS_TLSCRLFile" != "" ]; then
+    sed -i -e \"\|^TLSCRLFile=|d\" /usr/local/etc/zabbix_server.conf
     echo TLSCRLFile=${ZS_TLSCRLFile} >> /usr/local/etc/zabbix_server.conf
   fi
   if [ "$ZS_TLSCertFile" != "" ]; then
+    sed -i -e \"\|^TLSCertFile=|d\" /usr/local/etc/zabbix_server.conf
     echo TLSCertFile=${ZS_TLSCertFile} >> /usr/local/etc/zabbix_server.conf
   fi
   if [ "$ZS_TLSCAFile" != "" ]; then
+    sed -i -e \"\|^TLSKeyFile=|d\" /usr/local/etc/zabbix_server.conf
     echo TLSKeyFile=${ZS_TLSKeyFile} >> /usr/local/etc/zabbix_server.conf
   fi
 
@@ -95,48 +102,63 @@ update_config() {
     sed -i "s#=${reg}\$#=${val}#g" /usr/local/etc/zabbix_agentd.conf
   done
   if [ "$ZA_TLSCAFile" != "" ]; then
+    sed -i -e \"\|^TLSCAFile=|d\" /usr/local/etc/zabbix_agentd.conf
     echo TLSCAFile=${ZA_TLSCAFile} >> /usr/local/etc/zabbix_agentd.conf
   fi
   if [ "$ZA_TLSCRLFile" != "" ]; then
+    sed -i -e \"\|^TLSCRLFile=|d\" /usr/local/etc/zabbix_agentd.conf
     echo TLSCRLFile=${ZA_TLSCRLFile} >> /usr/local/etc/zabbix_agentd.conf
   fi
   if [ "$ZA_TLSServerCertIssuer" != "" ]; then
+    sed -i -e \"\|^TLSServerCertIssuer=|d\" /usr/local/etc/zabbix_agentd.conf
     echo TLSServerCertIssuer=${ZA_TLSServerCertIssuer} >> /usr/local/etc/zabbix_agentd.conf
   fi
   if [ "$ZA_TLSServerCertSubject" != "" ]; then
+    sed -i -e \"\|^TLSServerCertSubject=|d\" /usr/local/etc/zabbix_agentd.conf
     echo TLSServerCertSubject=${ZA_TLSServerCertSubject} >> /usr/local/etc/zabbix_agentd.conf
   fi
   if [ "$ZA_TLSCertFile" != "" ]; then
+    sed -i -e \"\|^TLSCertFile=|d\" /usr/local/etc/zabbix_agentd.conf
     echo TLSCertFile=${ZA_TLSCertFile} >> /usr/local/etc/zabbix_agentd.conf
   fi
   if [ "$ZA_TLSKeyFile" != "" ]; then
+    sed -i -e \"\|^TLSKeyFile=|d\" /usr/local/etc/zabbix_agentd.conf
     echo TLSKeyFile=${ZA_TLSKeyFile} >> /usr/local/etc/zabbix_agentd.conf
   fi
   if [ "$ZA_TLSPSKIdentity" != "" ]; then
+    sed -i -e \"\|^TLSPSKIdentity=|d\" /usr/local/etc/zabbix_agentd.conf
     echo TLSPSKIdentity=${ZA_TLSPSKIdentity} >> /usr/local/etc/zabbix_agentd.conf
   fi
   if [ "$ZA_TLSPSKFile" != "" ]; then
+    sed -i -e \"\|^TLSPSKFile=|d\" /usr/local/etc/zabbix_agentd.conf
     echo TLSPSKFile=${ZA_TLSPSKFile} >> /usr/local/etc/zabbix_agentd.conf
   fi
   if [ "$ZA_SourceIP" != "" ]; then
+    sed -i -e \"\|^SourceIP=|d\" /usr/local/etc/zabbix_agentd.conf
     echo SourceIP=${ZA_SourceIP} >> /usr/local/etc/zabbix_agentd.conf
   fi
   if [ "$ZA_LoadModulePath" != "" ]; then
+    sed -i -e \"\|^LoadModulePath=|d\" /usr/local/etc/zabbix_agentd.conf
     echo LoadModulePath=${ZA_LoadModulePath} >> /usr/local/etc/zabbix_agentd.conf
   fi
   if [ "$ZA_UserParameter" != "" ]; then
+    sed -i -e \"\|^UserParameter=|d\" /usr/local/etc/zabbix_agentd.conf
     echo UserParameter=${ZA_UserParameter} >> /usr/local/etc/zabbix_agentd.conf
   fi
   if [ "$ZA_HostMetadata" != "" ]; then
+    sed -i -e \"\|^HostMetadata=|d\" /usr/local/etc/zabbix_agentd.conf
     echo HostMetadata=${ZA_HostMetadata} >> /usr/local/etc/zabbix_agentd.conf
   fi
   if [ "$ZA_Include" != "" ]; then
+    sed -i -e \"\|^Include=|d\" /usr/local/etc/zabbix_agentd.conf
     echo Include=${ZA_Include} >> /usr/local/etc/zabbix_agentd.conf
   fi
   if [ "$ZA_Hostname" != "" ]; then
+    sed -i -e \"\|^Hostname=|d\" /usr/local/etc/zabbix_agentd.conf
     echo Hostname=${ZA_Hostname} >> /usr/local/etc/zabbix_agentd.conf
   fi
   if [ "$ZA_HostnameItem" != "" ]; then
+    sed -i -e \"\|^HostnameItem=|d\" /usr/local/etc/zabbix_agentd.conf
     echo HostnameItem=${ZA_HostnameItem} >> /usr/local/etc/zabbix_agentd.conf
   fi
 
