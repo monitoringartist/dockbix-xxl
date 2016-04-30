@@ -32,6 +32,11 @@ import_zabbix_db() {
   mysql -u ${ZS_DBUser} -p${ZS_DBPassword} -h ${ZS_DBHost} -P ${ZS_DBPort} -D ${ZS_DBName} < ${ZABBIX_SQL_DIR}/images.sql
   mysql -u ${ZS_DBUser} -p${ZS_DBPassword} -h ${ZS_DBHost} -P ${ZS_DBPort} -D ${ZS_DBName} < ${ZABBIX_SQL_DIR}/data.sql
 }
+partition_zabbix_db() {
+  mysql -u ${ZS_DBUser} -p${ZS_DBPassword} -h ${ZS_DBHost} -P ${ZS_DBPort} -D ${ZS_DBName} < /config/partitioning/zabbix_partitioning.sql
+  ZBCRON='0 1 * * 0 root /usr/bin/echo "CALL partition_maintenance_all('"'${ZS_DBName}',${ZS_DBPartKeepData},${ZS_DBPartKeepTrends}"');" | /usr/bin/mysql --user=${MARIADB_USER} --password=${MARIADB_PASS} -h '"${ZS_DBHost} -P ${ZS_DBPort} -D ${ZS_DBName}"
+  echo $ZBCRON >> /etc/crontab
+}
 logging() {
   mkdir -p /var/log/zabbix
   chmod 777 /var/log/zabbix
@@ -243,7 +248,13 @@ if $ZS_enabled; then
     log `create_db`
     log "Database and user created, importing default SQL"
     log `import_zabbix_db`
-    log "Import finished, starting"
+    log "Import finished"
+    if $ZS_DBPartitioned; then
+      log "Partitioning Zabbix database"
+      log `partition_zabbix_db`
+      log "Database partitioned"
+    fi
+    log "Starting"
   else
     log "Zabbix database exists, starting server"
   fi

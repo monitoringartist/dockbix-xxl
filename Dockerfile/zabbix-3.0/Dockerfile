@@ -30,6 +30,9 @@ ENV \
   ZS_DBPassword=zabbix \
   ZS_DBSocket=/tmp/mysql.sock \
   ZS_DBPort=3306 \
+  ZS_DBPartitioned=false \
+  ZS_DBPartKeepData=90 \
+  ZS_DBPartKeepTrends=730 \
   ZS_StartPollers=5 \
   ZS_StartPollersUnreachable=1 \
   ZS_StartTrappers=5 \
@@ -134,6 +137,7 @@ RUN \
   yum clean all && \
   yum update -y && \
   yum install -y epel-release && \
+  yum install -y cronie && \
   sed -i -e "\|^https://\"http://|d" /etc/yum.repos.d/epel.repo && \
   yum clean all && \
   yum install -y supervisor && \
