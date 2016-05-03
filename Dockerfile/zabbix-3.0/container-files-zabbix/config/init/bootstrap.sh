@@ -269,7 +269,7 @@ if ! $ZJ_enabled; then
 else
   # levels: TRACE, DEBUG, INFO, WARN, ERROR
   rm -rf /usr/local/sbin/zabbix_java/lib/logback.xml
-  mv /usr/local/sbin/zabbix_java/lib/logback-docker.xml /usr/local/sbin/zabbix_java/lib/logback.xml
+  mv /usr/local/etc/logback.xml /usr/local/sbin/zabbix_java/lib/
   sed -i "s#<root level=\"info\">#<root level=\"${ZJ_LogLevel}\">#g" /usr/local/sbin/zabbix_java/lib/logback.xml
   export ZJ_JarFile=$(find /usr/local/sbin/zabbix_java/ -name 'zabbix-java-gateway*.jar' | awk -F'zabbix_java/bin/' '{print $2}')
 fi
