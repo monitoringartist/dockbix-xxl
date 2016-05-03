@@ -207,7 +207,7 @@ if [ -f /etc/custom-config/zabbix_server.conf ]; then
   if [ ! -z "$FZS_DBPort" ]; then
     export ZS_DBPort=$FZS_DBPort
   fi
-  FZS_DBName=$(grep ^ZS_DBName= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')
+  FZS_DBName=$(grep ^DBName= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')
   if [ ! -z "$FZS_DBName" ]; then
     export ZS_DBName=$FZS_DBName
   fi
