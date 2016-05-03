@@ -263,6 +263,14 @@ if ! $ZW_enabled; then
   rm -rf /etc/supervisor.d/php-fpm.conf
 fi
 
+if ! $ZJ_enabled; then
+  # Zabbix Java Gateway disabled
+  rm -rf /etc/supervisor.d/zabbix-java-gateway.conf
+else
+  # levels: TRACE, DEBUG, INFO, WARN, ERROR
+  sed -i "s#<root level=\"info\">#<root level=\"${ZJ_LogLevel}\">#g" /usr/local/sbin/zabbix_java/lib/logback.xml
+fi
+
 if ! $SNMPTRAP_enabled; then
   # SNMP trap process is disabled
   rm -rf /etc/supervisor.d/snmptrapd.conf

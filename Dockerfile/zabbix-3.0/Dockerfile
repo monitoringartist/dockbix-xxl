@@ -8,6 +8,7 @@ ENV \
   ZS_enabled=true \
   ZA_enabled=true \
   ZW_enabled=true \
+  ZJ_enabled=false \
   SNMPTRAP_enabled=false \
   STATUS_PAGE_ALLOWED_IP=127.0.0.1 \
   JAVA_HOME=/usr/lib/jvm/jre \
@@ -127,6 +128,12 @@ ENV \
   ZA_TLSKeyFile="" \
   ZA_TLSPSKIdentity="" \
   ZA_TLSPSKFile="" \
+  ZJ_LISTEN_IP=0.0.0.0 \
+  ZJ_LISTEN_PORT=10052 \
+  ZJ_PID_FILE=/tmp/zabbix_java.pid \
+  ZJ_START_POLLERS=5 \
+  ZJ_TIMEOUT=3 \
+  ZJ_LogLevel=error \
   TERM=xterm
 
 # Layer: base
