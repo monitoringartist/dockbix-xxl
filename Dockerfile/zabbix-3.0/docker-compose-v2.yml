@@ -10,7 +10,7 @@ services:
       - MARIADB_USER=zabbix
       - MARIADB_PASS=my_password
   zabbix-server:
-    image: zabbix/zabbix-3.0:latest
+    image: whitehat/zabbix-3.0:latest
     depends_on:
       - zabbix-db
     ports:
