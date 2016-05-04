@@ -32,6 +32,14 @@ import_zabbix_db() {
   mysql -u ${ZS_DBUser} -p${ZS_DBPassword} -h ${ZS_DBHost} -P ${ZS_DBPort} -D ${ZS_DBName} < ${ZABBIX_SQL_DIR}/images.sql
   mysql -u ${ZS_DBUser} -p${ZS_DBPassword} -h ${ZS_DBHost} -P ${ZS_DBPort} -D ${ZS_DBName} < ${ZABBIX_SQL_DIR}/data.sql
 }
+create_proxy_db() {
+  mysql -u ${ZP_DBUser} -p${ZP_DBPassword} -h ${ZP_DBHost} -P ${ZP_DBPort} -e "CREATE DATABASE IF NOT EXISTS ${ZP_DBName} CHARACTER SET utf8;"
+  mysql -u ${ZP_DBUser} -p${ZP_DBPassword} -h ${ZP_DBHost} -P ${ZP_DBPort} -e "GRANT ALL ON ${ZP_DBName}.* TO '${ZP_DBUser}'@'%' identified by '${ZP_DBPassword}';"
+  mysql -u ${ZP_DBUser} -p${ZP_DBPassword} -h ${ZP_DBHost} -P ${ZP_DBPort} -e "flush privileges;"
+}
+import_zabbix_proxy_db() {
+  mysql -u ${ZP_DBUser} -p${ZP_DBPassword} -h ${ZP_DBHost} -P ${ZP_DBPort} -D ${ZP_DBName} < ${ZABBIX_SQL_DIR}/schema.sql
+}
 logging() {
   mkdir -p /var/log/zabbix
   chmod 777 /var/log/zabbix
@@ -270,8 +278,75 @@ else
   # levels: TRACE, DEBUG, INFO, WARN, ERROR
   rm -rf /usr/local/sbin/zabbix_java/lib/logback.xml
   mv /usr/local/etc/logback.xml /usr/local/sbin/zabbix_java/lib/
-  sed -i "s#<root level=\"info\">#<root level=\"${ZJ_LogLevel}\">#g" /usr/local/sbin/zabbix_java/lib/logback.xml
+  if [ -f /etc/custom-config/logback.xml ]; then
+    rm -rf /usr/local/sbin/zabbix_java/lib/logback.xml
+    cp /etc/custom-config/logback.xml /usr/local/sbin/zabbix_java/lib/
+  else
+    sed -i "s#<root level=\"info\">#<root level=\"${ZJ_LogLevel}\">#g" /usr/local/sbin/zabbix_java/lib/logback.xml
+  fi
   export ZJ_JarFile=$(find /usr/local/sbin/zabbix_java/ -name 'zabbix-java-gateway*.jar' | awk -F'zabbix_java/bin/' '{print $2}')
+fi
+
+if ! $ZP_enabled; then
+  # Zabbix proxy disabled
+  rm -rf /etc/supervisor.d/zabbix-proxy.conf
+else
+  # Zabbix proxy configuration
+  if [ -f /etc/custom-config/zabbix-proxy.conf ]; then
+    rm -rf /usr/local/etc/zabbix_proxy.conf
+    cp /etc/custom-config/zabbix-proxy.conf /usr/local/etc/
+    FZP_DBPassword=$(grep ^DBPassword= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')
+    if [ ! -z "$FZP_DBPassword" ]; then
+      export ZP_DBPassword=$FZP_DBPassword
+    fi
+    FZP_DBUser=$(grep ^DBUser= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')
+    if [ ! -z "$FZP_DBUser" ]; then
+      export ZP_DBUser=$FZP_DBUser
+    fi
+    FZP_DBHost=$(grep ^DBHost= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')
+    if [ ! -z "$FZP_DBHost" ]; then
+      export ZP_DBHost=$FZP_DBHost
+    fi
+    FZP_DBPort=$(grep ^DBPort= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')
+    if [ ! -z "$FZP_DBPort" ]; then
+      export ZP_DBPort=$FZP_DBPort
+    fi
+    FZP_DBName=$(grep ^DBName= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')
+    if [ ! -z "$FZP_DBName" ]; then
+      export ZP_DBName=$FZP_DBName
+    fi    
+  else
+    > /usr/local/etc/zabbix_proxy.conf
+    for i in $( set -o posix ; set | grep ^ZP_ | sort -rn ); do
+      reg=$(echo ${i} | awk -F'=' '{print $1}')
+      val=$(echo ${i} | awk -F'=' '{print $2}')
+      echo  "${reg}=${val}" >> /usr/local/etc/zabbix_proxy.conf
+    done
+  fi    
+  # wait 120sec for DB server initialization
+  retry=24
+  log "Waiting for database server"
+  until mysql -u ${ZP_DBUser} -p${ZP_DBPassword} -h ${ZP_DBHost} -P ${ZP_DBPort} -e "exit" &>/dev/null
+  do
+    log "Waiting for database server, it's still not available"
+    retry=`expr $retry - 1`
+    if [ $retry -eq 0 ]; then
+      error "Database server is not available!"
+      exit 1
+    fi
+    sleep 5
+  done
+  log "Database server is available"  
+  log "Checking if proxy database exists or SQL import is required"
+  if ! mysql -u ${ZP_DBUser} -p${ZP_DBPassword} -h ${ZP_DBHost} -P ${ZP_DBPort} -e "use ${ZP_DBName};" &>/dev/null; then
+    warning "Zabbix proxy database doesn't exist. Installing and importing default settings"
+    log `create_proxy_db`
+    log "Proxu database and user created, importing default SQL"
+    log `import_zabbix_proxy_db`
+    log "Import finished, starting"
+  else
+    log "Zabbix proxy database exists, starting proxy"
+  fi
 fi
 
 if ! $SNMPTRAP_enabled; then

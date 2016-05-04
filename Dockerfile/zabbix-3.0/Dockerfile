@@ -9,6 +9,7 @@ ENV \
   ZA_enabled=true \
   ZW_enabled=true \
   ZJ_enabled=false \
+  ZP_enabled=false \
   SNMPTRAP_enabled=false \
   STATUS_PAGE_ALLOWED_IP=127.0.0.1 \
   JAVA_HOME=/usr/lib/jvm/jre \
@@ -134,6 +135,7 @@ ENV \
   ZJ_START_POLLERS=5 \
   ZJ_TIMEOUT=3 \
   ZJ_LogLevel=error \
+  ZP_LogType=console \
   TERM=xterm
 
 # Layer: base
@@ -189,7 +191,7 @@ RUN \
   ./configure --enable-server --enable-agent --with-mysql --enable-java \
               --with-net-snmp --with-libcurl --with-libxml2 --with-openipmi \
               --enable-ipv6 --with-jabber --with-openssl --with-ssh2 \
-              --with-ldap --with-unixodbc && \
+              --enable-proxy --with-ldap --with-unixodbc && \
   make dbschema && \
   gem install sass && \
   make css && \
