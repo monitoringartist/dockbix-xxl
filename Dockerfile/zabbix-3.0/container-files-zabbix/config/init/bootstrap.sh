@@ -318,7 +318,7 @@ else
   else
     > /usr/local/etc/zabbix_proxy.conf
     for i in $( set -o posix ; set | grep ^ZP_ | sort -rn ); do
-      reg=$(echo ${i} | awk -F'=' '{print $1}')
+      reg=$(echo ${i} | awk -F'=' '{print $1}' | tr -d 'ZP_')
       val=$(echo ${i} | awk -F'=' '{print $2}')
       echo  "${reg}=${val}" >> /usr/local/etc/zabbix_proxy.conf
     done
