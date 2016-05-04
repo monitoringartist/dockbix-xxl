@@ -137,7 +137,6 @@ RUN \
   yum clean all && \
   yum update -y && \
   yum install -y epel-release && \
-  yum install -y cronie && \
   sed -i -e "\|^https://\"http://|d" /etc/yum.repos.d/epel.repo && \
   yum clean all && \
   yum install -y supervisor && \

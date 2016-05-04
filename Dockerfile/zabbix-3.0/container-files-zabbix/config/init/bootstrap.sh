@@ -34,8 +34,9 @@ import_zabbix_db() {
 }
 partition_zabbix_db() {
   mysql -u ${ZS_DBUser} -p${ZS_DBPassword} -h ${ZS_DBHost} -P ${ZS_DBPort} -D ${ZS_DBName} < /config/partitioning/zabbix_partitioning.sql
-  ZBCRON='0 1 * * 0 root /usr/bin/echo "CALL partition_maintenance_all('"'${ZS_DBName}',${ZS_DBPartKeepData},${ZS_DBPartKeepTrends}"');" | /usr/bin/mysql --user=${MARIADB_USER} --password=${MARIADB_PASS} -h '"${ZS_DBHost} -P ${ZS_DBPort} -D ${ZS_DBName}"
-  echo $ZBCRON >> /etc/crontab
+  install -m 755 /config/partitioning/zbdb_maintenance.sh /usr/sbin/
+  install -m 755 /config/partitioning/passthru.py /usr/sbin/ 
+  install /config/partitioning/zbdb.conf /etc/supervisor.d/
 }
 logging() {
   mkdir -p /var/log/zabbix
