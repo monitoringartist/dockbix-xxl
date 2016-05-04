@@ -15,7 +15,7 @@ zabbix-db:
     - MARIADB_PASS=my_password
 
 zabbix-server:
-  image: whitehat/zabbix-3.0:latest
+  image: zabbix/zabbix-3.0:latest
   ports:
     - "80:80"
     - "10051:10051"
