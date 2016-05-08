@@ -275,7 +275,6 @@ if ! $ZJ_enabled; then
   # Zabbix Java Gateway disabled
   rm -rf /etc/supervisor.d/zabbix-java-gateway.conf
 else
-  # levels: TRACE, DEBUG, INFO, WARN, ERROR
   rm -rf /usr/local/sbin/zabbix_java/lib/logback.xml
   mv /usr/local/etc/logback.xml /usr/local/sbin/zabbix_java/lib/
   if [ -f /etc/custom-config/logback.xml ]; then
@@ -285,6 +284,10 @@ else
     sed -i "s#<root level=\"info\">#<root level=\"${ZJ_LogLevel}\">#g" /usr/local/sbin/zabbix_java/lib/logback.xml
   fi
   export ZJ_JarFile=$(find /usr/local/sbin/zabbix_java/ -name 'zabbix-java-gateway*.jar' | awk -F'zabbix_java/bin/' '{print $2}')
+  export ZJ_JarFile_android_json=$(find /usr/local/sbin/zabbix_java/ -name 'android-json*.jar' | awk -F'zabbix_java/lib/' '{print $2}')
+  export ZJ_JarFile_logback_classic=$(find /usr/local/sbin/zabbix_java/ -name 'logback-classic*.jar' | awk -F'zabbix_java/lib/' '{print $2}')
+  export ZJ_JarFile_logback_core=$(find /usr/local/sbin/zabbix_java/ -name 'logback-core*.jar' | awk -F'zabbix_java/lib/' '{print $2}')
+  export ZJ_JarFile_slf4j_api=$(find /usr/local/sbin/zabbix_java/ -name 'slf4j-api*.jar' | awk -F'zabbix_java/lib/' '{print $2}')
 fi
 
 if ! $ZP_enabled; then
@@ -292,26 +295,26 @@ if ! $ZP_enabled; then
   rm -rf /etc/supervisor.d/zabbix-proxy.conf
 else
   # Zabbix proxy configuration
-  if [ -f /etc/custom-config/zabbix-proxy.conf ]; then
+  if [ -f /etc/custom-config/zabbix_proxy.conf ]; then
     rm -rf /usr/local/etc/zabbix_proxy.conf
-    cp /etc/custom-config/zabbix-proxy.conf /usr/local/etc/
-    FZP_DBPassword=$(grep ^DBPassword= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')
+    cp /etc/custom-config/zabbix_proxy.conf /usr/local/etc/
+    FZP_DBPassword=$(grep ^DBPassword= /etc/custom-config/zabbix_proxy.conf | awk -F= '{print $2}')
     if [ ! -z "$FZP_DBPassword" ]; then
       export ZP_DBPassword=$FZP_DBPassword
     fi
-    FZP_DBUser=$(grep ^DBUser= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')
+    FZP_DBUser=$(grep ^DBUser= /etc/custom-config/zabbix_proxy.conf | awk -F= '{print $2}')
     if [ ! -z "$FZP_DBUser" ]; then
       export ZP_DBUser=$FZP_DBUser
     fi
-    FZP_DBHost=$(grep ^DBHost= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')
+    FZP_DBHost=$(grep ^DBHost= /etc/custom-config/zabbix_proxy.conf | awk -F= '{print $2}')
     if [ ! -z "$FZP_DBHost" ]; then
       export ZP_DBHost=$FZP_DBHost
     fi
-    FZP_DBPort=$(grep ^DBPort= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')
+    FZP_DBPort=$(grep ^DBPort= /etc/custom-config/zabbix_proxy.conf | awk -F= '{print $2}')
     if [ ! -z "$FZP_DBPort" ]; then
       export ZP_DBPort=$FZP_DBPort
     fi
-    FZP_DBName=$(grep ^DBName= /etc/custom-config/zabbix_server.conf | awk -F= '{print $2}')
+    FZP_DBName=$(grep ^DBName= /etc/custom-config/zabbix_proxy.conf | awk -F= '{print $2}')
     if [ ! -z "$FZP_DBName" ]; then
       export ZP_DBName=$FZP_DBName
     fi    
@@ -341,7 +344,7 @@ else
   if ! mysql -u ${ZP_DBUser} -p${ZP_DBPassword} -h ${ZP_DBHost} -P ${ZP_DBPort} -e "use ${ZP_DBName};" &>/dev/null; then
     warning "Zabbix proxy database doesn't exist. Installing and importing default settings"
     log `create_proxy_db`
-    log "Proxu database and user created, importing default SQL"
+    log "Proxy database and user created, importing default SQL"
     log `import_zabbix_proxy_db`
     log "Import finished, starting"
   else

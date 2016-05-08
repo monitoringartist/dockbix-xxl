@@ -166,10 +166,23 @@ variables:
 | ZS_TLSCAFile | |
 | ZS_TLSCRLFile | |
 | ZS_TLSCertFile | |
-| ZS_TLSKeyFile | |
+| ZS_TLSKeyFile | |  
 | ZW_ZBX_SERVER | localhost |
 | ZW_ZBX_SERVER_PORT | 10051 |
 | ZW_ZBX_SERVER_NAME | Zabbix Server |
+| ZJ_LISTEN_IP | 0.0.0.0 |
+| ZJ_LISTEN_PORT | 10052 |
+| ZJ_PID_FILE | /tmp/zabbix_java.pid |
+| ZJ_START_POLLERS | 5 |
+| ZJ_TIMEOUT | 3 |
+| ZJ_LogLevel | error |
+| ZJ_TCP_TIMEOUT | 3000 |
+| ZP_LogType | console |
+| ZP_DBHost | zabbixproxy.db |
+| ZP_DBName | zabbix | 	
+| ZP_DBUser | zabbix |
+| ZP_DBPassword | zabbix |
+| ZP_DBPort | 3306 |
 
 #### Configuration from volume
 Full config files can be also used. Environment configs will be overriden by
@@ -186,6 +199,8 @@ Available files:
 | ---- | ----------- |
 | php-zabbix.ini | PHP configuration file |
 | zabbix_server.conf | Zabbix server configuration file |
+| zabbix_proxy.conf | Zabbix proxy configuration file |
+| logback.xml | Zabbix Java gateway log configuration file |
 
 Zabbix role environment variables:
 
@@ -194,6 +209,8 @@ Zabbix role environment variables:
 | ZS_enabled | true | Zabbix Server start |
 | ZA_enabled | true | Zabbix Agent start |
 | ZW_enabled | true | Zabbix Web UI start |
+| ZP_enabled | false | Zabbix Proxy start |
+| ZJ_enabled | false | Zabbix Java Gateway start |
 | SNMPTRAP_enabled | false | SNMP trap process (port 162) start |
 
 All Zabbix components are enabled by default except SNMP traps proccessing. However users 

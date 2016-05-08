@@ -135,7 +135,13 @@ ENV \
   ZJ_START_POLLERS=5 \
   ZJ_TIMEOUT=3 \
   ZJ_LogLevel=error \
+  ZJ_TCP_TIMEOUT=3000 \
   ZP_LogType=console \
+  ZP_DBHost=zabbixproxy.db \
+  ZP_DBName=zabbix \ 	
+  ZP_DBUser=zabbix \
+  ZP_DBPassword=zabbix \
+  ZP_DBPort=3306 \
   TERM=xterm
 
 # Layer: base
