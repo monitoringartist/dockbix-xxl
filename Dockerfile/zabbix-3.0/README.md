@@ -9,7 +9,7 @@ Please use these community Zabbix Docker images, if you want to
 zabbix-3.0 [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/zabbix/zabbix-community-docker/tree/master/Dockerfile/zabbix-3.0/) [![](https://badge.imagelayers.io/zabbix/zabbix-3.0:dev.svg)](https://imagelayers.io/?images=zabbix/zabbix-3.0:dev)
 =================
 
-Compiled Zabbix with almost all features (MySQL support, Java, SNMP,
+Compiled Zabbix (server, proxy, agent, java gateway) with almost all features (MySQL support, Java, SNMP,
 Curl, IPMI, IPv6, Jabber, fping) and Zabbix web UI based on CentOS 7,
 Supervisor, Nginx, PHP. Image requires external MySQL/MariaDB database (you can
 run MySQL/MariaDB also as Docker container).

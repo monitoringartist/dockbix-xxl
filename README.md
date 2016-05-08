@@ -11,7 +11,7 @@ Available Docker images
 See [README of zabbix-3.0](https://github.com/zabbix/zabbix-community-docker/tree/master/Dockerfile/zabbix-3.0)
 for more details.
 
-Compiled Zabbix with almost all features (MySQL support, Java, SNMP, Curl, Ipmi, 
+Compiled Zabbix (server, proxy, agent, java gateway) with almost all features (MySQL support, Java, SNMP, Curl, Ipmi, 
 fping) and Zabbix web UI based on CentOS 7, Supervisor, Nginx, PHP. Image 
 requires external MySQL database (you can run MySQL also as Docker container).
 
