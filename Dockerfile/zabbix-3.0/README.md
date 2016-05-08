@@ -183,6 +183,7 @@ variables:
 | ZP_DBUser | zabbix |
 | ZP_DBPassword | zabbix |
 | ZP_DBPort | 3306 |
+| ZP_User | zabbix |
 
 #### Configuration from volume
 Full config files can be also used. Environment configs will be overriden by

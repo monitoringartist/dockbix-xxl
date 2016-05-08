@@ -142,6 +142,7 @@ ENV \
   ZP_DBUser=zabbix \
   ZP_DBPassword=zabbix \
   ZP_DBPort=3306 \
+  ZP_User=zabbix \
   TERM=xterm
 
 # Layer: base
