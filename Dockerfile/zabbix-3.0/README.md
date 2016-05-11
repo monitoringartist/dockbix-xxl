@@ -101,6 +101,7 @@ variables:
 | PHP_error_reporting | E_ALL |
 | ZS_ListenPort | 10051 |
 | ZS_SourceIP | |
+| ZS_LogType | file |
 | ZS_LogFile | /tmp/zabbix_server.log |
 | ZS_LogFileSize | 10 |
 | ZS_DebugLevel | 3 |
@@ -118,6 +119,7 @@ variables:
 | ZS_StartPingers | 1 |
 | ZS_StartDiscoverers | 1 |
 | ZS_StartHTTPPollers | 1 |
+| ZS_StartIPMIPollers | 0 |
 | ZS_StartTimers | 1 |
 | ZS_JavaGateway | 127.0.0.1 |
 | ZS_JavaGatewayPort | 10052 |
