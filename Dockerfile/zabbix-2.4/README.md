@@ -11,18 +11,18 @@ zabbix-2.4 [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/depl
 
 **Zabbix 2.4 is not supported** - please use 3.0 version - http://www.zabbix.com/life_cycle_and_release_policy.php
 
-Compiled zabbix with almost all features (MySQL support, Java, SNMP,
+Compiled Zabbix with almost all features (MySQL support, Java, SNMP,
 Curl, IPMI, IPv6, Jabber, fping) and Zabbix web UI based on CentOS 7,
 Supervisor, Nginx, PHP. Image requires external MySQL/MariaDB database (you can
 run MySQL/MariaDB also as Docker container).
 
-#### Standard Dockerized Zabbix deployement
+#### Standard Dockerized Zabbix deployment
 
 ```
 # create /var/lib/mysql as persistent volume storage
 docker run -d -v /var/lib/mysql --name zabbix-db-storage busybox:latest
 
-# start DB for zabbix - default 1GB innodb_buffer_pool_size is used
+# start DB for Zabbix - default 1GB innodb_buffer_pool_size is used
 docker run \
     -d \
     --name zabbix-db \
@@ -77,7 +77,7 @@ For more information about zabbix/zabbix-db-mariadb see
 [README of zabbix-db-mariadb]
 (https://github.com/zabbix/zabbix-community-docker/tree/master/Dockerfile/zabbix-db-mariadb).
 
-Example:  
+Example:
 
 	docker run \
 		-d \
@@ -196,12 +196,12 @@ Zabbix role environment variables:
 
 All Zabbix components are enabled by default except SNMP traps proccessing. However users
 want to run dedicated Zabbix component per container. Typical use case is Zabbix
-web UI. Thanks to role environemnt variables are users able to execute many web
+web UI. Thanks to role environment variables are users able to execute many web
 UI containers, which helps to scale Zabbix as a service.
 
 
 #### Zabbix deployment
-Now when we have Zabbix database running we can deploy zabbix image with
+Now when we have Zabbix database running we can deploy Zabbix image with
 appropriate environmental variables set.
 
 Example:
@@ -219,7 +219,7 @@ Example:
 		zabbix/zabbix-2.4
 
 #### Access to Zabbix web interface
-To log in into zabbix web interface for the first time use credentials
+To log in into Zabbix web interface for the first time use credentials
 `Admin:zabbix`.
 
 Access web interface under [http://docker_host_ip]()

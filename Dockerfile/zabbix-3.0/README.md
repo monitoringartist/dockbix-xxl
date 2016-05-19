@@ -14,7 +14,7 @@ Curl, IPMI, IPv6, Jabber, fping) and Zabbix web UI based on CentOS 7,
 Supervisor, Nginx, PHP. Image requires external MySQL/MariaDB database (you can
 run MySQL/MariaDB also as Docker container).
 
-#### Standard Dockerized Zabbix deployement
+#### Standard Dockerized Zabbix deployment
 
 ```
 # create /var/lib/mysql as persistent volume storage
@@ -168,7 +168,7 @@ variables:
 | ZS_TLSCAFile | |
 | ZS_TLSCRLFile | |
 | ZS_TLSCertFile | |
-| ZS_TLSKeyFile | |  
+| ZS_TLSKeyFile | |
 | ZW_ZBX_SERVER | localhost |
 | ZW_ZBX_SERVER_PORT | 10051 |
 | ZW_ZBX_SERVER_NAME | Zabbix Server |
@@ -181,14 +181,14 @@ variables:
 | ZJ_TCP_TIMEOUT | 3000 |
 | ZP_LogType | console |
 | ZP_DBHost | zabbixproxy.db |
-| ZP_DBName | zabbix | 	
+| ZP_DBName | zabbix |
 | ZP_DBUser | zabbix |
 | ZP_DBPassword | zabbix |
 | ZP_DBPort | 3306 |
 | ZP_User | zabbix |
 
 #### Configuration from volume
-Full config files can be also used. Environment configs will be overriden by
+Full config files can be also used. Environment configs will be overridden by
 values from config files in this case. You need only to add */etc/custom-config/*
  volume:
 
@@ -216,14 +216,14 @@ Zabbix role environment variables:
 | ZJ_enabled | false | Zabbix Java Gateway start |
 | SNMPTRAP_enabled | false | SNMP trap process (port 162) start |
 
-All Zabbix components are enabled by default except SNMP traps proccessing. However users 
-want to run dedicated Zabbix component per container. Typical use case is Zabbix 
-web UI. Thanks to role environemnt variables are users able to execute many web
+All Zabbix components are enabled by default except SNMP traps processing. However users
+want to run dedicated Zabbix component per container. Typical use case is Zabbix
+web UI. Thanks to role environment variables are users able to execute many web
 UI containers, which helps to scale Zabbix as a service.
 
 
 #### Zabbix deployment
-Now when we have Zabbix database running we can deploy zabbix image with
+Now when we have Zabbix database running we can deploy Zabbix image with
 appropriate environmental variables set.
 
 Example:
@@ -241,7 +241,7 @@ Example:
 		zabbix/zabbix-3.0:latest
 
 #### Access to Zabbix web interface
-To log in into zabbix web interface for the first time use credentials
+To log in into Zabbix web interface for the first time use credentials
 `Admin:zabbix`.
 
 Access web interface under [http://docker_host_ip]()
