@@ -1,12 +1,12 @@
-Zabbix Community Dockerfiles
-============================
+Zabbix Dockerfiles
+==================
 
-[Zabbix Github repo](https://github.com/zabbix/zabbix-community-docker) is
+[Zabbix Github repo](https://github.com/monitoringartist/zabbix-server-xxl-docker) is
 intended as a source for [Zabbix Docker registry](https://registry.hub.docker.com/repos/zabbix/).
-Please use these community Zabbix Docker images, if you want to
-[build/ship your own Zabbix Docker image](https://github.com/zabbix/zabbix-community-docker#how-to-build-own-docker-image).
+Please use these Zabbix Docker images, if you want to
+[build/ship own Zabbix Docker image](https://github.com/monitoringartist/zabbix-server-xxl-docker#how-to-build-own-docker-image).
 
-zabbix-2.4 [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/zabbix/zabbix-community-docker/tree/master/Dockerfile/zabbix-2.4/) [![](https://badge.imagelayers.io/zabbix/zabbix-2.4:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-2.4:latest)
+zabbix-2.4 [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/monitoringartist/zabbix-server-xxl-docker/tree/master/Dockerfile/zabbix-2.4/) [![](https://badge.imagelayers.io/zabbix/zabbix-2.4:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-2.4:latest)
 =================
 
 **Zabbix 2.4 is not supported** - please use 3.0 version - http://www.zabbix.com/life_cycle_and_release_policy.php
@@ -75,7 +75,7 @@ can use [zabbix/zabbix-db-mariadb]
 
 For more information about zabbix/zabbix-db-mariadb see
 [README of zabbix-db-mariadb]
-(https://github.com/zabbix/zabbix-community-docker/tree/master/Dockerfile/zabbix-db-mariadb).
+(https://github.com/monitoringartist/zabbix-server-xxl-docker/tree/master/Dockerfile/zabbix-db-mariadb).
 
 Example:
 
