@@ -14,7 +14,7 @@ Curl, IPMI, IPv6, Jabber, fping) and Zabbix web UI based on CentOS 7,
 Supervisor, Nginx, PHP. Image requires external MySQL/MariaDB database (you can
 run MySQL/MariaDB also as Docker container).
 
-#### Standard Dockerized Zabbix deployement
+#### Standard Dockerized Zabbix deployment
 
 ```
 # create /var/lib/mysql as persistent volume storage
