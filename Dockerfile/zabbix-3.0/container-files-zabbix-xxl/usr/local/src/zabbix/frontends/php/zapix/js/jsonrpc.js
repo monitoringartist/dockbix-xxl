@@ -47,7 +47,7 @@ var jsonRpc = (function($) {
             $jq('#responsetime').text("");
             ajaxTime= new Date().getTime();
 
-			$.ajax({
+			$jq.ajax({
 				url: hostname,
 				headers: {
 					"Content-type": "application/json-rpc"

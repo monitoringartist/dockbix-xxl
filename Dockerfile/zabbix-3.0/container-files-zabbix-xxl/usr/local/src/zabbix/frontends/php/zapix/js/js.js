@@ -457,7 +457,7 @@ $jq(document).ready(function() {
 
         // iterate through the pool of strings and for any string that
         // contains the substring `q`, add it to the `matches` array
-        $.each(strs, function(i, str) {
+        $jq.each(strs, function(i, str) {
           if (substrRegex.test(str)) {
             matches.push(str);
           }
@@ -499,7 +499,7 @@ $jq(document).on('search keyup change typeahead:selected typeahead:autocompleted
     var prms = getHashParams();
     var hash = '';
     delete prms['apimethod'];
-    $.each( prms, function( key, value ) {
+    $jq.each( prms, function( key, value ) {
         hash = key + "=" + encodeURIComponent(value) + '&';
     });
     location.hash = 'apimethod=' + encodeURIComponent($jq(this).val()) + '&' + hash;
@@ -514,7 +514,7 @@ $jq(document).on('search keyup change', '#apiparams', function () {
     var prms = getHashParams();
     var hash = '';
     delete prms['apiparams'];
-    $.each( prms, function( key, value ) {
+    $jq.each( prms, function( key, value ) {
         hash = key + "=" + encodeURIComponent(value) + '&';
     });
     location.hash = hash + 'apiparams=' + encodeURIComponent($jq(this).val());
