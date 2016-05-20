@@ -41,6 +41,7 @@ $widget->show();
 <script async type="text/javascript" src="zapix/js/jsonrpc.js"></script>
 <script async type="text/javascript" src="zapix/js/jsonlint.js"></script>
 <script async type="text/javascript" src="zapix/js/js.js"></script>
+<!-- 
 <div class="navbar navbar-top">
 	<div class="navbar-inner">
 		<div class="container-fluid">
@@ -58,6 +59,7 @@ $widget->show();
 		</div>
 	</div>
 </div>
+!-->
 
 <!-- Connection manager modal -->
 <div class="modal" id="connections" style="display: none;">
@@ -200,6 +202,7 @@ $widget->show();
 		</div>
 	</div>    
 </div>
+<br /><br />
 <?php
 require_once dirname(__FILE__).'/include/page_footer.php';
 ?>
