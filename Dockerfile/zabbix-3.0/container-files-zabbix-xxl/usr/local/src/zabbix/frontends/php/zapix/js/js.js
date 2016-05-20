@@ -224,22 +224,22 @@ CConfig.prototype = {
 		this.connections = JSON.parse(localStorage.getItem('connections')) || {};
 
 		var that = this;
-		$('#host').change(function(){
+		$jq('#host').change(function(){
 			that.host = this.value;
 		});
-		$('#login').change(function(){
+		$jq('#login').change(function(){
 			that.login = this.value;
 		});
-		$('#password').change(function(){
+		$jq('#password').change(function(){
 			that.password = this.value;
 		});
-		$('#connAdd').click(function(){
+		$jq('#connAdd').click(function(){
 			that.addConnection();
 		});
-		$('#connList').change(function(){
-			that.loadConnection($('#connList').val());
+		$jq('#connList').change(function(){
+			that.loadConnection($jq('#connList').val());
 		});
-		$('#connRemove').click(function(){
+		$jq('#connRemove').click(function(){
 			that.removeConnection();
 		});
 		this.syncConnectionsList();
@@ -256,7 +256,7 @@ CConfig.prototype = {
 		this.syncConnectionsList();
 	},
 	removeConnection: function(){
-		delete this.connections[$('#connList').val()];
+		delete this.connections[$jq('#connList').val()];
 
 		localStorage.setItem('connections', JSON.stringify(this.connections));
 
@@ -271,43 +271,43 @@ CConfig.prototype = {
 	},
 
 	syncConnectionsList: function(){
-		$('#connList').empty();
+		$jq('#connList').empty();
 		for(var key in this.connections){
-			$('#connList').append(new Option(this.connections[key].host, this.connections[key].host));
+			$jq('#connList').append(new Option(this.connections[key].host, this.connections[key].host));
 		}
 	},
 	syncConnectionsConfig: function(){
-		$('#host').val(this.host);
-		$('#login').val(this.login);
-		$('#password').val(this.password);
+		$jq('#host').val(this.host);
+		$jq('#login').val(this.login);
+		$jq('#password').val(this.password);
 	}
 };
 
-$(document).ready(function() {
-    $('#loadMe').click(function (e) {
-    if ($('#load').css('display') == 'none') {
-        var docUrl = "https://www.zabbix.com/documentation/3.0/manual/api/reference/" + $('#apimethod').val().replace('.','/')
-        if ($("#load").attr("src") != docUrl) {
-            $("#load").attr("src", docUrl);
+$jq(document).ready(function() {
+    $jq('#loadMe').click(function (e) {
+    if ($jq('#load').css('display') == 'none') {
+        var docUrl = "https://www.zabbix.com/documentation/3.0/manual/api/reference/" + $jq('#apimethod').val().replace('.','/')
+        if ($jq("#load").attr("src") != docUrl) {
+            $jq("#load").attr("src", docUrl);
         }
-        $('#load').show();
+        $jq('#load').show();
     } else {
-       $('#load').hide();
+       $jq('#load').hide();
     }
     });
 
 	config = new CConfig();
 
-	$('#saveRequest').click(function() {
-		$('#saveRequestMethod').val($('#apimethod').val());
-		$('#saveRequestParams').val($('#apiparams').val());
+	$jq('#saveRequest').click(function() {
+		$jq('#saveRequestMethod').val($jq('#apimethod').val());
+		$jq('#saveRequestParams').val($jq('#apiparams').val());
 	});
 
-	$('#saveRequestOk').click(function() {
+	$jq('#saveRequestOk').click(function() {
 		var request = {
-				name: $('#saveRequestName').val(),
-				method: $('#saveRequestMethod').val(),
-				params: $('#saveRequestParams').val()
+				name: $jq('#saveRequestName').val(),
+				method: $jq('#saveRequestMethod').val(),
+				params: $jq('#saveRequestParams').val()
 			},
 			requests = JSON.parse(localStorage.getItem('requests')) || {};
 
@@ -315,58 +315,58 @@ $(document).ready(function() {
 
 		localStorage.setItem('requests', JSON.stringify(requests));
 
-		$('#saveRequestModal').modal('hide');
+		$jq('#saveRequestModal').modal('hide');
 	});
 
 
-	$('#loadRequest').click(function() {
+	$jq('#loadRequest').click(function() {
 		var requests = JSON.parse(localStorage.getItem('requests')) || {};
-		$('#savedRequests').empty();
+		$jq('#savedRequests').empty();
 		for (var name in requests) {
-			$('#savedRequests').append(new Option(name, name));
+			$jq('#savedRequests').append(new Option(name, name));
 		}
 	});
 
-	$('#loadRequestOk').click(function() {
+	$jq('#loadRequestOk').click(function() {
 		var request,
 			requests = JSON.parse(localStorage.getItem('requests')) || {};
 
-		if ($('#savedRequests').val()) {
-			request = requests[$('#savedRequests').val()];
-			$('#apimethod').val(request.method);
-			$('#apiparams').val(request.params);
+		if ($jq('#savedRequests').val()) {
+			request = requests[$jq('#savedRequests').val()];
+			$jq('#apimethod').val(request.method);
+			$jq('#apiparams').val(request.params);
 		}
 
-		$('#loadRequestModal').modal('hide');
+		$jq('#loadRequestModal').modal('hide');
 	});
 
-	$('#removeSavedRequest').click(function() {
+	$jq('#removeSavedRequest').click(function() {
 		var requests = JSON.parse(localStorage.getItem('requests')) || {};
 
-		delete requests[$('#savedRequests').val()];
+		delete requests[$jq('#savedRequests').val()];
 		localStorage.setItem('requests', JSON.stringify(requests));
 
-		$('#savedRequests').empty();
+		$jq('#savedRequests').empty();
 		for(var name in requests){
-			$('#savedRequests').append(new Option(name, name));
+			$jq('#savedRequests').append(new Option(name, name));
 		}
 	});
 
 
-	$('#loginButton').click(function() {
+	$jq('#loginButton').click(function() {
 		jsonRpc.connect(config.host, config.login, config.password);
 	});
 
-	$('#execute').click(function() {
+	$jq('#execute').click(function() {
         testOnly();
         paramsUpdate();
 		var params;
 		try {
-			params = $('#apiparams').val();
+			params = $jq('#apiparams').val();
 			if (params !== '') {
-				params = JSON.parse($('#apiparams').val());
+				params = JSON.parse($jq('#apiparams').val());
 			}
-			jsonRpc.call($('#apimethod').val(), params);
+			jsonRpc.call($jq('#apimethod').val(), params);
 		}
 		catch(e) {
 			//alert(e);
@@ -374,23 +374,23 @@ $(document).ready(function() {
 	});
 
     function testOnly(){
-        if ($('#apiparams').val() == '') {
-            $('#apiparams').parent().removeClass('error');
-            $('#testResult').hide();
+        if ($jq('#apiparams').val() == '') {
+            $jq('#apiparams').parent().removeClass('error');
+            $jq('#testResult').hide();
             return true;
         }
-        lint = window.JSONLint( $('#apiparams').val(), { comments: false } );
+        lint = window.JSONLint( $jq('#apiparams').val(), { comments: false } );
 
         if ( ! lint.error ) {
-			$('#apiparams').parent().removeClass('error');
-            $('#testResult').hide();
+			$jq('#apiparams').parent().removeClass('error');
+            $jq('#testResult').hide();
 		}
 		else {
-			$('#apiparams').parent().addClass('error');
-            $('#response, #request').empty();
-            $('#responsetime').text("");
-            $('#testResult').show();
-            $('#testResult').html([
+			$jq('#apiparams').parent().addClass('error');
+            $jq('#response, #request').empty();
+            $jq('#responsetime').text("");
+            $jq('#testResult').show();
+            $jq('#testResult').html([
 				lint.error + "<br>" +
 				"<b>Evidence:</b> " + lint.evidence + "<br>" +
 				"<b>Line:</b> " + lint.line + "<br>" +
@@ -400,33 +400,33 @@ $(document).ready(function() {
     }
 
     function paramsUpdate() {
-        location.hash = 'apimethod=' + encodeURIComponent($('#apimethod').val()) + '&apiparams=' + encodeURIComponent($('#apiparams').val());
+        location.hash = 'apimethod=' + encodeURIComponent($jq('#apimethod').val()) + '&apiparams=' + encodeURIComponent($jq('#apiparams').val());
     }
 
-    $('#compressJSON').click(function(){
+    $jq('#compressJSON').click(function(){
         var params;
-        params = JSON.parse($('#apiparams').val());
-        $('#apiparams').val(JSON.stringify(params, null, null));
+        params = JSON.parse($jq('#apiparams').val());
+        $jq('#apiparams').val(JSON.stringify(params, null, null));
         paramsUpdate();
     });
 
-	$('#formatJSON').click(function(){
+	$jq('#formatJSON').click(function(){
 		var params;
-        if ($('#apiparams').val() == '') {
-            $('#apiparams').parent().removeClass('error');
-            $('#testResult').hide();
+        if ($jq('#apiparams').val() == '') {
+            $jq('#apiparams').parent().removeClass('error');
+            $jq('#testResult').hide();
             return true;
         }
-        lint = window.JSONLint( $('#apiparams').val(), { comments: false } );
+        lint = window.JSONLint( $jq('#apiparams').val(), { comments: false } );
 
         if ( ! lint.error ) {
-			$('#apiparams').parent().removeClass('error');
-            $('#response, #request').empty();
-            $('#responsetime').text("");
-            $('#testResult').hide();
+			$jq('#apiparams').parent().removeClass('error');
+            $jq('#response, #request').empty();
+            $jq('#responsetime').text("");
+            $jq('#testResult').hide();
     	    try {
-    			params = JSON.parse($('#apiparams').val());
-    			$('#apiparams').val(JSON.stringify(params, null, 4));
+    			params = JSON.parse($jq('#apiparams').val());
+    			$jq('#apiparams').val(JSON.stringify(params, null, 4));
                 paramsUpdate();
     		}
     		catch(e) {
@@ -434,9 +434,9 @@ $(document).ready(function() {
     		}
 		}
 		else {
-			$('#apiparams').parent().addClass('error');
-            $('#testResult').show();
-            $('#testResult').html([
+			$jq('#apiparams').parent().addClass('error');
+            $jq('#testResult').show();
+            $jq('#testResult').html([
 				lint.error + "<br>" +
 				"<b>Evidence:</b> " + lint.evidence + "<br>" +
 				"<b>Line:</b> " + lint.line + "<br>" +
@@ -467,7 +467,7 @@ $(document).ready(function() {
       };
     };
 
-	$('#apimethod').typeahead({
+	$jq('#apimethod').typeahead({
 		hint: true,
 		highlight: true,
 		minLength: 1
@@ -481,43 +481,43 @@ $(document).ready(function() {
     if (location.hash.length) {
         var prms = getHashParams();
         if ('apimethod' in prms) {
-            $('#apimethod').val(prms['apimethod']);
+            $jq('#apimethod').val(prms['apimethod']);
         }
         if ('apiparams' in prms) {
-            $('#apiparams').val(prms['apiparams']);
+            $jq('#apiparams').val(prms['apiparams']);
         }
     }
     
-    if (methods.indexOf($('#apimethod').val()) > -1 ) {
-        $('#loadMe').removeClass('disabled');
+    if (methods.indexOf($jq('#apimethod').val()) > -1 ) {
+        $jq('#loadMe').removeClass('disabled');
     } else {
-        $('#loadMe').addClass('disabled');
+        $jq('#loadMe').addClass('disabled');
     }    
 });
 
-$(document).on('search keyup change typeahead:selected typeahead:autocompleted', '#apimethod', function () {
+$jq(document).on('search keyup change typeahead:selected typeahead:autocompleted', '#apimethod', function () {
     var prms = getHashParams();
     var hash = '';
     delete prms['apimethod'];
     $.each( prms, function( key, value ) {
         hash = key + "=" + encodeURIComponent(value) + '&';
     });
-    location.hash = 'apimethod=' + encodeURIComponent($(this).val()) + '&' + hash;
-    if (methods.indexOf($(this).val()) > -1 ) {
-        $('#loadMe').removeClass('disabled');
+    location.hash = 'apimethod=' + encodeURIComponent($jq(this).val()) + '&' + hash;
+    if (methods.indexOf($jq(this).val()) > -1 ) {
+        $jq('#loadMe').removeClass('disabled');
     } else {
-        $('#loadMe').addClass('disabled');
+        $jq('#loadMe').addClass('disabled');
     }
 })
 
-$(document).on('search keyup change', '#apiparams', function () {
+$jq(document).on('search keyup change', '#apiparams', function () {
     var prms = getHashParams();
     var hash = '';
     delete prms['apiparams'];
     $.each( prms, function( key, value ) {
         hash = key + "=" + encodeURIComponent(value) + '&';
     });
-    location.hash = hash + 'apiparams=' + encodeURIComponent($(this).val());
+    location.hash = hash + 'apiparams=' + encodeURIComponent($jq(this).val());
 })
 
 function getHashParams() {

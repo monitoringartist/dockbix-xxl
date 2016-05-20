@@ -257,8 +257,8 @@ RUN \
   mv /tmp/grapher/grapher* /usr/local/src/zabbix/frontends/php/ && \
   rm -rf /tmp/grapher && \
   ### Zapix ### && \
-  git clone https://github.com/monitoringartist/zapix /usr/local/src/zabbix/frontends/php/zapix && \
-  rm -rf /usr/local/src/zabbix/frontends/php/zapix/.git && \
+  #git clone https://github.com/monitoringartist/zapix /usr/local/src/zabbix/frontends/php/zapix && \
+  #rm -rf /usr/local/src/zabbix/frontends/php/zapix/.git && \
   ### branding / menu ### && \
   sed -i "s/ZABBIX_VERSION.*'\(.*\)'/ZABBIX_VERSION', '\1 XXL'/g" /usr/local/src/zabbix/frontends/php/include/defines.inc.php && \
   grep 'XXL' /usr/local/src/zabbix/frontends/php/include/defines.inc.php && \
