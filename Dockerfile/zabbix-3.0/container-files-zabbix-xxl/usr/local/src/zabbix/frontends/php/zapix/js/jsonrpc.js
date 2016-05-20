@@ -20,8 +20,8 @@ var jsonRpc = (function($) {
 
 			this.call('user.login', {user: user, password: pass}, function(result) {
 				sessionid = result;
-				$('#connections').modal('hide');
-				$("#connInfo").text('Connected to ' + config.host.replace('https://', '').replace('http://',''));
+				$jq('#connections').modal('hide');
+				$jq("#connInfo").text('Connected to ' + config.host.replace('https://', '').replace('http://',''));
 			});
 		},
 
@@ -41,10 +41,10 @@ var jsonRpc = (function($) {
 			}
 			request = JSON.stringify(request);
 
-			$('#response, #request').empty();
-			$('#request').html(request);
-            $('#execute').addClass('active', {duration:0});
-            $('#responsetime').text("");
+			$jq('#response, #request').empty();
+			$jq('#request').html(request);
+            $jq('#execute').addClass('active', {duration:0});
+            $jq('#responsetime').text("");
             ajaxTime= new Date().getTime();
 
 			$.ajax({
@@ -57,11 +57,11 @@ var jsonRpc = (function($) {
 				dataType: "text",
 				success: function(result) {
                     totalTime = new Date().getTime() - ajaxTime;
-                    $('#execute').removeClass('active', {duration:0});
-                    $('#responsetime').text(" (" + totalTime/1000 + "s)");                    
+                    $jq('#execute').removeClass('active', {duration:0});
+                    $jq('#responsetime').text(" (" + totalTime/1000 + "s)");                    
 					try {
 						result = JSON.parse(result);
-						$('#response').text(JSON.stringify(result, null, 4));
+						$jq('#response').text(JSON.stringify(result, null, 4));
 						if (typeof result.result !== 'undefined') {
 							if (typeof onSuccess !== 'undefined') {
 								onSuccess(result.result);
@@ -72,14 +72,14 @@ var jsonRpc = (function($) {
 						}
 					}
 					catch (e) {
-						$('#response').html(result);
+						$jq('#response').html(result);
 						alert('Api response not in JSON format.');
 					}
 				},
 				error: function(xhr) {
                     totalTime = new Date().getTime() - ajaxTime;
-                    $('#execute').removeClass('active', {duration:0});
-                    $('#responsetime').text(" (" + totalTime/1000 + "s)");
+                    $jq('#execute').removeClass('active', {duration:0});
+                    $jq('#responsetime').text(" (" + totalTime/1000 + "s)");
 					alert(xhr.statusText);
 				}
 			});
