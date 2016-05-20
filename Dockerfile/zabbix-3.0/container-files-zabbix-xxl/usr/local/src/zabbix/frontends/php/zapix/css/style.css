@@ -1,9 +1,3 @@
-body {
-	padding-top: 60px;
-	padding-bottom: 40px;
-    overflow-y: scroll;
-}
-
 .pseudoLink{
 	color: #00008b;
 	border-bottom: 1px dotted #00008b;
@@ -43,38 +37,6 @@ padding: 2px 8px 2px 8px;
 .tt-selectable:hover {
 background-color: #0088CC;
 color: #fff;
-}
-.navbar-inner {
-background-color: #0a466a;
-background-image: -moz-linear-gradient(center top , #0a466a, #0a466a);
-background-image:-ms-linear-gradient(top, #0a466a, #0a466a);
-background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#0a466a), to(#0a466a));
-background-image:-webkit-linear-gradient(top, #0a466a, #0a466a);
-background-image:-o-linear-gradient(top, #0a466a, #0a466a);
-background-image:linear-gradient(top, #0a466a, #0a466a);
-background-repeat:repeat-x;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#0a466a', endColorstr='#0a466a', GradientType=0);
-}
-
-.brand {
-background-color: #d40000;
-border-bottom: 3px solid #d40000;
-border-top: 3px solid #d40000;
-}
-.brand a {
-color: #fff;
-text-decoration: none;
-}
-.navbar .nav > li > a {
-color: rgba(255, 255, 255, 0.75);
-}
-.nav li > a {
-border-bottom: 3px solid transparent;
-border-top: 3px solid transparent;
-color: rgba(255, 255, 255, 0.75);
-}
-.nav li > a:hover, .nav li > a:focus {
-border-bottom: 3px solid #1384c7;
-color: white;
 } 
 .btn-mini {
 margin-top: 8px;
@@ -90,7 +52,7 @@ margin-bottom: 14px;
 #load {
    position: absolute;
    left: 10px;
-   top: 105px;
+   top: 205px;
    width: 98%;
    height: 95%;
    display:none;

@@ -3,8 +3,8 @@
 var jsonRpc = (function($) {
 	var JSONRPCVersion = '2.0';
 
-	var sessionid = null,
-		hostname,
+	var sessionid = getCookie('zbx_sessionid'),
+		hostname = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '') + "/api_jsonrpc.php",
 		id = 0,
         ajaxTime = 0,
         totalTime = 0;
