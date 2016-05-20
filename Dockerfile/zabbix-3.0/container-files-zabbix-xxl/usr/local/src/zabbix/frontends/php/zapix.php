@@ -33,7 +33,7 @@ $widget->show();
 
 ?>
 <link rel="stylesheet" type="text/css" href="zapix/css/bootstrap/bootstrap.min.css" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.min.css" />
 <link rel="stylesheet" type="text/css" href="zapix/css/style.css" />
 <script>var $jq = jQuery.noConflict();</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
