@@ -41,6 +41,7 @@ $widget->show();
 <script async type="text/javascript" src="zapix/js/jsonrpc.js"></script>
 <script async type="text/javascript" src="zapix/js/jsonlint.js"></script>
 <script async type="text/javascript" src="zapix/js/js.js"></script>
+<div class="bootstrap-iso">
 <!-- 
 <div class="navbar navbar-top">
 	<div class="navbar-inner">
@@ -173,9 +174,11 @@ $widget->show();
 							<input id="apimethod" class="span4" type="text" name="apimethod" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="class.method" />
                             <!--a id="docLink" target="_blank" disabled="true" href="https://www.zabbix.com/documentation/3.0/manual/api/reference/ event/get" class="btn btn-mini" type="button">Doc</a -->                            
                             <a id="loadMe" class="btn disabled btn-mini" type="button">Doc</a>
-                            <iframe id="load" src=""></iframe>                            
+                            <iframe id="load" src=""></iframe>
+                            <!--                             
 							<a id="saveRequest" data-toggle="modal" href="#saveRequestModal" class="btn btn-mini" type="button">Save</a>
 							<a id="loadRequest" data-toggle="modal" href="#loadRequestModal" class="btn btn-mini" type="button">Load</a>
+                            !-->
 						</div>
 						<div class="control-group">
 							<textarea id="apiparams" name="apiparams" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="parameters as JSON object: {&quot;param1&quot;: &quot;value1&quot;, &quot;param2&quot;: &quot;value2&quot;, ...}"></textarea>
@@ -203,6 +206,7 @@ $widget->show();
 	</div>    
 </div>
 <br /><br />
+</div>
 <?php
 require_once dirname(__FILE__).'/include/page_footer.php';
 ?>
