@@ -52,7 +52,7 @@ margin-bottom: 14px;
 #load {
    position: absolute;
    left: 10px;
-   top: 205px;
+   top: 170px;
    width: 98%;
    height: 95%;
    display:none;
@@ -89,4 +89,7 @@ margin-bottom: 14px;
 
 .has-spinner.btn.active .spinner {
     width: 14px;
+}
+#apimethod {
+background-color: white;
 }
