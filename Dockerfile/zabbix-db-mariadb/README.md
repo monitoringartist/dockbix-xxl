@@ -1,10 +1,10 @@
 Zabbix Dockerfiles
 ==================
 
-[Zabbix Github repo](https://github.com/monitoringartist/zabbix-server-xxl-docker) is 
+[Zabbix XXL GitHub repo](https://github.com/monitoringartist/zabbix-xxl) is 
 intended as a source for [Zabbix Docker registry](https://registry.hub.docker.com/repos/zabbix/).
 Please use these Zabbix Docker images, if you want to 
-[build/ship own Zabbix Docker image](https://github.com/monitoringartist/zabbix-server-xxl-docker#how-to-build-own-docker-image).
+[build/ship own Zabbix Docker image](https://github.com/monitoringartist/zabbix-xxl#how-to-build-own-docker-image).
 
 Zabbix DB - MariaDB 10.0 [![](https://badge.imagelayers.io/zabbix/zabbix-db-mariadb:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-db-mariadb:latest)
 ========================

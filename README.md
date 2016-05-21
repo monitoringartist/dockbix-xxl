@@ -1,14 +1,14 @@
 Zabbix Dockerfiles
 ==================
 
-[Zabbix Github repo](https://github.com/monitoringartist/zabbix-server-xxl-docker) is intended as a source for [Zabbix Docker registry](https://hub.docker.com/u/zabbix/). Doc: [How to build/ship own Zabbix Docker image](https://github.com/monitoringartist/zabbix-server-xxl-docker#how-to-build-own-docker-image).
+[Zabbix XXL GitHub repo](https://github.com/monitoringartist/zabbix-xxl) is intended as a source for [Zabbix Docker registry](https://hub.docker.com/u/zabbix/). Doc: [How to build/ship own Zabbix Docker image](https://github.com/monitoringartist/zabbix-xxl#how-to-build-own-docker-image).
 
 Available Docker images
 =======================
 
-### 1. [Docker image zabbix-3.0](https://registry.hub.docker.com/u/zabbix/zabbix-3.0/) [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/monitoringartist/zabbix-server-xxl-docker/tree/master/Dockerfile/zabbix-3.0/) [![](https://badge.imagelayers.io/zabbix/zabbix-3.0:dev.svg)](https://imagelayers.io/?images=zabbix/zabbix-3.0:dev)
+### 1. [Docker image zabbix-3.0](https://registry.hub.docker.com/u/zabbix/zabbix-3.0/) [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-3.0/) [![](https://badge.imagelayers.io/zabbix/zabbix-3.0:dev.svg)](https://imagelayers.io/?images=zabbix/zabbix-3.0:dev)
 
-See [README of zabbix-3.0](https://github.com/monitoringartist/zabbix-server-xxl-docker/tree/master/Dockerfile/zabbix-3.0)
+See [README of zabbix-3.0](https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-3.0)
 for more details.
 
 Compiled Zabbix (server, proxy, agent, java gateway) with almost all features (MySQL support, Java, SNMP, Curl, Ipmi, 
@@ -17,16 +17,16 @@ requires external MySQL database (you can run MySQL also as Docker container).
 
 ### 2. [Docker image zabbix-db-mariadb](https://registry.hub.docker.com/u/zabbix/zabbix-db-mariadb/) [![](https://badge.imagelayers.io/zabbix/zabbix-db-mariadb:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-db-mariadb:latest)
 
-See [README of zabbix-db-mariadb](https://github.com/monitoringartist/zabbix-server-xxl-docker/tree/master/Dockerfile/zabbix-db-mariadb) 
+See [README of zabbix-db-mariadb](https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-db-mariadb) 
 for more details.
 
 MariaDB container customized for Zabbix.
 
-### 3. [Docker image zabbix-2.4](https://registry.hub.docker.com/u/zabbix/zabbix-2.4/) [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/monitoringartist/zabbix-server-xxl-docker/tree/master/Dockerfile/zabbix-2.4/) [![](https://badge.imagelayers.io/zabbix/zabbix-2.4:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-2.4:latest)
+### 3. [Docker image zabbix-2.4](https://registry.hub.docker.com/u/zabbix/zabbix-2.4/) [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-2.4/) [![](https://badge.imagelayers.io/zabbix/zabbix-2.4:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-2.4:latest)
 
 **2.4 is not supported version** - please use 3.0 version.
 
-See [README of zabbix-2.4](https://github.com/monitoringartist/zabbix-server-xxl-docker/tree/master/Dockerfile/zabbix-2.4) 
+See [README of zabbix-2.4](https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-2.4) 
 for more details.
 
 Compiled Zabbix with almost all features (MySQL support, Java, SNMP, 

@@ -1,12 +1,12 @@
 Zabbix Dockerfiles
 ==================
 
-[Zabbix Github repo](https://github.com/monitoringartist/zabbix-server-xxl-docker) is
+[Zabbix XXL GitHub repo](https://github.com/monitoringartist/zabbix-xxl) is
 intended as a source for [Zabbix Docker registry](https://registry.hub.docker.com/repos/zabbix/).
 Please use these Zabbix Docker images, if you want to
-[build/ship own Zabbix Docker image](https://github.com/monitoringartist/zabbix-server-xxl-docker#how-to-build-own-docker-image).
+[build/ship own Zabbix Docker image](https://github.com/monitoringartist/zabbix-xxl#how-to-build-own-docker-image).
 
-zabbix-3.0 [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/monitoringartist/zabbix-server-xxl-docker/tree/master/Dockerfile/zabbix-3.0/) [![](https://badge.imagelayers.io/zabbix/zabbix-3.0:dev.svg)](https://imagelayers.io/?images=zabbix/zabbix-3.0:dev)
+zabbix-3.0 [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-3.0/) [![](https://badge.imagelayers.io/zabbix/zabbix-3.0:dev.svg)](https://imagelayers.io/?images=zabbix/zabbix-3.0:dev)
 =================
 
 Compiled Zabbix (server, proxy, agent, java gateway) with almost all features (MySQL support, Java, SNMP,
@@ -73,7 +73,7 @@ can use [zabbix/zabbix-db-mariadb]
 
 For more information about zabbix/zabbix-db-mariadb see
 [README of zabbix-db-mariadb]
-(https://github.com/monitoringartist/zabbix-server-xxl-docker/tree/master/Dockerfile/zabbix-db-mariadb).
+(https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-db-mariadb).
 
 Example:
 
@@ -248,7 +248,7 @@ Access web interface under [http://docker_host_ip]()
 
 #### HTTPS web interface
 
-Set up nginx - customize [default.conf](https://github.com/monitoringartist/zabbix-server-xxl-docker/blob/master/Dockerfile/zabbix-3.0/container-files-zabbix/etc/nginx/hosts.d/default.conf)
+Set up nginx - customize [default.conf](https://github.com/monitoringartist/zabbix-xxl/blob/master/Dockerfile/zabbix-3.0/container-files-zabbix/etc/nginx/hosts.d/default.conf)
 and then use volume to mount custom nginx configuration (for example `-v /etc/https-zabbix-nginx.conf:/etc/nginx/hosts.d/default.conf`) + mount also certificates used in your custom nginx conf file.
 
 Docker troubleshooting
