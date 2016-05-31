@@ -57,6 +57,15 @@ docker exec \
     bash -c "\
     mysqldump -u zabbix -pmy_password zabbix | \
     bzip2 -cq9 > /backups/zabbix_db_dump_$(date +%Y-%m-%d-%H.%M.%S).sql.bz2"
+    
+# Restore with Full DB Backup
+docker exec \
+    -ti zabbix-db \
+    bash -c "\
+    bunzip2 -dc /backups/zabbix_db_dump_<DATE>.sql.bz2 | \
+    mysql -uzabbix -pmy_password zabbix"
+# or use script
+bash restore.sh
 ```
 
 #### Up and Running with Docker Compose
