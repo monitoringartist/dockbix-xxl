@@ -45,18 +45,30 @@ docker run \
     zabbix/zabbix-3.0:latest
 # wait ~60 seconds for Zabbix initialization
 # Zabbix web will be available on the port 80, Zabbix server on the port 10051
+```
 
-# Backup of Zabbix configuration data only
+Admin tasks examples:
+
+```
+# Backup of DB Zabbix - configuration data only, no item history/trends
 docker exec \
     -ti zabbix-db \
     /zabbix-backup/zabbix-mariadb-dump -u zabbix -p my_password -o /backups
 
-# Full DB backup of Zabbix
+# Full backup of Zabbix DB
 docker exec \
     -ti zabbix-db \
     bash -c "\
     mysqldump -u zabbix -pmy_password zabbix | \
     bzip2 -cq9 > /backups/zabbix_db_dump_$(date +%Y-%m-%d-%H.%M.%S).sql.bz2"
+
+# Restore Zabbix DB
+# remove zabbix server container
+docker rm -f zabbix
+# restore data from dump (all current data will be dropped!!!)
+docker exec -i zabbix-db sh -c 'bunzip2 -dc /backups/zabbix_db_dump_2016-05-25-02.57.46.sql.bz2 | mysql -uzabbix -p --password=my_password zabbix'
+# run zabbix server again
+docker run ...    
 ```
 
 #### Up and Running with Docker Compose

@@ -90,7 +90,22 @@ Customized Zabbix Docker images
 
 Recommended example how to build custom Zabbix server on top of base image is 
 [million12/docker-zabbix-server](https://github.com/million12/docker-zabbix-server). 
-It provides custom features, such as Push notification, Slack and SMTP auth.  
+It provides custom features, such as Push notification, Slack and SMTP auth.
+
+Support
+=======
+
+Public Docker image zabbix/zabbix-3.0 has best effort support.
+
+Security issues
+===============
+
+Our zabbix Docker images are security scanned regularly. All detected vulnerabilities are fixed*:
+
+- Critical vulnerabilities - within 72 hours of notification
+- Major vulnerabilities - within 7 days of notification
+
+*except Zabbix security issues, which will be reported directly to Zabbix vendor  
 
 Related Zabbix Docker projects
 ==============================
