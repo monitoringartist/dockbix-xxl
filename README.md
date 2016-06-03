@@ -118,4 +118,4 @@ About Docker
 ============
 
 * [Official Docker Doc](https://docs.docker.com/)
-* [Awesome Docker](http://getawesomeness.com/get/docker)
+* [Awesome Docker](http://veggiemonk.github.io/awesome-docker/)

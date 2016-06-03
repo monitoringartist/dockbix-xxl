@@ -145,6 +145,9 @@ ENV \
   ZP_DBPassword=zabbix \
   ZP_DBPort=3306 \
   ZP_User=zabbix \
+  XXL_searcher=true \
+  XXL_zapix=false \
+  XXL_grapher=false \
   TERM=xterm
 
 # Layer: base
@@ -247,7 +250,7 @@ RUN \
 # Layer: zabbix-xxl
 COPY container-files-zabbix-xxl /
 RUN \
-  yum -y install git bash-completion && \
+  yum -y install git bash-completion python-httplib2 python-simplejson openssh-clients && \
   ### Zabbix bash completition ### && \
   git clone https://github.com/zabbix/zabbix-bash-completion /tmp/zabbix-bash-completition && \
   mv /tmp/zabbix-bash-completition/zabbix* /etc/bash_completion.d/ && \
@@ -285,6 +288,6 @@ RUN \
 
 CMD ["/config/bootstrap.sh"]
 
-VOLUME ["/etc/custom-config", "/usr/local/share/zabbix/externalscripts", "/usr/local/share/zabbix/ssl/certs", "/usr/local/share/zabbix/ssl/keys", "/usr/lib/zabbix/modules", "/usr/share/snmp/mibs", "/etc/snmp"]
+VOLUME ["/etc/custom-config", "/usr/local/share/zabbix/alertscripts/", "/usr/local/share/zabbix/externalscripts", "/usr/local/share/zabbix/ssl/certs", "/usr/local/share/zabbix/ssl/keys", "/usr/lib/zabbix/modules", "/usr/share/snmp/mibs", "/etc/snmp"]
 
 EXPOSE 80 162/udp 10051 10052
