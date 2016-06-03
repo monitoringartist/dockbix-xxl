@@ -63,6 +63,21 @@ fix_permissions() {
   chmod 4710 /usr/sbin/fping
   chmod 4710 /usr/sbin/fping6
 }
+xxl_config() {
+  # disable/enable XXL features
+  if ! $XXL_searcher; then
+    sed -i "s#['url' => 'searcher.php','label' => _('Searcher'),],#g" /usr/local/src/zabbix/frontends/php/include/menu.inc.php
+    rm -rf /usr/local/src/zabbix/frontends/php/searcher/ /usr/local/src/zabbix/frontends/php/searcher.php
+  fi
+  if ! $XXL_zapix; then
+    sed -i "s#['url' => 'zapix.php','label' => _('Zapix'),],#g" /usr/local/src/zabbix/frontends/php/include/menu.inc.php
+    rm -rf /usr/local/src/zabbix/frontends/php/zapix/ /usr/local/src/zabbix/frontends/php/zapix.php
+  fi
+  if ! $XXL_grapher; then
+    sed -i "s#['url' => 'grapher.php','label' => _('Grapher'),],#g" /usr/local/src/zabbix/frontends/php/include/menu.inc.php
+    rm -rf /usr/local/src/zabbix/frontends/php/grapher/ /usr/local/src/zabbix/frontends/php/grapher.php
+  fi
+}
 update_config() {
   # ^ZS_: /usr/local/etc/zabbix_server.conf
   for i in $( set -o posix ; set | grep ^ZS_ | grep -v ^ZS_Include | grep -v ^ZS_LoadModule | grep -v ^ZS_SourceIP | grep -v ^ZS_TLS | sort -rn ); do
@@ -222,6 +237,7 @@ if [ -f /etc/custom-config/zabbix_server.conf ]; then
 fi
 log "Preparing server configuration"
 update_config
+xxl_config
 log "Config updated."
 log "Enabling logging and pid management"
 logging
@@ -317,7 +333,7 @@ else
     FZP_DBName=$(grep ^DBName= /etc/custom-config/zabbix_proxy.conf | awk -F= '{print $2}')
     if [ ! -z "$FZP_DBName" ]; then
       export ZP_DBName=$FZP_DBName
-    fi    
+    fi
   else
     > /usr/local/etc/zabbix_proxy.conf
     for i in $( set -o posix ; set | grep ^ZP_ | grep -v '^ZP_enabled' | sort -rn ); do
@@ -325,7 +341,7 @@ else
       val=$(echo ${i} | awk -F'=' '{print $2}')
       echo  "${reg}=${val}" >> /usr/local/etc/zabbix_proxy.conf
     done
-  fi    
+  fi
   # wait 120sec for DB server initialization
   retry=24
   log "Waiting for database server"
@@ -339,7 +355,7 @@ else
     fi
     sleep 5
   done
-  log "Database server is available"  
+  log "Database server is available"
   log "Checking if proxy database exists or SQL import is required"
   if ! mysql -u ${ZP_DBUser} -p${ZP_DBPassword} -h ${ZP_DBHost} -P ${ZP_DBPort} -e "use ${ZP_DBName};" &>/dev/null; then
     warning "Zabbix proxy database doesn't exist. Installing and importing default settings"
