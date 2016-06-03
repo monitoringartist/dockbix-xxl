@@ -63,21 +63,6 @@ fix_permissions() {
   chmod 4710 /usr/sbin/fping
   chmod 4710 /usr/sbin/fping6
 }
-xxl_config() {
-  # disable/enable XXL features
-  if ! $XXL_searcher; then
-    sed -i "s#['url' => 'searcher.php','label' => _('Searcher'),],#g" /usr/local/src/zabbix/frontends/php/include/menu.inc.php
-    rm -rf /usr/local/src/zabbix/frontends/php/searcher/ /usr/local/src/zabbix/frontends/php/searcher.php
-  fi
-  if ! $XXL_zapix; then
-    sed -i "s#['url' => 'zapix.php','label' => _('Zapix'),],#g" /usr/local/src/zabbix/frontends/php/include/menu.inc.php
-    rm -rf /usr/local/src/zabbix/frontends/php/zapix/ /usr/local/src/zabbix/frontends/php/zapix.php
-  fi
-  if ! $XXL_grapher; then
-    sed -i "s#['url' => 'grapher.php','label' => _('Grapher'),],#g" /usr/local/src/zabbix/frontends/php/include/menu.inc.php
-    rm -rf /usr/local/src/zabbix/frontends/php/grapher/ /usr/local/src/zabbix/frontends/php/grapher.php
-  fi
-}
 update_config() {
   # ^ZS_: /usr/local/etc/zabbix_server.conf
   for i in $( set -o posix ; set | grep ^ZS_ | grep -v ^ZS_Include | grep -v ^ZS_LoadModule | grep -v ^ZS_SourceIP | grep -v ^ZS_TLS | sort -rn ); do
@@ -237,7 +222,6 @@ if [ -f /etc/custom-config/zabbix_server.conf ]; then
 fi
 log "Preparing server configuration"
 update_config
-xxl_config
 log "Config updated."
 log "Enabling logging and pid management"
 logging
