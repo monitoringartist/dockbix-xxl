@@ -53,20 +53,34 @@ xxl_config() {
 xxl_api() {
   XXL_apiuser=${XXL_apiuser:-Admin}
   XXL_apipass=${XXL_apipass:-zabix}
+
+  # wait 120sec for Zabbix API start
+  retry=24
+  until curl --output /dev/null --silent --head --fail localhost:80 &>/dev/null
+  do
+    log "Waiting for API, it's still not available"
+    retry=`expr $retry - 1`
+    if [ $retry -eq 0 ]; then
+      error "API is not available!"
+      exit 1
+    fi
+    sleep 5
+  done
+  log "API is available"  
+  
   AUTH_TOKEN=$(curl -s -X POST -H 'Content-Type: application/json-rpc' -d "{\"jsonrpc\":\"2.0\",\"method\":\"user.login\",\"id\":0,\"auth\":null,\"params\":{\"user\":\"guest\",\"password\":\"\"}}" http://0.0.0.0/api_jsonrpc.php | jq -r .result)
   if [ "$AUTH_TOKEN" != "null" ]; then
     log "API access succesfull"
     if [ -d "/etc/zabbix/api" ]; then
       files=$(find /etc/zabbix/api -name '*.curl'|sort)
-      for file in files
-      do
-      ID=1
-      while IFS= read -r line; do
-        echo $line              
-        command=$(echo $line | sed -e "s/<ID>/$ID/g" | sed -e "s/<AUTH_TOKEN>/$AUTH_TOKEN/g")
-        curl -s -X POST -H 'Content-Type: application/json-rpc' -d "${command}" http://0.0.0.0/api_jsonrpc.php
-        ID=$((ID+1))
-      done <$file
+      for file in $files; do
+        ID=1
+        for line in $(cat $file); do
+          log $line              
+          command=$(echo $line | sed -e "s/<ID>/$ID/g" | sed -e "s/<AUTH_TOKEN>/$AUTH_TOKEN/g")
+          log $(curl -s -X POST -H 'Content-Type: application/json-rpc' -d "${command}" http://0.0.0.0/api_jsonrpc.php) 
+          ID=$((ID+1))
+        done
       done 
     fi          
   else
@@ -76,5 +90,5 @@ xxl_api() {
 
 log "Preparing XXL features"
 xxl_config
-xxl_api
+xxl_api &
 log "XXL configuration done."
