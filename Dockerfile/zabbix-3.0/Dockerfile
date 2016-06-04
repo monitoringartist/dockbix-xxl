@@ -189,7 +189,8 @@ RUN \
               java-1.8.0-openjdk-devel mariadb-devel libxml2-devel gettext \
               libcurl-devel OpenIPMI-devel mysql iksemel-devel libssh2-devel \
               unixODBC unixODBC-devel mysql-connector-odbc postgresql-odbc \
-              openldap-devel telnet net-tools snmptt sudo rubygems && \
+              openldap-devel telnet net-tools snmptt sudo rubygems \ 
+              openssh-clients python-httplib2 python-simplejson && \
  `# reinstall glibc for locales` \
   yum -y -q reinstall glibc-common && \
   cp /usr/local/etc/zabbix_agentd.conf /tmp && \
@@ -250,11 +251,7 @@ RUN \
 # Layer: zabbix-xxl
 COPY container-files-zabbix-xxl /
 RUN \
-  yum -y install git bash-completion python-httplib2 python-simplejson openssh-clients && \
-  ### Zabbix bash completition ### && \
-  git clone https://github.com/zabbix/zabbix-bash-completion /tmp/zabbix-bash-completition && \
-  mv /tmp/zabbix-bash-completition/zabbix* /etc/bash_completion.d/ && \
-  rm -rf /tmp/zabbix-bash-completition && \
+  yum -y install git && \
   ### Grapher ### && \
   git clone https://github.com/sepich/zabbixGrapher /tmp/grapher && \
   mv /tmp/grapher/grapher* /usr/local/src/zabbix/frontends/php/ && \

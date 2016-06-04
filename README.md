@@ -1,32 +1,30 @@
-Zabbix Dockerfiles
-==================
+Zabbix XXL
+==========
 
-[Zabbix Github repo](https://github.com/monitoringartist/zabbix-server-xxl-docker) is intended as a source for [Zabbix Docker registry](https://hub.docker.com/u/zabbix/). Doc: [How to build/ship own Zabbix Docker image](https://github.com/monitoringartist/zabbix-server-xxl-docker#how-to-build-own-docker-image).
+[Zabbix XXL repo](https://github.com/monitoringartist/zabbix-server-xxl-docker) is intended as a source of some [Zabbix Docker images](https://hub.docker.com/u/monitoringartist/dashboard/). It contains standard Zabbix binaries + some additional XXL (community) features and everything is packaged into Docker image.
 
 Available Docker images
 =======================
 
-### 1. [Docker image zabbix-3.0](https://registry.hub.docker.com/u/zabbix/zabbix-3.0/) [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/monitoringartist/zabbix-server-xxl-docker/tree/master/Dockerfile/zabbix-3.0/) [![](https://badge.imagelayers.io/zabbix/zabbix-3.0:dev.svg)](https://imagelayers.io/?images=zabbix/zabbix-3.0:dev)
+### 1. [Docker image zabbix-3.0-xxl](https://hub.docker.com/r/monitoringartist/zabbix-3.0-xxl/) [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-3.0/) [![](https://badge.imagelayers.io/monitoringartist/zabbix-3.0-xxl:latest.svg)](https://imagelayers.io/?images=monitoringartist/zabbix-3.0-xxl:latest)
 
-See [README of zabbix-3.0](https://github.com/monitoringartist/zabbix-server-xxl-docker/tree/master/Dockerfile/zabbix-3.0)
+See [README of zabbix-3.0-xxl](https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-3.0)
 for more details.
 
-Compiled Zabbix (server, proxy, agent, java gateway) with almost all features (MySQL support, Java, SNMP, Curl, Ipmi, 
-fping) and Zabbix web UI based on CentOS 7, Supervisor, Nginx, PHP. Image 
-requires external MySQL database (you can run MySQL also as Docker container).
+Compiled Zabbix (server, proxy, agent, java gateway) with almost all features (MySQL support, Java, SNMP, Curl, Ipmi, SSH, fping) and Zabbix web UI based on CentOS 7, Supervisor, Nginx, PHP. Image requires external MySQL/MariDB database (you can run MySQL/MariaDB as a Docker container).
 
-### 2. [Docker image zabbix-db-mariadb](https://registry.hub.docker.com/u/zabbix/zabbix-db-mariadb/) [![](https://badge.imagelayers.io/zabbix/zabbix-db-mariadb:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-db-mariadb:latest)
+### 2. [Docker image zabbix-db-mariadb](https://registry.hub.docker.com/u/monitoringartist/zabbix-db-mariadb/) [![](https://badge.imagelayers.io/monitoringartist/zabbix-db-mariadb:latest.svg)](https://imagelayers.io/?images=monitoringartist/zabbix-db-mariadb:latest)
 
-See [README of zabbix-db-mariadb](https://github.com/monitoringartist/zabbix-server-xxl-docker/tree/master/Dockerfile/zabbix-db-mariadb) 
+See [README of zabbix-db-mariadb](https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-db-mariadb) 
 for more details.
 
 MariaDB container customized for Zabbix.
 
-### 3. [Docker image zabbix-2.4](https://registry.hub.docker.com/u/zabbix/zabbix-2.4/) [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/monitoringartist/zabbix-server-xxl-docker/tree/master/Dockerfile/zabbix-2.4/) [![](https://badge.imagelayers.io/zabbix/zabbix-2.4:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-2.4:latest)
+### 3. [Docker image zabbix-2.4](https://registry.hub.docker.com/u/monitoringartist/zabbix-2.4/) [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-2.4/) [![](https://badge.imagelayers.io/monitoringartist/zabbix-2.4:latest.svg)](https://imagelayers.io/?images=monitoringartist/zabbix-2.4:latest)
 
 **2.4 is not supported version** - please use 3.0 version.
 
-See [README of zabbix-2.4](https://github.com/monitoringartist/zabbix-server-xxl-docker/tree/master/Dockerfile/zabbix-2.4) 
+See [README of zabbix-2.4](https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-2.4) 
 for more details.
 
 Compiled Zabbix with almost all features (MySQL support, Java, SNMP, 
@@ -57,7 +55,7 @@ docker exec -ti zabbix /bin/bash
 
 History of an image and size of layers: 
 ``` 
-docker history --no-trunc=true zabbix/zabbix-3.0 | tr -s ' ' | tail -n+2 | awk -F " ago " '{print $2}'
+docker history --no-trunc=true monitoringartist/zabbix-3.0-xxl | tr -s ' ' | tail -n+2 | awk -F " ago " '{print $2}'
 ```
 
 Run specific Zabbix version, e.g. 3.0.0 - just specify 3.0.0 tag for image:
@@ -67,11 +65,11 @@ Run specific Zabbix version, e.g. 3.0.0 - just specify 3.0.0 tag for image:
 		--name zabbix \
 		-p 80:80 \
 		-p 10051:10051 \
-    		-v /etc/localtime:/etc/localtime:ro \
+    	-v /etc/localtime:/etc/localtime:ro \
 		--env="ZS_DBHost=database_ip" \
 		--env="ZS_DBUser=username" \
 		--env="ZS_DBPassword=my_password" \
-		zabbix/zabbix-3.0:3.0.0
+		monitoringartist/zabbix-3.0-xxl:3.0.3
 ```
 
 How to build own Docker image
@@ -82,7 +80,7 @@ You will need to specify only _FROM_ definition in your Dockerfile. For
 example: if you want to use always the latest available version, then please use:
 
 ```
-FROM zabbix/zabbix-3.0:latest
+FROM monitoringartist/zabbix-3.0-xxl:latest
 ```
 
 Customized Zabbix Docker images
@@ -95,7 +93,7 @@ It provides custom features, such as Push notification, Slack and SMTP auth.
 Support
 =======
 
-Public Docker image zabbix/zabbix-3.0 has best effort support.
+Public Docker image monitoringartist/zabbix-3.0-xxl has best effort support.
 
 Security issues
 ===============
@@ -119,3 +117,14 @@ About Docker
 
 * [Official Docker Doc](https://docs.docker.com/)
 * [Awesome Docker](http://veggiemonk.github.io/awesome-docker/)
+
+Author
+======
+
+[Devops Monitoring Expert](http://www.jangaraj.com 'DevOps / Docker / Kubernetes / AWS ECS / Zabbix / Zenoss / Terraform / Monitoring'),
+who loves monitoring systems, which start with letter Z. Those are Zabbix and Zenoss.
+
+Professional devops / monitoring services:
+
+[![Monitoring Artist](http://monitoringartist.com/img/github-monitoring-artist-logo.jpg)]
+(http://www.monitoringartist.com 'DevOps / Docker / Kubernetes / AWS ECS / Zabbix / Zenoss / Terraform / Monitoring')
