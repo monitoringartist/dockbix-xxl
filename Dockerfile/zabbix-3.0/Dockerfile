@@ -251,7 +251,7 @@ RUN \
 # Layer: zabbix-xxl
 COPY container-files-zabbix-xxl /
 RUN \
-  yum -y install git && \
+  yum -y install git jq && \
   ### Grapher ### && \
   git clone https://github.com/sepich/zabbixGrapher /tmp/grapher && \
   mv /tmp/grapher/grapher* /usr/local/src/zabbix/frontends/php/ && \

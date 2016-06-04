@@ -32,32 +32,33 @@ $widget = (new CWidget())
 $widget->show();
 ?>
 <p>
-Zabbix 3.0 XXL contains standard Zabbix binaries + some additional XXL (community) 
-features and everything is packaged into Docker image for easy deployement.<br />
+Zabbix 3.0 XXL contains standard Zabbix + additional XXL (community) 
+extensions and everything is packaged into Docker image for easy deployment.<br />
 Source repo: <a target="_blank" href="https://github.com/monitoringartist/zabbix-xxl">https://github.com/monitoringartist/zabbix-xxl</a>
 </p>
 <p>
   <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8LB6J222WRUZ4" target="_blank">
     <img src="searcher/assets/donate-button2.png">
   </a>
+  <br /><br />
 </p>
 
 <p>
   <h2>Author</h2>
 </p>
-<div style="background: white; padding: 10px;">
+<div style="background: white; padding: 10px; margin-bottom: 2em;">
   <a title="DevOps / Docker / Kubernetes / AWS ECS / Zabbix / Zenoss / Terraform / Monitoring" href="http://www.monitoringartist.com" target="_blank" style="float: right;">
     <img alt="DevOps / Docker / Kubernetes / AWS ECS / Zabbix / Zenoss / Terraform / Monitoring" src="searcher/assets/Monitoring-Artist-logo.jpg">
   </a>
   <a title="DevOps / Docker / Kubernetes / AWS ECS / Zabbix / Zenoss / Terraform / Monitoring" href="http://www.monitoringartist.com" target="_blank">
   Monitoring Artist</a> is a company, which provides professional devops, automation, cloud and monitoring services.<br />
-  Most of the projects are related to open source monitoring tools such as Zabbix, Zenoss, Grafana, ....
+  Most of the projects are related to open source monitoring tools such as Zabbix, Zenoss, Grafana, ...
   <div style="clear:both; width: 100%; height:0;font-size:0;"></div>
 </div>
 <p>
 
-<div style="float:left">
-<h2>Available XXL community features:</h2>
+<div style="float:left; width:48%;">
+<h2>XXL extensions:</h2>
 <p>
   <ul>
   <li>
@@ -80,7 +81,7 @@ Source repo: <a target="_blank" href="https://github.com/monitoringartist/zabbix
 </div>
 
 <div style="float:left">
-  <h2>Monitoring Artist Zabbix related projects</h2>
+  <h2>Monitoring Artist other projects</h2>
   <ul>
   <li>
     <a target="_blank" href="https://github.com/monitoringartist/kubernetes-zabbix">
@@ -89,7 +90,7 @@ Source repo: <a target="_blank" href="https://github.com/monitoringartist/zabbix
   </li>
   <li>
     <a target="_blank" href="https://github.com/monitoringartist/zabbix-docker-monitoring">
-      Zabbix module/template for Docker monitoring
+      Zabbix Docker monitoring
     </a>
   </li>
   <li>
@@ -116,6 +117,6 @@ Source repo: <a target="_blank" href="https://github.com/monitoringartist/zabbix
   </ul>
 </p>
 </div>
-
+<div style="clear:both; width: 100%; height:0;font-size:0;"></div>
 <?php
 require_once dirname(__FILE__).'/include/page_footer.php';

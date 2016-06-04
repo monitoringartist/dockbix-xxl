@@ -1,7 +1,7 @@
 Zabbix XXL
 ==========
 
-[Zabbix XXL repo](https://github.com/monitoringartist/zabbix-server-xxl-docker) is intended as a source of some [Zabbix Docker images](https://hub.docker.com/u/monitoringartist/dashboard/). It contains standard Zabbix binaries + some additional XXL (community) features and everything is packaged into Docker image.
+[Zabbix XXL repo](https://github.com/monitoringartist/zabbix-server-xxl-docker) is intended as a source of some [Zabbix Docker images](https://hub.docker.com/u/monitoringartist/dashboard/). It contains standard Zabbix + additional XXL (community) extensions and everything is packaged into Docker image for easy deployment.
 
 Available Docker images
 =======================
