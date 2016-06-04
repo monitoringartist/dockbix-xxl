@@ -52,7 +52,7 @@ xxl_config() {
 
 xxl_api() {
   XXL_apiuser=${XXL_apiuser:-Admin}
-  XXL_apipass=${XXL_apipass:-zabix}
+  XXL_apipass=${XXL_apipass:-zabbix}
 
   # wait 120sec for Zabbix API start
   retry=24
