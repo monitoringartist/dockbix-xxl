@@ -68,7 +68,7 @@ xxl_api() {
   done
   log "API is available"  
   
-  AUTH_TOKEN=$(curl -s -X POST -H 'Content-Type: application/json-rpc' -d "{\"jsonrpc\":\"2.0\",\"method\":\"user.login\",\"id\":0,\"auth\":null,\"params\":{\"user\":\"guest\",\"password\":\"\"}}" http://0.0.0.0/api_jsonrpc.php | jq -r .result)
+  AUTH_TOKEN=$(curl -s -X POST -H 'Content-Type: application/json-rpc' -d "{\"jsonrpc\":\"2.0\",\"method\":\"user.login\",\"id\":0,\"auth\":null,\"params\":{\"user\":\"${XXL_apiuser}\",\"password\":\"${XXL_apipass}\"}}" http://0.0.0.0/api_jsonrpc.php | jq -r .result)
   if [ "$AUTH_TOKEN" != "null" ]; then
     log "API access succesfull"
     if [ -d "/etc/zabbix/api" ]; then
