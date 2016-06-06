@@ -148,6 +148,7 @@ ENV \
   XXL_searcher=true \
   XXL_zapix=false \
   XXL_grapher=false \
+  XXL_grapher=true \
   TERM=xterm
 
 # Layer: base
