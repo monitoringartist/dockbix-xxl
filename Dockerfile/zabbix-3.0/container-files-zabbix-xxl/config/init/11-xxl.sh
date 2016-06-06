@@ -72,11 +72,22 @@ xxl_api() {
   if [ "$AUTH_TOKEN" != "null" ]; then
     log "API access succesfull"
     if [ -d "/etc/zabbix/api" ]; then
-      files=$(find /etc/zabbix/api -name '*.curl'|sort)
+      ID=1
+      # templates import
+      files=$(find /etc/zabbix/api -name '*.xml'|sort)
       for file in $files; do
-        ID=1
+        log "API XML import: $line"
+        template=$(cat $file | sed -e 's/\"/\\\"/g' | sed -e 's/^[ \t]*//' | tr --delete '\n')
+        apicall='{\"jsonrpc\":\"2.0\",\"method\":\"configuration.import\",\"id\":<ID>,\"auth\":\"<AUTH_TOKEN>\",\"params\":{\"format\":\"xml\",\"rules\":{\"templates\":{\"createMissing\":true,\"updateExisting\":true},\"images\":{\"createMissing\":true,\"updateExisting\":true},\"groups\":{\"createMissing\":true},\"triggers\":{\"createMissing\":true,\"updateExisting\":true},\"valueMaps\":{\"createMissing\":true,\"updateExisting\":true},\"hosts\":{\"createMissing\":true,\"updateExisting\":true},\"items\":{\"createMissing\":true,\"updateExisting\":true},\"maps\":{\"createMissing\":true,\"updateExisting\":true},\"screens\":{\"createMissing\":true,\"updateExisting\":true},\"templateScreens\":{\"createMissing\":true,\"updateExisting\":true},\"templateLinkage\":{\"createMissing\":true},\"applications\":{\"createMissing\":true,\"updateExisting\":true},\"graphs\":{\"createMissing\":true,\"updateExisting\":true},\"discoveryRules\":{\"createMissing\":true,\"updateExisting\":true}},\"source\":\"${template}\"}'
+        command=$(echo $apicall | sed -e "s/<ID>/$ID/g" | sed -e "s/<AUTH_TOKEN>/$AUTH_TOKEN/g")
+        log $(curl -s -X POST -H 'Content-Type: application/json-rpc' -d "${command}" http://0.0.0.0/api_jsonrpc.php)
+        ID=$((ID+1))
+      done
+      # api calls
+      files=$(find /etc/zabbix/api -name '*.api'|sort)
+      for file in $files; do        
         for line in $(cat $file); do
-          log $line              
+          log "API call: $line"              
           command=$(echo $line | sed -e "s/<ID>/$ID/g" | sed -e "s/<AUTH_TOKEN>/$AUTH_TOKEN/g")
           log $(curl -s -X POST -H 'Content-Type: application/json-rpc' -d "${command}" http://0.0.0.0/api_jsonrpc.php) 
           ID=$((ID+1))
