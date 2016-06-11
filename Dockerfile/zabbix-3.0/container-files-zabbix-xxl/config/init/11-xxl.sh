@@ -20,7 +20,7 @@ log() {
 xxl_config() {
   cid=$(md5sum <<< $(hostname) | awk -F - '{print $1}' | tr -d ' ')
   XXL_analytics=${XXL_analytics:-true}
-  # disable/enable XXL features  
+  # disable/enable XXL features
   if ! $XXL_searcher; then
     sed -i "/'searcher.php'/d" /usr/local/src/zabbix/frontends/php/include/menu.inc.php
     rm -rf /usr/local/src/zabbix/frontends/php/searcher/ /usr/local/src/zabbix/frontends/php/searcher.php
@@ -35,7 +35,7 @@ xxl_config() {
   else
     if $XXL_analytics; then
       curl -ks -o /dev/null "http://www.google-analytics.com/r/collect?v=1&tid=UA-72810204-2&cid=${cid}&t=event&ec=Bootstrap&ea=Start&el=XXL_zapix&ev=1&dp=%2F&dl=http%3A%2F%2Fgithub.com%2Fmonitoringartist%2Fzabbix-xxl" &> /dev/null
-    fi  
+    fi
   fi
   if ! $XXL_grapher; then
     sed -i "/'grapher.php'/d" /usr/local/src/zabbix/frontends/php/include/menu.inc.php
@@ -43,18 +43,19 @@ xxl_config() {
   else
     if $XXL_analytics; then
       curl -ks -o /dev/null "http://www.google-analytics.com/r/collect?v=1&tid=UA-72810204-2&cid=${cid}&t=event&ec=Bootstrap&ea=Start&el=XXL_grapher&ev=1&dp=%2F&dl=http%3A%2F%2Fgithub.com%2Fmonitoringartist%2Fzabbix-xxl" &> /dev/null
-    fi  
+    fi
   fi
   if ! $XXL_analytics; then
     sed -i "/<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-72810204-2','auto');ga('send','pageview');</script>/d" /usr/local/src/zabbix/frontends/php/include/menu.inc.php
-  fi  
+  fi
 }
 
 xxl_api() {
+  XXL_api=${XXL_api:-true}
   if ! $XXL_api; then
-    return 0 
+    return 0
   fi
-  
+
   XXL_apiuser=${XXL_apiuser:-Admin}
   XXL_apipass=${XXL_apipass:-zabbix}
 
@@ -70,41 +71,47 @@ xxl_api() {
     fi
     sleep 5
   done
-  log "API is available"  
-  
+  log "API is available"
+
   AUTH_TOKEN=$(curl -s -X POST -H 'Content-Type: application/json-rpc' -d "{\"jsonrpc\":\"2.0\",\"method\":\"user.login\",\"id\":0,\"auth\":null,\"params\":{\"user\":\"${XXL_apiuser}\",\"password\":\"${XXL_apipass}\"}}" http://0.0.0.0/api_jsonrpc.php | jq -r .result)
   if [ "$AUTH_TOKEN" != "null" ]; then
     log "API access succesfull"
     if [ -d "/etc/zabbix/api" ]; then
       ID=1
       LAST_ID=0
-      # templates import
-      files=$(find /etc/zabbix/api -name '*.xml'|sort)
+      files=$(find /etc/zabbix/api -regex  '.*\(.xml\|.api\|.sh\)$' -type f|sort)
       for file in $files; do
-        log "API XML import: $file"
-        template=$(cat $file | sed -e 's/\"/\\\"/g' | sed -e 's/^[ \t]*//' | tr --delete '\n')
-        apicall="{\"jsonrpc\":\"2.0\",\"method\":\"configuration.import\",\"id\":<ID>,\"auth\":\"<AUTH_TOKEN>\",\"params\":{\"format\":\"xml\",\"rules\":{\"templates\":{\"createMissing\":true,\"updateExisting\":true},\"images\":{\"createMissing\":true,\"updateExisting\":true},\"groups\":{\"createMissing\":true},\"triggers\":{\"createMissing\":true,\"updateExisting\":true},\"valueMaps\":{\"createMissing\":true,\"updateExisting\":true},\"hosts\":{\"createMissing\":true,\"updateExisting\":true},\"items\":{\"createMissing\":true,\"updateExisting\":true},\"maps\":{\"createMissing\":true,\"updateExisting\":true},\"screens\":{\"createMissing\":true,\"updateExisting\":true},\"templateScreens\":{\"createMissing\":true,\"updateExisting\":true},\"templateLinkage\":{\"createMissing\":true},\"applications\":{\"createMissing\":true,\"updateExisting\":true},\"graphs\":{\"createMissing\":true,\"updateExisting\":true},\"discoveryRules\":{\"createMissing\":true,\"updateExisting\":true}},\"source\":\"${template}\"}}"
-        command=$(echo $apicall | sed -e "s/<ID>/$ID/g" | sed -e "s/<AUTH_TOKEN>/$AUTH_TOKEN/g")
-        output=$(curl -s -X POST -H 'Content-Type: application/json-rpc' -d "${command}" http://0.0.0.0/api_jsonrpc.php)
-        log "API response: $output"  
-        ID=$((ID+1))
-      done
-      # api calls
-      files=$(find /etc/zabbix/api -name '*.api'|sort)
-      for file in $files; do        
-        for line in $(cat $file); do
-          log "API call: $line"              
-          command=$(echo $line | sed -e "s/<ID>/$ID/g" | sed -e "s/<AUTH_TOKEN>/$AUTH_TOKEN/g" | sed -e "s/<LAST_ID>/$LAST_ID/g")
+        if [[ "$file" == *xml ]]; then
+          # API XML import
+          log "API XML import: $file"
+          template=$(cat $file | sed -e 's/\"/\\\"/g' | sed -e 's/^[ \t]*//' | tr --delete '\n')
+          apicall="{\"jsonrpc\":\"2.0\",\"method\":\"configuration.import\",\"id\":<ID>,\"auth\":\"<AUTH_TOKEN>\",\"params\":{\"format\":\"xml\",\"rules\":{\"templates\":{\"createMissing\":true,\"updateExisting\":true},\"images\":{\"createMissing\":true,\"updateExisting\":true},\"groups\":{\"createMissing\":true},\"triggers\":{\"createMissing\":true,\"updateExisting\":true},\"valueMaps\":{\"createMissing\":true,\"updateExisting\":true},\"hosts\":{\"createMissing\":true,\"updateExisting\":true},\"items\":{\"createMissing\":true,\"updateExisting\":true},\"maps\":{\"createMissing\":true,\"updateExisting\":true},\"screens\":{\"createMissing\":true,\"updateExisting\":true},\"templateScreens\":{\"createMissing\":true,\"updateExisting\":true},\"templateLinkage\":{\"createMissing\":true},\"applications\":{\"createMissing\":true,\"updateExisting\":true},\"graphs\":{\"createMissing\":true,\"updateExisting\":true},\"discoveryRules\":{\"createMissing\":true,\"updateExisting\":true}},\"source\":\"${template}\"}}"
+          command=$(echo $apicall | sed -e "s/<ID>/$ID/g" | sed -e "s/<AUTH_TOKEN>/$AUTH_TOKEN/g")
           output=$(curl -s -X POST -H 'Content-Type: application/json-rpc' -d "${command}" http://0.0.0.0/api_jsonrpc.php)
           log "API response: $output"
-          LAST_ID=$(echo $output | jq -r 'first(.result[]?)|.[]?')           
           ID=$((ID+1))
-        done
-      done 
-    fi          
+        elif [[ "$file" == *api ]]; then
+          # API command
+          log "API command: $file"
+          for line in $(cat $file); do
+            log "API call: $line"
+            command=$(echo $line | sed -e "s/<ID>/$ID/g" | sed -e "s/<AUTH_TOKEN>/$AUTH_TOKEN/g" | sed -e "s/<LAST_ID>/$LAST_ID/g")
+            output=$(curl -s -X POST -H 'Content-Type: application/json-rpc' -d "${command}" http://0.0.0.0/api_jsonrpc.php)
+            log "API response: $output"
+            LAST_ID=$(echo $output | jq -r 'first(.result[]?)|.[]?')
+            ID=$((ID+1))
+          done
+        else
+          # bash script - environment variable are available in the script
+          log "API script: $file"
+          output=$(bash $file)
+          log "API script output: $output"
+        fi
+      done
+    fi
   else
     log "API access not succesfull - try to set up variables XXL_apiuser/XXL_apipass"
-  fi    
+  fi
 }
 
 log "Preparing XXL features"

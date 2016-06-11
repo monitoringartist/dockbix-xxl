@@ -1,7 +1,7 @@
 Zabbix XXL
 ==========
 
-[Zabbix XXL repo](https://github.com/monitoringartist/zabbix-server-xxl-docker) is intended as a source of some [Zabbix Docker images](https://hub.docker.com/u/monitoringartist/dashboard/). It contains standard Zabbix + additional XXL (community) extensions and everything is packaged into Docker image for easy deployment.
+[Zabbix XXL](https://github.com/monitoringartist/zabbix-server-xxl-docker) is a standard Zabbix prepared for Docker world. You must install Zabbix package (rpm, deb, ...) in the old world. Similarly you need to pull Zabbix Docker image in the Docker world. This Docker image contains standard Zabbix + additional XXL (community) extensions. Routine tasks such as import of Zabbix DB are automated, so it's prepared for easy deployment.
 
 Available Docker images
 =======================
@@ -10,7 +10,7 @@ Available Docker images
 
 See [README of zabbix-3.0-xxl](https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-3.0) for more details.
 
-Compiled Zabbix (server, proxy, agent, java gateway, snmpd daemon) with almost all features (MySQL support, Java, SNMP, Curl, Ipmi, SSH, fping) and Zabbix web UI based on CentOS 7, Supervisor, Nginx, PHP. Image requires external MySQL/MariDB database (you can run MySQL/MariaDB as a Docker container). Integated XXL extensions: Searcher, Grapher (beta), Zapix (beta).
+Compiled Zabbix (server, proxy, agent, java gateway, snmpd daemon) with almost all features (MySQL support, Java, SNMP, Curl, Ipmi, SSH, fping) and Zabbix web UI based on CentOS 7, Supervisor, Nginx, PHP. Image requires external MySQL/MariDB database (you can run MySQL/MariaDB as a Docker container). Integated XXL extensions: Searcher, Grapher (beta), Zapix (beta), template auto import, API command/script execution.
 
 ### 2. [Docker image zabbix-db-mariadb](https://registry.hub.docker.com/u/monitoringartist/zabbix-db-mariadb/) [![](https://badge.imagelayers.io/monitoringartist/zabbix-db-mariadb:latest.svg)](https://imagelayers.io/?images=monitoringartist/zabbix-db-mariadb:latest)
 
@@ -70,17 +70,6 @@ Run specific Zabbix version, e.g. 3.0.0 - just specify 3.0.0 tag for image:
 		monitoringartist/zabbix-3.0-xxl:3.0.3
 ```
 
-How to build own Docker image
-=============================
-
-It's easy to build customized image on top of this base image. 
-You will need to specify only _FROM_ definition in your Dockerfile. For 
-example: if you want to use always the latest available version, then please use:
-
-```
-FROM monitoringartist/zabbix-3.0-xxl:latest
-```
-
 Customized Zabbix Docker images
 ===============================
 
@@ -92,6 +81,7 @@ Support
 =======
 
 Public Docker image monitoringartist/zabbix-3.0-xxl has best effort support.
+Please contact info@monitoringartist.com for commercial support.
 
 Security issues
 ===============
@@ -107,8 +97,8 @@ Related Zabbix Docker projects
 ==============================
 
 * [Zabbix agent 3.0 XXL with Docker monitoring support](https://github.com/monitoringartist/zabbix-agent-xxl)
-* Dockerised project [Grafana XXL](https://github.com/monitoringartist/grafana-xxl), which includes also [Grafana Zabbix datasource](https://github.com/alexanderzobnin/grafana-zabbix)
-* Scale your Dockerised [Zabbix with Kubernetes](https://github.com/monitoringartist/kubernetes-zabbix)
+* Dockerized project [Grafana XXL](https://github.com/monitoringartist/grafana-xxl), which includes also [Grafana Zabbix datasource](https://github.com/alexanderzobnin/grafana-zabbix)
+* Scale your Dockerized [Zabbix with Kubernetes](https://github.com/monitoringartist/kubernetes-zabbix)
 
 About Docker
 ============
