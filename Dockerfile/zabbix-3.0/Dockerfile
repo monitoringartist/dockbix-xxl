@@ -189,7 +189,7 @@ RUN \
               java-1.8.0-openjdk-devel mariadb-devel libxml2-devel gettext \
               libcurl-devel OpenIPMI-devel mysql iksemel-devel libssh2-devel \
               unixODBC unixODBC-devel mysql-connector-odbc postgresql-odbc \
-              openldap-devel telnet net-tools snmptt sudo rubygems jq \ 
+              openldap-devel telnet net-tools snmptt sudo rubygems jq \
               openssh-clients python-httplib2 python-simplejson && \
  `# reinstall glibc for locales` \
   yum -y -q reinstall glibc-common && \
