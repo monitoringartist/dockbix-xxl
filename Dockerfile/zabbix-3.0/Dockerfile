@@ -148,7 +148,6 @@ ENV \
   XXL_searcher=true \
   XXL_zapix=false \
   XXL_grapher=false \
-  XXL_grapher=true \
   TERM=xterm
 
 # Layer: base
@@ -190,7 +189,7 @@ RUN \
               java-1.8.0-openjdk-devel mariadb-devel libxml2-devel gettext \
               libcurl-devel OpenIPMI-devel mysql iksemel-devel libssh2-devel \
               unixODBC unixODBC-devel mysql-connector-odbc postgresql-odbc \
-              openldap-devel telnet net-tools snmptt sudo rubygems \ 
+              openldap-devel telnet net-tools snmptt sudo rubygems jq \ 
               openssh-clients python-httplib2 python-simplejson && \
  `# reinstall glibc for locales` \
   yum -y -q reinstall glibc-common && \
@@ -252,14 +251,6 @@ RUN \
 # Layer: zabbix-xxl
 COPY container-files-zabbix-xxl /
 RUN \
-  yum -y install git jq && \
-  ### Grapher ### && \
-  git clone https://github.com/sepich/zabbixGrapher /tmp/grapher && \
-  mv /tmp/grapher/grapher* /usr/local/src/zabbix/frontends/php/ && \
-  rm -rf /tmp/grapher && \
-  ### Zapix ### && \
-  #git clone https://github.com/monitoringartist/zapix /usr/local/src/zabbix/frontends/php/zapix && \
-  #rm -rf /usr/local/src/zabbix/frontends/php/zapix/.git && \
   ### branding / menu ### && \
   sed -i "s/ZABBIX_VERSION.*'\(.*\)'/ZABBIX_VERSION', '\1 XXL'/g" /usr/local/src/zabbix/frontends/php/include/defines.inc.php && \
   grep 'XXL' /usr/local/src/zabbix/frontends/php/include/defines.inc.php && \
@@ -278,11 +269,7 @@ RUN \
   #sed -i "s#case PAGE_TYPE_XML:#case PAGE_TYPE_PEM:\nheader('Content-Type: application/x-pem-file');\nheader('Content-Disposition: attachment; filename=\"'.\$page['file'].'\"');\nbreak;\ncase PAGE_TYPE_XML:#g" /usr/local/src/zabbix/frontends/php/include/page_header.php && \
   #grep 'case PAGE_TYPE_PEM:' /usr/local/src/zabbix/frontends/php/include/page_header.php && \
   #sed -i "s#define('PAGE_TYPE_HTML'#define('PAGE_TYPE_PEM',-1);\ndefine('PAGE_TYPE_HTML'#g" /usr/local/src/zabbix/frontends/php/include/defines.inc.php && \
-  #grep 'PAGE_TYPE_PEM' /usr/local/src/zabbix/frontends/php/include/defines.inc.php && \
-  ### cleaning ### && \
-  yum -y autoremove git && \
-  yum clean all && \
-  rm -rf /tmp/*
+  #grep 'PAGE_TYPE_PEM' /usr/local/src/zabbix/frontends/php/include/defines.inc.php
 
 CMD ["/config/bootstrap.sh"]
 
