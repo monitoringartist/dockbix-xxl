@@ -97,6 +97,7 @@ Remember to use the same credentials when deploying zabbix image.
 #### Environmental variables
 
 Available variables related to XXL features:
+
 | Variable | Default value | Description |
 | -------- | ------------- | ----------- |
 | XXL_searcher | true | enable/disable [Zabbix searcher project](https://github.com/monitoringartist/zabbix-searcher) |
