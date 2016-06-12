@@ -1,7 +1,7 @@
 Zabbix XXL
 ==========
 
-[Zabbix XXL](https://github.com/monitoringartist/zabbix-xxl) is a standard Zabbix prepared for Docker world. You must install Zabbix package (rpm, deb, ...) in the old world. Similarly you need to pull Zabbix Docker image in the Docker world. This Docker image contains standard Zabbix + additional XXL (community) extensions. Routine tasks such as import of Zabbix DB are automated, so it's prepared for easy deployment.
+[Zabbix XXL](https://github.com/monitoringartist/zabbix-xxl) is a standard Zabbix prepared for Docker world. You must install Zabbix package (rpm, deb, ...) in the old world. Similarly, you need to pull Zabbix Docker image in the Docker world. This Docker image contains standard Zabbix + additional XXL (community) extensions. Routine tasks such as import of Zabbix DB are automated, so it's prepared for easy deployment.
 
 zabbix-3.0 [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-3.0/) [![](https://badge.imagelayers.io/monitoringartist/zabbix-3.0-xxl:latest.svg)](https://imagelayers.io/?images=monitoringartist/zabbix-3.0-xxl:latest)
 =================
@@ -73,7 +73,7 @@ docker-compose up -d
 
 ### Zabbix database as Docker container
 To be able to connect to database we would need one to be running first.
-Easiest way to do that is to use another docker image. For this purpose you
+The easiest way to do that is to use another docker image. For this purpose you
 can use [zabbix/zabbix-db-mariadb]
 (https://registry.hub.docker.com/u/monitoringartist/zabbix-db-mariadb) image as database.
 
@@ -235,7 +235,7 @@ Zabbix role environment variables:
 | ZJ_enabled | false | Zabbix Java Gateway start |
 | SNMPTRAP_enabled | false | SNMP trap process (port 162) start |
 
-All Zabbix server components are enabled by default except SNMP traps processing. However users
+All Zabbix server components are enabled by default except SNMP traps processing. However, users
 want to run dedicated Zabbix component per container. Typical use case is Zabbix
 web UI. Thanks to role environment variables are users able to execute many web
 UI containers, which helps to scale Zabbix as a service.
@@ -287,7 +287,7 @@ If env variable `XXL_api` is `true` (default value), then bootstrap script will 
 {"jsonrpc":"2.0","method":"host.update","id":<ID>,"auth":"<AUTH_TOKEN>","params":{"hostid":"10084","status":0}}
 ```
 
-- **Sh files**: All `*.sh*` files are processed as scripts and they are intented for user custom API scripting. Env variables `XXL_apiuser, XXL_apipass` should be used for API authentification.
+- **Sh files**: All `*.sh*` files are processed as scripts and they are intended  for user custom API scripting. Env variables `XXL_apiuser, XXL_apipass` should be used for API authentication.
 
 Docker troubleshooting
 ======================
