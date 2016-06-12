@@ -270,6 +270,7 @@ RUN \
   #grep 'case PAGE_TYPE_PEM:' /usr/local/src/zabbix/frontends/php/include/page_header.php && \
   #sed -i "s#define('PAGE_TYPE_HTML'#define('PAGE_TYPE_PEM',-1);\ndefine('PAGE_TYPE_HTML'#g" /usr/local/src/zabbix/frontends/php/include/defines.inc.php && \
   #grep 'PAGE_TYPE_PEM' /usr/local/src/zabbix/frontends/php/include/defines.inc.php
+  rm -rf /tmp/*
 
 CMD ["/config/bootstrap.sh"]
 
