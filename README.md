@@ -88,7 +88,7 @@ Please contact info@monitoringartist.com for commercial support.
 Security issues
 ===============
 
-Our zabbix Docker images are security scanned regularly. All detected vulnerabilities are fixed*:
+Our Docker images are security scanned regularly. All detected vulnerabilities are fixed*:
 
 - Critical vulnerabilities - within 72 hours of notification
 - Major vulnerabilities - within 7 days of notification
