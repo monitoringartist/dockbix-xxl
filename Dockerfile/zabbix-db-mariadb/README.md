@@ -1,16 +1,13 @@
-Zabbix Dockerfiles
-==================
+Zabbix XXL
+==========
 
-[Zabbix XXL GitHub repo](https://github.com/monitoringartist/zabbix-xxl) is 
-intended as a source for [Zabbix Docker registry](https://registry.hub.docker.com/repos/zabbix/).
-Please use these Zabbix Docker images, if you want to 
-[build/ship own Zabbix Docker image](https://github.com/monitoringartist/zabbix-xxl#how-to-build-own-docker-image).
+[Zabbix XXL](https://github.com/monitoringartist/zabbix-xxl) is a standard Zabbix prepared for Docker world. You must install Zabbix package (rpm, deb, ...) in the old world. Similarly, you need to pull Zabbix Docker image in the Docker world. This Docker image contains standard Zabbix + additional XXL (community) extensions. Routine tasks such as import of Zabbix DB are automated, so it's prepared for easy deployment.
 
-Zabbix DB - MariaDB 10.0 [![](https://badge.imagelayers.io/zabbix/zabbix-db-mariadb:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-db-mariadb:latest)
+Zabbix DB - MariaDB 10.0 [![](https://badge.imagelayers.io/monitoringartist/zabbix-db-mariadb:latest.svg)](https://imagelayers.io/?images=monitoringartist/zabbix-db-mariadb:latest)
 ========================
 
 This is a MariaDB 10.0 Docker [zabbix/zabbix-db-mariadb]
-(https://hub.docker.com/r/zabbix/zabbix-db-mariadb/) 
+(https://hub.docker.com/r/monitoringartist/zabbix-db-mariadb/) 
 image. Built on top of official [centos:centos7]
 (https://registry.hub.docker.com/_/centos/) 
 image. Inspired by [Tutum](https://github.com/tutumcloud)'s 
@@ -33,7 +30,7 @@ Run the image as daemon and bind it to port 3306:
 		--env="MARIADB_USER=username" \
 		--env="MARIADB_PASS=my_password" \
         --env="DB_innodb_buffer_pool_size=768M" \
-		zabbix/zabbix-db-mariadb
+		monitoringartist/zabbix-db-mariadb:latest
 ```        
         
 ## Environmental variables
@@ -93,7 +90,7 @@ If you want to use a preset password instead of a random generated one, you can
 set the environment variable MARIADB_PASS to your specific password when 
 running the container:  
 
-`docker run -d -p 3306:3306 -e MARIADB_PASS="mypass" zabbix/zabbix-db-mariadb`
+`docker run -d -p 3306:3306 -e MARIADB_PASS="mypass" monitoringartist/zabbix-db-mariadb`
 
 ### Mounting the database file volume from other containers
 One way to persist the database data is to store database files in another 
@@ -108,4 +105,4 @@ MariaDB database files. You can specify any name of the container by using
 After this you can start your MariaDB image using volumes in the container 
 created above (put the name of container in `--volumes-from`).  
 
-`docker run -d --volumes-from db-data -p 3306:3306 zabbix/zabbix-db-mariadb`
+`docker run -d --volumes-from db-data -p 3306:3306 monitoringartist/zabbix-db-mariadb`
