@@ -64,19 +64,24 @@ Source repo: <a target="_blank" href="https://github.com/monitoringartist/zabbix
   <ul>
   <li>
     <a target="_blank" href="http://monitoringartist.github.io/zabbix-searcher/">
-      Zabbix searcher
+      Zabbix searcher - source of Zabbix community projects
     </a>
   </li>
   <li>
     <a target="_blank" href="http://monitoringartist.github.io/zapix/">
-      Zapix (beta integration)
+      Zapix - online Zabbix API tool
     </a>
   </li>
   <li>
     <a target="_blank" href="https://github.com/sepich/zabbixGrapher">
-      Grapher (beta integration)
+      Grapher - quick grapher selection
     </a>
-  </li>      
+  </li>
+  <li>
+    <a target="_blank" href="https://github.com/monitoringartist/zabbix-docker-monitoring">
+      Zabbix Docker monitoring - basic templates
+    </a>
+  </li>        
   </ul>
 </p>
 </div>
