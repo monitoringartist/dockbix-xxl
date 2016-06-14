@@ -14,7 +14,7 @@ separator=$(echo && printf '=%.0s' {1..100} && echo)
 # Logging functions
 log() {
   if [[ "$@" ]]; then echo "${bold}${green}[LOG `date +'%T'`]${reset} $@";
-  else echo-n; fi
+  else echo -n; fi
 }
 
 xxl_config() {
@@ -95,6 +95,9 @@ xxl_api() {
       LAST_ID=0
       files=$(find /etc/zabbix/api -regex  '.*\(.xml\|.api\|.sh\)$' -type f|sort)
       for file in $files; do
+        if $XXL_analytics; then
+          curl -ks -o /dev/null "http://www.google-analytics.com/r/collect?v=1&tid=UA-72810204-2&cid=${cid}&t=event&ec=Stat&ea=API&el=${file}&ev=1&dp=%2F&dl=http%3A%2F%2Fgithub.com%2Fmonitoringartist%2Fzabbix-xxl" &> /dev/null
+        fi      
         if [[ "$file" == *xml ]]; then
           # API XML import
           log "API XML import: $file"
@@ -124,7 +127,7 @@ xxl_api() {
       done
     fi
   else
-    log "API access not succesfull - try to set up variables XXL_apiuser/XXL_apipass"
+    log "API access not succesfull - try to set up env. variables XXL_apiuser/XXL_apipass"
   fi
 }
 
