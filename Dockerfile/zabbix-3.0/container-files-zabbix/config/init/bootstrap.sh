@@ -14,7 +14,7 @@ separator=$(echo && printf '=%.0s' {1..100} && echo)
 # Logging functions
 log() {
   if [[ "$@" ]]; then echo "${bold}${green}[LOG `date +'%T'`]${reset} $@";
-  else echo; fi
+  else echo -n; fi
 }
 warning() {
   echo "${bold}${yellow}[WARNING `date +'%T'`]${reset} ${yellow}$@${reset}";
