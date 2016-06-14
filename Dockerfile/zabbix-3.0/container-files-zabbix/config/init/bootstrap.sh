@@ -317,7 +317,7 @@ else
     FZP_DBName=$(grep ^DBName= /etc/custom-config/zabbix_proxy.conf | awk -F= '{print $2}')
     if [ ! -z "$FZP_DBName" ]; then
       export ZP_DBName=$FZP_DBName
-    fi    
+    fi
   else
     > /usr/local/etc/zabbix_proxy.conf
     for i in $( set -o posix ; set | grep ^ZP_ | grep -v '^ZP_enabled' | sort -rn ); do
@@ -325,7 +325,7 @@ else
       val=$(echo ${i} | awk -F'=' '{print $2}')
       echo  "${reg}=${val}" >> /usr/local/etc/zabbix_proxy.conf
     done
-  fi    
+  fi
   # wait 120sec for DB server initialization
   retry=24
   log "Waiting for database server"
@@ -339,7 +339,7 @@ else
     fi
     sleep 5
   done
-  log "Database server is available"  
+  log "Database server is available"
   log "Checking if proxy database exists or SQL import is required"
   if ! mysql -u ${ZP_DBUser} -p${ZP_DBPassword} -h ${ZP_DBHost} -P ${ZP_DBPort} -e "use ${ZP_DBName};" &>/dev/null; then
     warning "Zabbix proxy database doesn't exist. Installing and importing default settings"

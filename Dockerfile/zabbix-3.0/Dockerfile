@@ -140,11 +140,14 @@ ENV \
   ZJ_TCP_TIMEOUT=3000 \
   ZP_LogType=console \
   ZP_DBHost=zabbixproxy.db \
-  ZP_DBName=zabbix \ 	
+  ZP_DBName=zabbix \
   ZP_DBUser=zabbix \
   ZP_DBPassword=zabbix \
   ZP_DBPort=3306 \
   ZP_User=zabbix \
+  XXL_searcher=true \
+  XXL_zapix=false \
+  XXL_grapher=false \
   TERM=xterm
 
 # Layer: base
@@ -186,7 +189,8 @@ RUN \
               java-1.8.0-openjdk-devel mariadb-devel libxml2-devel gettext \
               libcurl-devel OpenIPMI-devel mysql iksemel-devel libssh2-devel \
               unixODBC unixODBC-devel mysql-connector-odbc postgresql-odbc \
-              openldap-devel telnet net-tools snmptt sudo rubygems && \
+              openldap-devel telnet net-tools snmptt sudo rubygems jq \
+              openssh-clients python-httplib2 python-simplejson && \
  `# reinstall glibc for locales` \
   yum -y -q reinstall glibc-common && \
   cp /usr/local/etc/zabbix_agentd.conf /tmp && \
@@ -242,11 +246,34 @@ RUN \
   rm -rf /usr/local/src/zabbix/[a,A,b,c,C,i,I,m,M,n,N,r,R,s,t,u,r,\.]* /usr/local/src/zabbix/depcomp /usr/local/src/zabbix/.svn && \
   rm -rf /usr/local/src/zabbix/database/[i,M,o,p,s]* && \
   rm -rf /tmp/*
-
   # TODO apply http://geofrogger.net/review/snmptt-hide-generic-part.patch
+
+# Layer: zabbix-xxl
+COPY container-files-zabbix-xxl /
+RUN \
+  ### branding / menu ### && \
+  sed -i "s/ZABBIX_VERSION.*'\(.*\)'/ZABBIX_VERSION', '\1 XXL'/g" /usr/local/src/zabbix/frontends/php/include/defines.inc.php && \
+  grep 'XXL' /usr/local/src/zabbix/frontends/php/include/defines.inc.php && \
+  sed -i "s#]))->addClass(ZBX_STYLE_FOOTER);#,' / ',(new CLink('Monitoring Artist Ltd', 'http://www.monitoringartist.com'))->addClass(ZBX_STYLE_GREY)->addClass(ZBX_STYLE_LINK_ALT)->setAttribute('target', '_blank'),]))->addClass(ZBX_STYLE_FOOTER);#g" /usr/local/src/zabbix/frontends/php/include/html.inc.php && \
+  grep 'www.monitoringartist.com' /usr/local/src/zabbix/frontends/php/include/html.inc.php && \
+  sed -i "s/(new CDiv())->addClass(ZBX_STYLE_SIGNIN_LOGO),/(new CDiv())->addClass(ZBX_STYLE_SIGNIN_LOGO),(new CDiv())->addClass(ZBX_STYLE_CENTER)->addItem((new CTag('h1', true, _('Zabbix 3.0 XXL')))->addClass(ZBX_STYLE_BLUE))->addItem((new CLink(_('Maintained by Monitoring Artist'), 'http:\/\/www.monitoringartist.com'))->setTarget('_blank')->addClass(ZBX_STYLE_GREY)),/g" /usr/local/src/zabbix/frontends/php/include/views/general.login.php && \
+  grep 'www.monitoringartist.com' /usr/local/src/zabbix/frontends/php/include/views/general.login.php && \
+  sed -i "s#echo '</body></html>';#echo \"<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-72810204-2','auto');ga('send','pageview');</script></body></html>\";#g" /usr/local/src/zabbix/frontends/php/include/page_footer.php && \
+  grep 'UA-72810204-2' /usr/local/src/zabbix/frontends/php/include/page_footer.php && \
+  sed -i "s#echo '</body></html>';#echo \"<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-72810204-2','auto');ga('send','pageview');</script></body></html>\";#g" /usr/local/src/zabbix/frontends/php/app/views/layout.htmlpage.php && \
+  grep 'UA-72810204-2' /usr/local/src/zabbix/frontends/php/app/views/layout.htmlpage.php && \
+  sed -i "s#'login' => \[#'xxl' => \n[\n'label' => _('XXL extensions'),\n'user_type' => USER_TYPE_SUPER_ADMIN,\n'default_page_id' => 0,\n'pages' => [\n['url' => 'searcher.php','label' => _('Searcher'),],\n['url' => 'zapix.php','label' => _('Zapix'),],\n['url' => 'grapher.php','label' => _('Grapher'),],\n['url' => 'about.php','label' => _('About'),]\n]],\n'login' => [#g" /usr/local/src/zabbix/frontends/php/include/menu.inc.php && \
+  grep 'XXL extensions' /usr/local/src/zabbix/frontends/php/include/menu.inc.php && \
+  sed -i "s#'admin': 0},# 'admin': 0, 'xxl': 0},#g" /usr/local/src/zabbix/frontends/php/js/main.js && \
+  grep "'xxl': 0}" /usr/local/src/zabbix/frontends/php/js/main.js && \
+  #sed -i "s#case PAGE_TYPE_XML:#case PAGE_TYPE_PEM:\nheader('Content-Type: application/x-pem-file');\nheader('Content-Disposition: attachment; filename=\"'.\$page['file'].'\"');\nbreak;\ncase PAGE_TYPE_XML:#g" /usr/local/src/zabbix/frontends/php/include/page_header.php && \
+  #grep 'case PAGE_TYPE_PEM:' /usr/local/src/zabbix/frontends/php/include/page_header.php && \
+  #sed -i "s#define('PAGE_TYPE_HTML'#define('PAGE_TYPE_PEM',-1);\ndefine('PAGE_TYPE_HTML'#g" /usr/local/src/zabbix/frontends/php/include/defines.inc.php && \
+  #grep 'PAGE_TYPE_PEM' /usr/local/src/zabbix/frontends/php/include/defines.inc.php
+  rm -rf /tmp/*
 
 CMD ["/config/bootstrap.sh"]
 
-VOLUME ["/etc/custom-config", "/usr/local/share/zabbix/externalscripts", "/usr/local/share/zabbix/ssl/certs", "/usr/local/share/zabbix/ssl/keys", "/usr/lib/zabbix/modules", "/usr/share/snmp/mibs", "/etc/snmp"]
+VOLUME ["/etc/custom-config", "/usr/local/share/zabbix/alertscripts/", "/usr/local/share/zabbix/externalscripts", "/usr/local/share/zabbix/ssl/certs", "/usr/local/share/zabbix/ssl/keys", "/usr/lib/zabbix/modules", "/usr/share/snmp/mibs", "/etc/snmp"]
 
 EXPOSE 80 162/udp 10051 10052

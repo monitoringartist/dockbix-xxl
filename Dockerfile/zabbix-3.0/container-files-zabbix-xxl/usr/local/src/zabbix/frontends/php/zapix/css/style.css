@@ -1,0 +1,95 @@
+.pseudoLink{
+	color: #00008b;
+	border-bottom: 1px dotted #00008b;
+	cursor: pointer;
+}
+
+.pseudoLink:hover{
+	color: #4b0082;
+	border-bottom: 1px dotted #4b0082;
+}
+
+#apiparams {
+	width: 100%;
+	height: 200px;
+}
+
+#saveRequestParams {
+	width: 350px;
+	height: 200px;
+}
+
+.tt-menu {
+background-color: #fff;
+border-bottom: 1px solid #ccc;
+border-left: 1px solid #ccc;
+border-right: 1px solid #ccc;
+border-radius: 4px;
+margin-top: 3px;
+min-width: 180px;
+}
+
+.tt-selectable {
+cursor: pointer;
+padding: 2px 8px 2px 8px;
+}
+
+.tt-selectable:hover {
+background-color: #0088CC;
+color: #fff;
+} 
+.btn-mini {
+margin-top: 8px;
+padding: 5px 8px;
+}
+#testResult {
+margin-top: 0.5em;
+}
+#rsp {
+margin-top: 12px;
+margin-bottom: 14px;
+}
+#load {
+   position: absolute;
+   left: 10px;
+   top: 170px;
+   width: 98%;
+   height: 95%;
+   display:none;
+   background-color: #fff;
+}
+.spinner {
+  display: inline-block;
+  opacity: 0;
+  width: 0;
+
+  -webkit-transition: opacity 0s, width 0s;
+  -moz-transition: opacity 0s, width 0s;
+  -o-transition: opacity 0s, width 0s;
+  transition: opacity 0s, width 0s;
+}
+.has-spinner.active {
+  cursor:progress;
+}
+
+.has-spinner.active .spinner {
+  opacity: 1;
+  width: auto; /* This doesn't work, just fix for unkown width elements */
+}
+
+.has-spinner.active .play {
+  opacity: 0;
+  width: 0;
+  display: none;  
+}
+.has-spinner .play {
+ display: inline-block;
+ width: 10px;
+}
+
+.has-spinner.btn.active .spinner {
+    width: 14px;
+}
+#apimethod {
+background-color: white;
+}

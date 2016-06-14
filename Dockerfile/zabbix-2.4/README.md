@@ -1,20 +1,17 @@
-Zabbix Dockerfiles
-==================
+Zabbix XXL
+==========
 
-[Zabbix XXL GitHub repo](https://github.com/monitoringartist/zabbix-xxl) is
-intended as a source for [Zabbix Docker registry](https://registry.hub.docker.com/repos/zabbix/).
-Please use these Zabbix Docker images, if you want to
-[build/ship own Zabbix Docker image](https://github.com/monitoringartist/zabbix-xxl#how-to-build-own-docker-image).
+[Zabbix XXL](https://github.com/monitoringartist/zabbix-server-xxl-docker) is a standard Zabbix prepared for Docker world. You must install Zabbix package (rpm, deb, ...) in the old world. Similarly you need to pull Zabbix Docker image in the Docker world. This Docker image contains standard Zabbix + additional XXL (community) extensions. Routine tasks such as import of Zabbix DB are automated, so it's prepared for easy deployment.
 
-zabbix-2.4 [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-2.4/) [![](https://badge.imagelayers.io/zabbix/zabbix-2.4:latest.svg)](https://imagelayers.io/?images=zabbix/zabbix-2.4:latest)
+zabbix-2.4 [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-2.4/) [![](https://badge.imagelayers.io/monitoringartist/zabbix-2.4:latest.svg)](https://imagelayers.io/?images=monitoringartist/zabbix-2.4:latest)
 =================
 
 **Zabbix 2.4 is not supported** - please use 3.0 version - http://www.zabbix.com/life_cycle_and_release_policy.php
 
-Compiled Zabbix with almost all features (MySQL support, Java, SNMP,
-Curl, IPMI, IPv6, Jabber, fping) and Zabbix web UI based on CentOS 7,
-Supervisor, Nginx, PHP. Image requires external MySQL/MariaDB database (you can
-run MySQL/MariaDB also as Docker container).
+Compiled Zabbix with almost all features (MySQL support, Java, SNMP, 
+Curl, Ipmi, fping) and Zabbix web UI based on CentOS 7, Supervisor, Nginx, PHP. 
+Image requires external MySQL database (you can run MySQL also as Docker 
+container).
 
 #### Standard Dockerized Zabbix deployment
 
@@ -31,7 +28,7 @@ docker run \
     --volumes-from zabbix-db-storage \
     --env="MARIADB_USER=zabbix" \
     --env="MARIADB_PASS=my_password" \
-    zabbix/zabbix-db-mariadb
+    monitoringartist/zabbix-db-mariadb
 
 # start Zabbix linked to started DB
 docker run \
@@ -44,10 +41,14 @@ docker run \
     --env="ZS_DBHost=zabbix.db" \
     --env="ZS_DBUser=zabbix" \
     --env="ZS_DBPassword=my_password" \
-    zabbix/zabbix-2.4
+    monitoringartist/zabbix-2.4
 # wait ~60 seconds for Zabbix initialization
 # Zabbix web UI will be available on the port 80, Zabbix server on the port 10051
+```
 
+Examples of admin tasks:
+
+```
 # Backup of Zabbix configuration data only
 docker exec \
     -ti zabbix-db \
@@ -70,10 +71,10 @@ docker-compose up -d
 ### Zabbix database as Docker container
 To be able to connect to database we would need one to be running first.
 Easiest way to do that is to use another docker image. For this purpose you
-can use [zabbix/zabbix-db-mariadb]
-(https://registry.hub.docker.com/u/zabbix/zabbix-db-mariadb) image as database.
+can use [monitoringartist/zabbix-db-mariadb]
+(https://registry.hub.docker.com/u/monitoringartist/zabbix-db-mariadb) image as database.
 
-For more information about zabbix/zabbix-db-mariadb see
+For more information about monitoringartist/zabbix-db-mariadb see
 [README of zabbix-db-mariadb]
 (https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-db-mariadb).
 
@@ -86,7 +87,7 @@ Example:
 		-v /etc/localtime:/etc/localtime:ro \
 		--env="MARIADB_USER=zabbix" \
 		--env="MARIADB_PASS=my_password" \
-		zabbix/zabbix-db-mariadb
+		monitoringartist/zabbix-db-mariadb
 
 Remember to use the same credentials when deploying zabbix image.
 
@@ -216,7 +217,7 @@ Example:
 		--env="ZS_DBHost=zabbix.db" \
 		--env="ZS_DBUser=zabbix" \
 		--env="ZS_DBPassword=my_password" \
-		zabbix/zabbix-2.4
+		monitoringartist/zabbix-2.4
 
 #### Access to Zabbix web interface
 To log in into Zabbix web interface for the first time use credentials
@@ -246,7 +247,7 @@ docker exec -ti zabbix /bin/bash
 
 History of an image and size of layers:
 ```
-docker history --no-trunc=true zabbix/zabbix-2.4 | tr -s ' ' | tail -n+2 | awk -F " ago " '{print $2}'
+docker history --no-trunc=true monitoringartist/zabbix-2.4 | tr -s ' ' | tail -n+2 | awk -F " ago " '{print $2}'
 ```
 
 Run specific Zabbix version, e.g. 2.4.4 - just specify 2.4.4 tag for image:
@@ -261,5 +262,16 @@ Run specific Zabbix version, e.g. 2.4.4 - just specify 2.4.4 tag for image:
 		--env="ZS_DBHost=zabbix.db" \
 		--env="ZS_DBUser=zabbix" \
 		--env="ZS_DBPassword=my_password" \
-		zabbix/zabbix-2.4:2.4.4
+		monitoringartist/zabbix-2.4:2.4.4
 ```
+
+Author
+======
+
+[Devops Monitoring Expert](http://www.jangaraj.com 'DevOps / Docker / Kubernetes / AWS ECS / Zabbix / Zenoss / Terraform / Monitoring'),
+who loves monitoring systems, which start with letter Z. Those are Zabbix and Zenoss.
+
+Professional devops / monitoring services:
+
+[![Monitoring Artist](http://monitoringartist.com/img/github-monitoring-artist-logo.jpg)]
+(http://www.monitoringartist.com 'DevOps / Docker / Kubernetes / AWS ECS / Zabbix / Zenoss / Terraform / Monitoring')
