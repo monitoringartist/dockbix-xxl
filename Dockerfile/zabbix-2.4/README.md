@@ -263,3 +263,14 @@ Run specific Zabbix version, e.g. 2.4.4 - just specify 2.4.4 tag for image:
 		--env="ZS_DBPassword=my_password" \
 		zabbix/zabbix-2.4:2.4.4
 ```
+
+Author
+======
+
+[Devops Monitoring Expert](http://www.jangaraj.com 'DevOps / Docker / Kubernetes / AWS ECS / Zabbix / Zenoss / Terraform / Monitoring'),
+who loves monitoring systems, which start with letter Z. Those are Zabbix and Zenoss.
+
+Professional devops / monitoring services:
+
+[![Monitoring Artist](http://monitoringartist.com/img/github-monitoring-artist-logo.jpg)]
+(http://www.monitoringartist.com 'DevOps / Docker / Kubernetes / AWS ECS / Zabbix / Zenoss / Terraform / Monitoring')
