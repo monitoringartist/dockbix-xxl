@@ -66,7 +66,7 @@ xxl_config() {
 
 xxl_api() {
   XXL_api=${XXL_api:-true}
-  if ! $XXL_api; then
+  if [ ! $XXL_api ] || [ ! $ZW_enabled ]; then
     return 0
   fi
 
