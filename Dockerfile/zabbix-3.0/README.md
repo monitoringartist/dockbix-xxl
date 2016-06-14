@@ -8,6 +8,10 @@ zabbix-3.0 [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/depl
 
 Compiled Zabbix (server, proxy, agent, java gateway, snmpd daemon) with almost all features (MySQL support, Java, SNMP, Curl, Ipmi, SSH, fping) and Zabbix web UI based on CentOS 7, Supervisor, Nginx, PHP. Image requires external MySQL/MariDB database (you can run MySQL/MariaDB as a Docker container). Integated XXL extensions: Searcher, Grapher, Zapix, template auto import, API command/script execution (some extensions must be explicitly enabled - see env variables section).
 
+![Zabbix 3.0 XXL Zabbix searcher](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-3.0-xxl-zabbix-searcher.png)
+![Zabbix 3.0 XXL Zapix](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-3.0-xxl-zapix.png)
+![Zabbix 3.0 XXL Grapher](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-3.0-xxl-grapher.png)
+
 #### Standard Dockerized Zabbix deployment
 
 ```
