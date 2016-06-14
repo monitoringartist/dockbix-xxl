@@ -52,7 +52,8 @@ Source repo: <a target="_blank" href="https://github.com/monitoringartist/zabbix
   </a>
   <a title="DevOps / Docker / Kubernetes / AWS ECS / Zabbix / Zenoss / Terraform / Monitoring" href="http://www.monitoringartist.com" target="_blank">
   Monitoring Artist</a> is a company, which provides professional devops, automation, cloud and monitoring services.<br />
-  Most of the projects are related to open source monitoring tools such as Zabbix, Zenoss, Grafana, ...
+  Most of the projects are related to open source monitoring tools such as Zabbix, Zenoss, Grafana, ...<br /><br />
+  Feel free to contact us (<a href="mailto:info@monitoringartist.com">info@monitoringartist.com</a>) for commercial support of your Dockerized Zabbix or Docker/Kubernete/AWS ECS monitoring.
   <div style="clear:both; width: 100%; height:0;font-size:0;"></div>
 </div>
 <p>
