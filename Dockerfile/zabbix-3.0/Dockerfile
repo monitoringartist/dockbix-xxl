@@ -255,6 +255,7 @@ RUN \
   yum install -y ipa-pgothic-fonts && \
   cp /usr/share/fonts/ipa-pgothic/ipagp.ttf /usr/local/src/zabbix/frontends/php/fonts && \
   yum autoremove -y ipa-pgothic-fonts && \
+  yum clean all && \
   ### branding / menu ### && \
   sed -i "s/ZABBIX_VERSION.*'\(.*\)'/ZABBIX_VERSION', '\1 XXL'/g" /usr/local/src/zabbix/frontends/php/include/defines.inc.php && \
   grep 'XXL' /usr/local/src/zabbix/frontends/php/include/defines.inc.php && \
