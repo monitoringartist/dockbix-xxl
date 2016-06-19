@@ -187,6 +187,11 @@ update_config() {
     sed -i "s#${reg}\$#${val}#g" /etc/php.d/zz-zabbix.ini
   done
 
+  ZBX_GRAPH_FONT_NAME=${ZBX_GRAPH_FONT_NAME:-DejaVuSans}
+  if [ $ZBX_GRAPH_FONT_NAME == "ipag" ]; then
+    sed -i "/ZBX_GRAPH_FONT_NAME/c\define('ZBX_GRAPH_FONT_NAME','ipag');" /usr/local/src/zabbix/frontends/php/include/defines.inc.php
+  fi
+
   if [ -f /etc/custom-config/php-zabbix.ini ]; then
     cp -f /etc/custom-config/php-zabbix.ini /etc/php.d/zz-zabbix.ini
   fi

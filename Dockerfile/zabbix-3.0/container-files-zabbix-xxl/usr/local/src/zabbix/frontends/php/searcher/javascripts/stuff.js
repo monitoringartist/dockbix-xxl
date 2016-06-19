@@ -17,7 +17,7 @@ function focusOnSearch (e) {
 }
 
 var counter = 1
-$jq.getJSON('//monitoringartist.github.io/zabbix-searcher/sources/github-community-repos.json', function (projects) {  
+$jq.getJSON('https://monitoringartist.github.io/zabbix-searcher/sources/github-community-repos.json', function (projects) {  
   var container = $jq('.container')
   Object.keys(projects).forEach( function (key) {
     var project = projects[key]

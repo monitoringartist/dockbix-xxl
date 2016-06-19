@@ -220,6 +220,8 @@ variables:
 | ZP_DBPort | 3306 |
 | ZP_User | zabbix |
 
+Note: Japanese users might want to set env. variable `ZBX_GRAPH_FONT_NAME=ipag` to support japanese font in graphs.
+
 #### Configuration from volume
 Full config files can be also used. Environment configs will be overridden by
 values from config files in this case. You need only to add */etc/custom-config/*
