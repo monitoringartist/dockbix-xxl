@@ -345,6 +345,11 @@ Run specific Zabbix version, e.g. 3.0.0 - just specify 3.0.0 tag for image:
 		monitoringartist/zabbix-3.0-xxl:3.0.0
 ```
 
+Experimental
+============
+
+- Distributed Application Bundle (Docker 1.12+) - [zabbix-3.0-xxl.dsb](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/Dockerfile/zabbix-3.0/zabbix-3.0-xxl.dsb)
+
 Related Zabbix Docker projects
 ==============================
 
