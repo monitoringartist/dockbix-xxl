@@ -4,7 +4,7 @@ zabbix-db-storage:
     - /var/lib/mysql
 
 zabbix-db:
-  image: zabbix/zabbix-db-mariadb
+  image: monitoringartist/zabbix-db-mariadb
   volumes:
     - /backups:/backups
     - /etc/localtime:/etc/localtime:ro
@@ -15,7 +15,7 @@ zabbix-db:
     - MARIADB_PASS=my_password
 
 zabbix-server:
-  image: zabbix/zabbix-3.0:latest
+  image: monitoringartist/zabbix-3.0-xxl:latest
   ports:
     - "80:80"
     - "10051:10051"

@@ -148,6 +148,10 @@ ENV \
   XXL_searcher=true \
   XXL_zapix=false \
   XXL_grapher=false \
+  XXL_api=true \
+  XXL_apiuser=Admin \
+  XXL_apipass=zabbix \
+  XXL_analytics=true \
   TERM=xterm
 
 # Layer: base
@@ -279,6 +283,6 @@ RUN \
 
 CMD ["/config/bootstrap.sh"]
 
-VOLUME ["/etc/custom-config", "/usr/local/share/zabbix/alertscripts/", "/usr/local/share/zabbix/externalscripts", "/usr/local/share/zabbix/ssl/certs", "/usr/local/share/zabbix/ssl/keys", "/usr/lib/zabbix/modules", "/usr/share/snmp/mibs", "/etc/snmp"]
+VOLUME ["/etc/custom-config", "/usr/local/share/zabbix/alertscripts", "/usr/local/share/zabbix/externalscripts", "/usr/local/share/zabbix/ssl/certs", "/usr/local/share/zabbix/ssl/keys", "/usr/lib/zabbix/modules", "/usr/share/snmp/mibs", "/etc/snmp"]
 
 EXPOSE 80 162/udp 10051 10052

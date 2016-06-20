@@ -1,7 +1,7 @@
 version: '2'
 services:
   zabbix-db:
-    image: zabbix/zabbix-db-mariadb
+    image: monitoringartist/zabbix-db-mariadb
     volumes:
       - zabbix-db-storage:/var/lib/mysql
       - backups:/backups
@@ -10,7 +10,7 @@ services:
       - MARIADB_USER=zabbix
       - MARIADB_PASS=my_password
   zabbix-server:
-    image: zabbix/zabbix-3.0:latest
+    image: monitoringartist/zabbix-3.0-xxl:latest
     depends_on:
       - zabbix-db
     ports:
