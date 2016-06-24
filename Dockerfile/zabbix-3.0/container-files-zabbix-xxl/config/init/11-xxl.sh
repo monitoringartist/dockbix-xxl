@@ -105,7 +105,7 @@ xxl_api() {
           template=$(cat $file | sed -e 's/\"/\\\"/g' | sed -e 's/^[ \t]*//' | tr --delete '\n')
           apicall="{\"jsonrpc\":\"2.0\",\"method\":\"configuration.import\",\"id\":<ID>,\"auth\":\"<AUTH_TOKEN>\",\"params\":{\"format\":\"xml\",\"rules\":{\"templates\":{\"createMissing\":true,\"updateExisting\":true},\"images\":{\"createMissing\":true,\"updateExisting\":true},\"groups\":{\"createMissing\":true},\"triggers\":{\"createMissing\":true,\"updateExisting\":true},\"valueMaps\":{\"createMissing\":true,\"updateExisting\":true},\"hosts\":{\"createMissing\":true,\"updateExisting\":true},\"items\":{\"createMissing\":true,\"updateExisting\":true},\"maps\":{\"createMissing\":true,\"updateExisting\":true},\"screens\":{\"createMissing\":true,\"updateExisting\":true},\"templateScreens\":{\"createMissing\":true,\"updateExisting\":true},\"templateLinkage\":{\"createMissing\":true},\"applications\":{\"createMissing\":true,\"updateExisting\":true},\"graphs\":{\"createMissing\":true,\"updateExisting\":true},\"discoveryRules\":{\"createMissing\":true,\"updateExisting\":true}},\"source\":\"${template}\"}}"
           command=$(echo $apicall | sed -e "s/<ID>/$ID/g" | sed -e "s/<AUTH_TOKEN>/$AUTH_TOKEN/g")
-          output=$(curl -s -X POST -H 'Content-Type: application/json-rpc' -d "${command}" http://0.0.0.0/api_jsonrpc.php)
+          output=$(echo $command | curl -s -X POST -H 'Content-Type: application/json-rpc' -d @- http://0.0.0.0/api_jsonrpc.php)
           log "API response: $output"
           ID=$((ID+1))
         elif [[ "$file" == *api ]]; then
