@@ -5,7 +5,7 @@ Zabbix XXL
 
 If you like or use this project, please provide feedback to author - Star it ★.
 
-**Overview of Monitoring Artist Dockerized monitoring ecosystem:**
+**Overview of Monitoring Artist (dockerized) monitoring ecosystem:**
 
 - **[Zabbix XXL](https://hub.docker.com/r/monitoringartist/zabbix-3.0-xxl/)** - standard Zabbix 3.0 server/proxy/UI/snmpd/java gateway with additional XXL extensions
 - **[Zabbix agent XXL](https://hub.docker.com/r/monitoringartist/zabbix-agent-xxl-limited/)** - Zabbix 3.0 agent with [Docker (Mesos/Chronos/Marathon) monitoring](https://github.com/monitoringartist/zabbix-docker-monitoring) and [systemd monitoring](https://github.com/monitoringartist/zabbix-systemd-monitoring)
@@ -13,16 +13,15 @@ If you like or use this project, please provide feedback to author - Star it ★
 - **[Zabbix extension - all templates](https://hub.docker.com/r/monitoringartist/zabbix-ext-all-templates/)** - storage image for Zabbix XXL with 200+ [community templates](https://github.com/monitoringartist/zabbix-community-repos)
 - **[Kubernetized Zabbix](https://github.com/monitoringartist/kubernetes-zabbix)** - containerized Zabbix cluster based on Kubernetes
 - **[Grafana XXL](https://hub.docker.com/r/monitoringartist/grafana-xxl/)** - dockerized Grafana with all community plugins
+- **[Grafana dashboards](https://grafana.net/monitoringartist)** - Grafana dashboard collection for [AWS](https://github.com/monitoringartist/grafana-aws-cloudwatch-dashboards) and [Zabbix](https://github.com/monitoringartist/grafana-zabbix-dashboards)
 - **[Monitoring Analytics](https://hub.docker.com/r/monitoringartist/monitoring-analytics/)** - R statistical computing and graphics for monitoring from data scientists
 - **[Docker killer](https://hub.docker.com/r/monitoringartist/docker-killer/)** - Docker image for Docker stress and Docker orchestration testing
 
 Zabbix DB - MariaDB 10.0 [![](https://badge.imagelayers.io/monitoringartist/zabbix-db-mariadb:latest.svg)](https://imagelayers.io/?images=monitoringartist/zabbix-db-mariadb:latest)
 ========================
 
-This is a MariaDB 10.0 Docker [zabbix/zabbix-db-mariadb]
-(https://hub.docker.com/r/monitoringartist/zabbix-db-mariadb/) 
-image. Built on top of official [centos:centos7]
-(https://registry.hub.docker.com/_/centos/) 
+This is a MariaDB 10.0 Docker [zabbix/zabbix-db-mariadb](https://hub.docker.com/r/monitoringartist/zabbix-db-mariadb/) 
+image. Built on top of official [centos:centos7](https://registry.hub.docker.com/_/centos/) 
 image. Inspired by [Tutum](https://github.com/tutumcloud)'s 
 [tutum/mariadb](https://github.com/tutumcloud/tutum-docker-mariadb) image.
 
