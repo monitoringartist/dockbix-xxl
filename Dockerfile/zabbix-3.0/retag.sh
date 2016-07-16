@@ -42,3 +42,5 @@ sleep 5
 git add Dockerfile
 sleep 5
 git commit -m "Master = dev = trunk"
+git push origin master
+
