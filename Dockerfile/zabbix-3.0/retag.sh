@@ -1,6 +1,7 @@
 #!/bin/bash
 # use on master branch and retag also older tags
 
+# delete all current tags
 tags=()
 for t in `git tag`
 do
@@ -15,6 +16,7 @@ done
 git push origin master
 git push origin --tags
 
+# create tags from the list
 tags=('3.0.0' '3.0.1' '3.0.2' '3.0.3' '3.0.4');
 for t in "${tags[@]}"
 do
@@ -32,3 +34,11 @@ do
 done
 git push origin master
 git push origin --tags
+
+# master is dev image = trunk
+git checkout master
+sed -i -e "s#^[[:space:]]*ZABBIX_VERSION=.*#  ZABBIX_VERSION=trunk \\\#" Dockerfile
+sleep 5
+git add Dockerfile
+sleep 5
+git commit -m "Master = dev = trunk"
