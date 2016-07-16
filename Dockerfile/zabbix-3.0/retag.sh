@@ -1,6 +1,5 @@
 #!/bin/bash
-
-# use on master branche and retag also older tags
+# use on master branch and retag also older tags
 
 tags=()
 for t in `git tag`
@@ -16,7 +15,7 @@ done
 git push origin master
 git push origin --tags
 
-tags=('3.0.0' '3.0.1' '3.0.2' '3.0.3');
+tags=('3.0.0' '3.0.1' '3.0.2' '3.0.3' '3.0.4');
 for t in "${tags[@]}"
 do
     echo "Creating tags $t"
@@ -33,4 +32,3 @@ do
 done
 git push origin master
 git push origin --tags
-
