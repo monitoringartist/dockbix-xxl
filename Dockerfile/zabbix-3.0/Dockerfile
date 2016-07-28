@@ -36,6 +36,7 @@ ENV \
   ZW_ZBX_SERVER_PORT=10051 \
   ZW_ZBX_SERVER_NAME="Zabbix Server" \
   ZA_LogType=console \
+  ZA_Hostname="Zabbix Server" \
   ZJ_LISTEN_IP=0.0.0.0 \
   ZJ_LISTEN_PORT=10052 \
   ZJ_PID_FILE=/tmp/zabbix_java.pid \
