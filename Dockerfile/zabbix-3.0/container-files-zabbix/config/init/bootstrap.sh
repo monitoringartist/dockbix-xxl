@@ -65,123 +65,36 @@ fix_permissions() {
 }
 update_config() {
   # ^ZS_: /usr/local/etc/zabbix_server.conf
-  for i in $( set -o posix ; set | grep ^ZS_ | grep -v ^ZS_Include | grep -v ^ZS_LoadModule | grep -v ^ZS_SourceIP | grep -v ^ZS_TLS | sort -rn ); do
-    reg=$(echo ${i} | awk -F'=' '{print $1}')
+  > /usr/local/etc/zabbix_server.conf
+  for i in $( printenv | grep ^ZS_ | grep -v '^ZS_enabled' | sort -rn ); do
+    reg=$(echo ${i} | awk -F'=' '{print $1}' | sed 's|^ZS_||')
     val=$(echo ${i} | awk -F'=' '{print $2}')
-    sed -i "s#=${reg}\$#=${val}#g" /usr/local/etc/zabbix_server.conf
-    sed -i "s#${reg}#${val}#g" /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
+    echo  "${reg}=${val}" >> /usr/local/etc/zabbix_server.conf
   done
-  if [ "$ZS_SourceIP" != "" ]; then
-    sed -i -e "\|^SourceIP=|d" /usr/local/etc/zabbix_server.conf
-    echo SourceIP=${ZS_SourceIP} >> /usr/local/etc/zabbix_server.conf
-  fi
-  if [ "$ZS_Include" != "" ]; then
-    sed -i -e "\|^Include=|d" /usr/local/etc/zabbix_server.conf
-    echo Include=${ZS_Include} >> /usr/local/etc/zabbix_server.conf
-  fi
-  if [ "$ZS_LoadModule" != "" ]; then
-    sed -i -e "\|^LoadModule=|d" /usr/local/etc/zabbix_server.conf
-    echo LoadModule=${ZS_LoadModule} >> /usr/local/etc/zabbix_server.conf
-  fi
-  if [ "$ZS_TLSCAFile" != "" ]; then
-    sed -i -e "\|^TLSCAFile=|d" /usr/local/etc/zabbix_server.conf
-    echo TLSCAFile=${ZS_TLSCAFile} >> /usr/local/etc/zabbix_server.conf
-  fi
-  if [ "$ZS_TLSCRLFile" != "" ]; then
-    sed -i -e "\|^TLSCRLFile=|d" /usr/local/etc/zabbix_server.conf
-    echo TLSCRLFile=${ZS_TLSCRLFile} >> /usr/local/etc/zabbix_server.conf
-  fi
-  if [ "$ZS_TLSCertFile" != "" ]; then
-    sed -i -e "\|^TLSCertFile=|d" /usr/local/etc/zabbix_server.conf
-    echo TLSCertFile=${ZS_TLSCertFile} >> /usr/local/etc/zabbix_server.conf
-  fi
-  if [ "$ZS_TLSCAFile" != "" ]; then
-    sed -i -e "\|^TLSKeyFile=|d" /usr/local/etc/zabbix_server.conf
-    echo TLSKeyFile=${ZS_TLSKeyFile} >> /usr/local/etc/zabbix_server.conf
-  fi
 
   # ^ZA_: /usr/local/etc/zabbix_agentd.conf
   export ZA_Hostname_e=$(echo ${ZA_Hostname} | sed -e 's/ /\\\ /g')
   sed -i "s#ZA_Hostname#${ZA_Hostname_e}#g" /usr/local/etc/zabbix_agentd.conf
   unset ZA_Hostname_e
-  for i in $( set -o posix ; set | grep ^ZA_ | sort -rn ); do
-    reg=$(echo ${i} | awk -F'=' '{print $1}')
+  > /usr/local/etc/zabbix_agentd.conf
+  for i in $( printenv | grep ^ZA_ | grep -v '^ZA_enabled' | sort -rn ); do
+    reg=$(echo ${i} | awk -F'=' '{print $1}' | sed 's|^ZA_||')
     val=$(echo ${i} | awk -F'=' '{print $2}')
-    sed -i "s#=${reg}\$#=${val}#g" /usr/local/etc/zabbix_agentd.conf
+    echo  "${reg}=${val}" >> /usr/local/etc/zabbix_agentd.conf
   done
-  if [ "$ZA_TLSCAFile" != "" ]; then
-    sed -i -e "\|^TLSCAFile=|d" /usr/local/etc/zabbix_agentd.conf
-    echo TLSCAFile=${ZA_TLSCAFile} >> /usr/local/etc/zabbix_agentd.conf
-  fi
-  if [ "$ZA_TLSCRLFile" != "" ]; then
-    sed -i -e "\|^TLSCRLFile=|d" /usr/local/etc/zabbix_agentd.conf
-    echo TLSCRLFile=${ZA_TLSCRLFile} >> /usr/local/etc/zabbix_agentd.conf
-  fi
-  if [ "$ZA_TLSServerCertIssuer" != "" ]; then
-    sed -i -e "\|^TLSServerCertIssuer=|d" /usr/local/etc/zabbix_agentd.conf
-    echo TLSServerCertIssuer=${ZA_TLSServerCertIssuer} >> /usr/local/etc/zabbix_agentd.conf
-  fi
-  if [ "$ZA_TLSServerCertSubject" != "" ]; then
-    sed -i -e "\|^TLSServerCertSubject=|d" /usr/local/etc/zabbix_agentd.conf
-    echo TLSServerCertSubject=${ZA_TLSServerCertSubject} >> /usr/local/etc/zabbix_agentd.conf
-  fi
-  if [ "$ZA_TLSCertFile" != "" ]; then
-    sed -i -e "\|^TLSCertFile=|d" /usr/local/etc/zabbix_agentd.conf
-    echo TLSCertFile=${ZA_TLSCertFile} >> /usr/local/etc/zabbix_agentd.conf
-  fi
-  if [ "$ZA_TLSKeyFile" != "" ]; then
-    sed -i -e "\|^TLSKeyFile=|d" /usr/local/etc/zabbix_agentd.conf
-    echo TLSKeyFile=${ZA_TLSKeyFile} >> /usr/local/etc/zabbix_agentd.conf
-  fi
-  if [ "$ZA_TLSPSKIdentity" != "" ]; then
-    sed -i -e "\|^TLSPSKIdentity=|d" /usr/local/etc/zabbix_agentd.conf
-    echo TLSPSKIdentity=${ZA_TLSPSKIdentity} >> /usr/local/etc/zabbix_agentd.conf
-  fi
-  if [ "$ZA_TLSPSKFile" != "" ]; then
-    sed -i -e "\|^TLSPSKFile=|d" /usr/local/etc/zabbix_agentd.conf
-    echo TLSPSKFile=${ZA_TLSPSKFile} >> /usr/local/etc/zabbix_agentd.conf
-  fi
-  if [ "$ZA_SourceIP" != "" ]; then
-    sed -i -e "\|^SourceIP=|d" /usr/local/etc/zabbix_agentd.conf
-    echo SourceIP=${ZA_SourceIP} >> /usr/local/etc/zabbix_agentd.conf
-  fi
-  if [ "$ZA_LoadModulePath" != "" ]; then
-    sed -i -e "\|^LoadModulePath=|d" /usr/local/etc/zabbix_agentd.conf
-    echo LoadModulePath=${ZA_LoadModulePath} >> /usr/local/etc/zabbix_agentd.conf
-  fi
-  if [ "$ZA_UserParameter" != "" ]; then
-    sed -i -e "\|^UserParameter=|d" /usr/local/etc/zabbix_agentd.conf
-    echo UserParameter=${ZA_UserParameter} >> /usr/local/etc/zabbix_agentd.conf
-  fi
-  if [ "$ZA_HostMetadata" != "" ]; then
-    sed -i -e "\|^HostMetadata=|d" /usr/local/etc/zabbix_agentd.conf
-    echo HostMetadata=${ZA_HostMetadata} >> /usr/local/etc/zabbix_agentd.conf
-  fi
-  if [ "$ZA_Include" != "" ]; then
-    sed -i -e "\|^Include=|d" /usr/local/etc/zabbix_agentd.conf
-    echo Include=${ZA_Include} >> /usr/local/etc/zabbix_agentd.conf
-  fi
-  if [ "$ZA_Hostname" != "" ]; then
-    sed -i -e "\|^Hostname=|d" /usr/local/etc/zabbix_agentd.conf
-    echo Hostname=${ZA_Hostname} >> /usr/local/etc/zabbix_agentd.conf
-  fi
-  if [ "$ZA_HostnameItem" != "" ]; then
-    sed -i -e "\|^HostnameItem=|d" /usr/local/etc/zabbix_agentd.conf
-    echo HostnameItem=${ZA_HostnameItem} >> /usr/local/etc/zabbix_agentd.conf
-  fi
 
   # ^ZW_: /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
   export ZW_ZBX_SERVER_NAME_e=$(echo ${ZW_ZBX_SERVER_NAME} | sed -e 's/ /\\\ /g')
   sed -i "s#ZW_ZBX_SERVER_NAME#${ZW_ZBX_SERVER_NAME_e}#g" /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
   unset ZW_ZBX_SERVER_NAME_e
-  for i in $( set -o posix ; set | grep ^ZW_ | grep -v ^ZW_ZBX_SERVER_NAME | sort -rn ); do
+  for i in $( printenv | grep ^ZW_ | grep -v ^ZW_ZBX_SERVER_NAME | sort -rn ); do
     reg=$(echo ${i} | awk -F'=' '{print $1}')
     val=$(echo ${i} | awk -F'=' '{print $2}')
     sed -i "s#${reg}#${val}#g" /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
   done
 
   # ^PHP_: /etc/php.d/zz-zabbix.ini
-  for i in $( set -o posix ; set | grep ^PHP_ | sort -rn ); do
+  for i in $( printenv | grep ^PHP_ | sort -rn ); do
     reg=$(echo ${i} | awk -F'=' '{print $1}')
     val=$(echo ${i} | awk -F'=' '{print $2}')
     sed -i "s#${reg}\$#${val}#g" /etc/php.d/zz-zabbix.ini
@@ -325,7 +238,7 @@ else
     fi
   else
     > /usr/local/etc/zabbix_proxy.conf
-    for i in $( set -o posix ; set | grep ^ZP_ | grep -v '^ZP_enabled' | sort -rn ); do
+    for i in $( printenv | grep ^ZP_ | grep -v '^ZP_enabled' | sort -rn ); do
       reg=$(echo ${i} | awk -F'=' '{print $1}' | sed 's|^ZP_||')
       val=$(echo ${i} | awk -F'=' '{print $2}')
       echo  "${reg}=${val}" >> /usr/local/etc/zabbix_proxy.conf
