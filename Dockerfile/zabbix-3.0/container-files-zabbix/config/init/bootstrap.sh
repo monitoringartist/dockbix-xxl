@@ -70,7 +70,7 @@ update_config() {
     reg=$(echo ${i} | awk -F'=' '{print $1}' | sed 's|^ZS_||')
     val=$(echo ${i} | awk -F'=' '{print $2}')
     echo  "${reg}=${val}" >> /usr/local/etc/zabbix_server.conf
-    sed -i "s#${reg}#${val}#g" /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
+    sed -i "s#ZS_${reg}#${val}#g" /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
   done
 
   # ^ZA_: /usr/local/etc/zabbix_agentd.conf
