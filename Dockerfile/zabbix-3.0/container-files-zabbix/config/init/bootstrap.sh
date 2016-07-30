@@ -66,9 +66,9 @@ fix_permissions() {
 update_config() {
   # ^ZS_: /usr/local/etc/zabbix_server.conf
   > /usr/local/etc/zabbix_server.conf
-  for i in $( printenv | grep ^ZS_ | grep -v '^ZS_enabled' | sort -rn ); do
-    reg=$(echo ${i} | awk -F'=' '{print $1}' | sed 's|^ZS_||')
-    val=$(echo ${i} | awk -F'=' '{print $2}')
+  for i in $( printenv | grep ^ZS_ | grep -v '^ZS_enabled' | awk -F'=' '{print $1}' | sort -rn ); do
+    reg=$(echo ${i} | sed 's|^ZS_||')
+    val=$(echo ${!i})
     echo  "${reg}=${val}" >> /usr/local/etc/zabbix_server.conf
     sed -i "s#ZS_${reg}#${val}#g" /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
   done
@@ -78,9 +78,9 @@ update_config() {
   sed -i "s#ZA_Hostname#${ZA_Hostname_e}#g" /usr/local/etc/zabbix_agentd.conf
   unset ZA_Hostname_e
   > /usr/local/etc/zabbix_agentd.conf
-  for i in $( printenv | grep ^ZA_ | grep -v '^ZA_enabled' | sort -rn ); do
-    reg=$(echo ${i} | awk -F'=' '{print $1}' | sed 's|^ZA_||')
-    val=$(echo ${i} | awk -F'=' '{print $2}')
+  for i in $( printenv | grep ^ZA_ | grep -v '^ZA_enabled' |  awk -F'=' '{print $1}' | sort -rn ); do
+    reg=$(echo ${i} | sed 's|^ZA_||')
+    val=$(echo ${!i})
     echo  "${reg}=${val}" >> /usr/local/etc/zabbix_agentd.conf
   done
 
@@ -88,9 +88,9 @@ update_config() {
   export ZW_ZBX_SERVER_NAME_e=$(echo ${ZW_ZBX_SERVER_NAME} | sed -e 's/ /\\\ /g')
   sed -i "s#ZW_ZBX_SERVER_NAME#${ZW_ZBX_SERVER_NAME_e}#g" /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
   unset ZW_ZBX_SERVER_NAME_e
-  for i in $( printenv | grep ^ZW_ | grep -v ^ZW_ZBX_SERVER_NAME | sort -rn ); do
-    reg=$(echo ${i} | awk -F'=' '{print $1}')
-    val=$(echo ${i} | awk -F'=' '{print $2}')
+  for i in $( printenv | grep ^ZW_ | grep -v '^ZW_ZBX_SERVER_NAME' |  awk -F'=' '{print $1}' | sort -rn ); do
+    reg=$(echo ${i} | sed 's|^ZW_||')
+    val=$(echo ${!i})
     sed -i "s#${reg}#${val}#g" /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
   done
 
