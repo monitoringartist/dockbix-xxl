@@ -40,6 +40,8 @@ ENV \
   ZA_Hostname="Zabbix Server" \
   ZA_User=zabbix \
   ZA_PidFile=/tmp/zabbix_agentd.pid \
+  ZA_Server=127.0.0.1 \
+  ZA_ServerActive=127.0.0.1 \
   ZJ_LISTEN_IP=0.0.0.0 \
   ZJ_LISTEN_PORT=10052 \
   ZJ_PID_FILE=/tmp/zabbix_java.pid \
