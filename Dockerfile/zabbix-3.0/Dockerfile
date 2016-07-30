@@ -27,6 +27,7 @@ ENV \
   ZS_DBUser=zabbix \
   ZS_DBPassword=zabbix \
   ZS_DBPort=3306 \
+  ZS_PidFile=/tmp/zabbix_server.pid \
   ZS_AlertScriptsPath=/usr/local/share/zabbix/alertscripts \
   ZS_ExternalScripts=/usr/local/share/zabbix/externalscripts \
   ZS_SSLCertLocation=/usr/local/share/zabbix/ssl/certs \
@@ -37,6 +38,8 @@ ENV \
   ZW_ZBX_SERVER_NAME="Zabbix Server" \
   ZA_LogType=console \
   ZA_Hostname="Zabbix Server" \
+  ZA_User=zabbix \
+  ZA_PidFile=/tmp/zabbix_agentd.pid \
   ZJ_LISTEN_IP=0.0.0.0 \
   ZJ_LISTEN_PORT=10052 \
   ZJ_PID_FILE=/tmp/zabbix_java.pid \
