@@ -91,7 +91,7 @@ update_config() {
   for i in $( printenv | grep ^ZW_ | grep -v '^ZW_ZBX_SERVER_NAME' |  awk -F'=' '{print $1}' | sort -rn ); do
     reg=$(echo ${i} | sed 's|^ZW_||')
     val=$(echo ${!i})
-    sed -i "s#${reg}#${val}#g" /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
+    sed -i "s#ZW_${reg}#${val}#g" /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
   done
 
   # ^PHP_: /etc/php.d/zz-zabbix.ini
