@@ -4,7 +4,7 @@ MAINTAINER Jan Garaj info@monitoringartist.com
 # ZABBIX_VERSION=trunk tags/2.4.7 branches/dev/ZBXNEXT-1263-1
 
 ENV \
-  ZABBIX_VERSION=tags/2.4.3 \
+  ZABBIX_VERSION=tags/2.4.4 \
   ZS_enabled=true \
   ZA_enabled=true \
   ZW_enabled=true \
