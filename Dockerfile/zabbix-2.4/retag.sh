@@ -5,7 +5,7 @@
 tags=()
 for t in `git tag`
 do
-    if [[ "$t" != ^2.* ]]; then
+    if [[ "$t" != ^2* ]]; then
          continue
     fi
     echo "Deleting tags $t"
