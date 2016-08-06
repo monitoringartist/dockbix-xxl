@@ -67,9 +67,9 @@ update_config() {
   # ^ZS_: /usr/local/etc/zabbix_server.conf
   > /usr/local/etc/zabbix_server.conf
   for i in $( printenv | grep ^ZS_ | grep -v '^ZS_enabled' | awk -F'=' '{print $1}' | sort -rn ); do
-    reg=$(echo ${i} | sed 's|^ZS_||')
+    reg=$(echo ${i} | sed 's|^ZS_||' | sed -E "s/_[0-9]+$//")
     val=$(echo ${!i})
-    echo  "${reg}=${val}" >> /usr/local/etc/zabbix_server.conf
+    echo "${reg}=${val}" >> /usr/local/etc/zabbix_server.conf
     sed -i "s#ZS_${reg}#${val}#g" /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
   done
 
@@ -79,9 +79,9 @@ update_config() {
   unset ZA_Hostname_e
   > /usr/local/etc/zabbix_agentd.conf
   for i in $( printenv | grep ^ZA_ | grep -v '^ZA_enabled' |  awk -F'=' '{print $1}' | sort -rn ); do
-    reg=$(echo ${i} | sed 's|^ZA_||')
+    reg=$(echo ${i} | sed 's|^ZA_||' | sed -E "s/_[0-9]+$//")
     val=$(echo ${!i})
-    echo  "${reg}=${val}" >> /usr/local/etc/zabbix_agentd.conf
+    echo "${reg}=${val}" >> /usr/local/etc/zabbix_agentd.conf
   done
 
   # ^ZW_: /usr/local/src/zabbix/frontends/php/conf/zabbix.conf.php
@@ -239,10 +239,10 @@ else
     fi
   else
     > /usr/local/etc/zabbix_proxy.conf
-    for i in $( printenv | grep ^ZP_ | grep -v '^ZP_enabled' | sort -rn ); do
-      reg=$(echo ${i} | awk -F'=' '{print $1}' | sed 's|^ZP_||')
-      val=$(echo ${i} | awk -F'=' '{print $2}')
-      echo  "${reg}=${val}" >> /usr/local/etc/zabbix_proxy.conf
+    for i in $( printenv | grep ^ZP_ | grep -v '^ZP_enabled' | awk -F'=' '{print $1}' | sort -rn ); do
+      reg=$(echo ${i} | sed 's|^ZP_||' | sed -E "s/_[0-9]+$//")
+      val=$(echo ${!i})
+      echo "${reg}=${val}" >> /usr/local/etc/zabbix_proxy.conf
     done
   fi
   # wait 120sec for DB server initialization
