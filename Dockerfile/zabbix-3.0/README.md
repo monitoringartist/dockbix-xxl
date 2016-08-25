@@ -114,8 +114,8 @@ Remember to use the same credentials when deploying zabbix image.
 
 Available variables related to XXL features:
 
-| Variable | Default value | Description |
-| -------- | ------------- | ----------- |
+| Variable | Default value in the container | Description |
+| -------- | ------------------------------ | ----------- |
 | XXL_searcher | true | enable/disable [Zabbix searcher project](https://github.com/monitoringartist/zabbix-searcher) |
 | XXL_zapix | false | enable/disable [Zapix project](https://github.com/monitoringartist/zapix) |
 | XXL_grapher | false | enable/disable [Grapher project](https://github.com/sepich/zabbixGrapher) |
@@ -124,86 +124,30 @@ Available variables related to XXL features:
 | XXL_apipass | zabbix | password used for API commands |
 | XXL_analytics | true | enable/disable collecting of statistics via Google Analytics |
 
-You can use environmental variables to config Zabbix and Zabbix web UI (PHP). Available
-variables:
+Use environment variables to config Zabbix and Zabbix web UI (PHP).
+Default container variables or default Zabbix are used:
 
-| Variable | Default value |
-| -------- | ------------- |
+| Variable | Default value in the container |
+| -------- | ------------------------------ |
 | PHP_date_timezone | UTC |
 | PHP_max_execution_time | 300 |
 | PHP_max_input_time | 300 |
 | PHP_memory_limit | 128M |
 | PHP_error_reporting | E_ALL |
-| ZS_ListenPort | 10051 |
-| ZS_SourceIP | |
-| ZS_LogType | file |
-| ZS_LogFile | /tmp/zabbix_server.log |
-| ZS_LogFileSize | 10 |
-| ZS_DebugLevel | 3 |
-| ZS_PidFile | /var/run/zabbix_server.pid |
+| ZS_LogType | console  |
+| ZS_PidFile | /var/run/zabbix_server.pid  |
+| ZS_User | zabbix |
 | ZS_DBHost | zabbix.db |
 | ZS_DBName | zabbix |
-| ZS_DBSchema | |
 | ZS_DBUser | zabbix |
 | ZS_DBPassword | zabbix |
-| ZS_DBSocket | /tmp/mysql.sock |
 | ZS_DBPort | 3306 |
-| ZS_StartPollers | 5 |
-| ZS_StartPollersUnreachable | 1 |
-| ZS_StartTrappers | 5 |
-| ZS_StartPingers | 1 |
-| ZS_StartDiscoverers | 1 |
-| ZS_StartHTTPPollers | 1 |
-| ZS_StartIPMIPollers | 0 |
-| ZS_StartTimers | 1 |
-| ZS_JavaGateway | 127.0.0.1 |
-| ZS_JavaGatewayPort | 10052 |
-| ZS_StartJavaPollers | 0 |
-| ZS_StartVMwareCollectors | 0 |
-| ZS_VMwareFrequency | 60 |
-| ZS_VMwarePerfFrequency | 60 |
-| ZS_VMwareCacheSize | 8M |
-| ZS_VMwareTimeout | 10 |
-| ZS_SNMPTrapperFile | /tmp/zabbix_traps.tmp |
-| ZS_StartSNMPTrapper | 0 |
-| ZS_ListenIP | 0.0.0.0 |
-| ZS_HousekeepingFrequency | 1 |
-| ZS_MaxHousekeeperDelete | 500 |
-| ZS_SenderFrequency | 30 |
-| ZS_CacheSize | 8M |
-| ZS_CacheUpdateFrequency | 60 |
-| ZS_StartDBSyncers | 4 |
-| ZS_HistoryCacheSize | 8M |
-| ZS_TrendCacheSize | 4M |
-| ZS_HistoryTextCacheSize | 16M |
-| ZS_ValueCacheSize | 8M |
-| ZS_Timeout | 3 |
-| ZS_TrapperTimeout | 300 |
-| ZS_UnreachablePeriod | 45 |
-| ZS_UnavailableDelay | 60 |
-| ZS_UnreachableDelay | 15 |
+| ZS_PidFile | /tmp/zabbix_server.pid |
 | ZS_AlertScriptsPath | /usr/local/share/zabbix/alertscripts |
 | ZS_ExternalScripts | /usr/local/share/zabbix/externalscripts |
-| ZS_FpingLocation | /usr/sbin/fping |
-| ZS_Fping6Location | /usr/sbin/fping6 |
-| ZS_SSHKeyLocation | |
-| ZS_LogSlowQueries | 0 |
-| ZS_TmpDir | /tmp |
-| ZS_StartProxyPollers | 1 |
-| ZS_ProxyConfigFrequency | 3600 |
-| ZS_ProxyDataFrequency | 1 |
-| ZS_AllowRoot | 0 |
-| ZS_User | zabbix |
-| ZS_Include | |
 | ZS_SSLCertLocation | /usr/local/share/zabbix/ssl/certs |
 | ZS_SSLKeyLocation | /usr/local/share/zabbix/ssl/keys |
-| ZS_SSLCALocation | |
 | ZS_LoadModulePath | /usr/lib/zabbix/modules |
-| ZS_LoadModule | |
-| ZS_TLSCAFile | |
-| ZS_TLSCRLFile | |
-| ZS_TLSCertFile | |
-| ZS_TLSKeyFile | |
 | ZW_ZBX_SERVER | localhost |
 | ZW_ZBX_SERVER_PORT | 10051 |
 | ZW_ZBX_SERVER_NAME | Zabbix Server |
@@ -221,6 +165,15 @@ variables:
 | ZP_DBPassword | zabbix |
 | ZP_DBPort | 3306 |
 | ZP_User | zabbix |
+
+You add more variables, just add correct variable prefix (`ZS_` for Zabbix Server,
+`ZP_` for Zabbix Proxy) and set your custom value. Use numeric suffix (`_<NUM>`)
+for multiple config parameters. Example:
+
+```
+ZS_LoadModule_1=module1.so
+ZS_LoadModule_2=module2.so
+```
 
 Note: Japanese users might want to set env. variable `ZBX_GRAPH_FONT_NAME=ipagp` to support japanese font in graphs.
 
@@ -244,8 +197,8 @@ Available files:
 
 Zabbix role environment variables:
 
-| Variable | Default value | Description |
-| -------- | ------------- | ----------- |
+| Variable | Default value in the container | Description |
+| -------- | ------------------------------ | ----------- |
 | ZS_enabled | true | Zabbix Server start |
 | ZA_enabled | true | Zabbix Agent start |
 | ZW_enabled | true | Zabbix Web UI start |
@@ -261,7 +214,7 @@ UI containers, which helps to scale Zabbix as a service.
 
 #### Zabbix deployment
 Now when we have Zabbix database running we can deploy Zabbix image with
-appropriate environmental variables set.
+appropriate environment variables set.
 
 Example:
 

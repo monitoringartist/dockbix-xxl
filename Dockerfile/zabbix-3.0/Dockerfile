@@ -54,6 +54,7 @@ ENV \
   ZP_DBName=zabbix \
   ZP_DBUser=zabbix \
   ZP_DBPassword=zabbix \
+  ZP_User=zabbix \
   XXL_searcher=true \
   XXL_zapix=false \
   XXL_grapher=false \
@@ -113,15 +114,17 @@ RUN \
   sed -i "s/ZABBIX_VERSION.*'\(.*\)'/ZABBIX_VERSION', '\1 ($DATE)'/g" frontends/php/include/defines.inc.php && \
   sed -i "s/ZABBIX_VERSION_RC.*\"\(.*\)\"/ZABBIX_VERSION_RC \"\1 (${DATE})\"/g" include/version.h && \
   sed -i "s/String VERSION =.*\"\(.*\)\"/String VERSION = \"\1 (${DATE})\"/g" src/zabbix_java/src/com/zabbix/gateway/GeneralInformation.java && \
+  zabbix_revision=$(svn info svn://svn.zabbix.com/${ZABBIX_VERSION} |grep "Last Changed Rev"|awk '{print $4;}') && \
+  sed -i "s/{ZABBIX_REVISION}/$zabbix_revision/g" include/version.h && \
   ./bootstrap.sh && \
   ./configure --enable-server --enable-agent --with-mysql --enable-java \
               --with-net-snmp --with-libcurl --with-libxml2 --with-openipmi \
               --enable-ipv6 --with-jabber --with-openssl --with-ssh2 \
               --enable-proxy --with-ldap --with-unixodbc && \
-  make dbschema && \
+  make -j"$(nproc)" dbschema && \
   gem install sass && \
   make css && \
-  make install && \
+  make -j"$(nproc)"  install && \
   mv /health/ /usr/local/src/zabbix/frontends/php/ && \
   cp /usr/local/etc/web/zabbix.conf.php /usr/local/src/zabbix/frontends/php/conf/ && \
   pip install py-zabbix && \
@@ -131,7 +134,7 @@ RUN \
   ./autogen.sh && \
   ./configure --prefix=/usr --enable-ipv6 --enable-ipv4 && \
   make -j"$(nproc)" && \
-  make install && \
+  make -j"$(nproc)" install && \
   setcap cap_net_raw+ep /usr/sbin/fping || echo 'Warning: setcap cap_net_raw+ep /usr/sbin/fping' && \
   setcap cap_net_raw+ep /usr/sbin/fping6 || echo 'Warning: setcap cap_net_raw+ep /usr/sbin/fping6' && \
   chmod 4710 /usr/sbin/fping && \
@@ -194,4 +197,4 @@ CMD ["/config/bootstrap.sh"]
 
 VOLUME ["/etc/custom-config", "/usr/local/share/zabbix/alertscripts", "/usr/local/share/zabbix/externalscripts", "/usr/local/share/zabbix/ssl/certs", "/usr/local/share/zabbix/ssl/keys", "/usr/lib/zabbix/modules", "/usr/share/snmp/mibs", "/etc/snmp"]
 
-EXPOSE 80 162/udp 10051 10052
+EXPOSE 80/TCP 162/UDP 10051/TCP 10052/TCP
