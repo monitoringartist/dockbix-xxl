@@ -195,7 +195,7 @@ if ! $ZJ_enabled; then
   rm -rf /etc/supervisor.d/zabbix-java-gateway.conf
 else
   rm -rf /usr/local/sbin/zabbix_java/lib/logback.xml
-  mv /usr/local/etc/logback.xml /usr/local/sbin/zabbix_java/lib/
+  cp /usr/local/etc/logback.xml /usr/local/sbin/zabbix_java/lib/
   if [ -f /etc/custom-config/logback.xml ]; then
     rm -rf /usr/local/sbin/zabbix_java/lib/logback.xml
     cp /etc/custom-config/logback.xml /usr/local/sbin/zabbix_java/lib/
