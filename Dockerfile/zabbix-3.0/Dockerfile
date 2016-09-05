@@ -167,8 +167,8 @@ RUN \
 # Layer: zabbix-xxl
 COPY container-files-zabbix-xxl /
 RUN \
-  ### japanese font ### && \
-  yum install -y ipa-pgothic-fonts && \
+  ### japanese font and boto ### && \
+  yum install -y ipa-pgothic-fonts python-boto && \
   cp /usr/share/fonts/ipa-pgothic/ipagp.ttf /usr/local/src/zabbix/frontends/php/fonts && \
   yum autoremove -y ipa-pgothic-fonts && \
   yum clean all && \
