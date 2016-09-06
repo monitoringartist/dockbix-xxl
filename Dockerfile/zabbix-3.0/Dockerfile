@@ -168,9 +168,10 @@ RUN \
 COPY container-files-zabbix-xxl /
 RUN \
   ### japanese font and boto ### && \
-  yum install -y ipa-pgothic-fonts python-boto && \
+  yum install -y ipa-pgothic-fonts python-boto python-pip && \
   cp /usr/share/fonts/ipa-pgothic/ipagp.ttf /usr/local/src/zabbix/frontends/php/fonts && \
-  yum autoremove -y ipa-pgothic-fonts && \
+  pip install pyzabbix && \
+  yum autoremove -y ipa-pgothic-fonts python-pip && \
   yum clean all && \
   ### branding / menu ### && \
   sed -i "s/ZABBIX_VERSION.*'\(.*\)'/ZABBIX_VERSION', '\1 XXL'/g" /usr/local/src/zabbix/frontends/php/include/defines.inc.php && \
