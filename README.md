@@ -7,7 +7,7 @@ If you like or use this project, please provide feedback to author - Star it ★
 
 **Overview of Monitoring Artist (dockerized) monitoring ecosystem:**
 
-- **[Zabbix XXL](https://hub.docker.com/r/monitoringartist/zabbix-3.0-xxl/)** - standard Zabbix 3.0 server/proxy/UI/snmpd/java gateway with additional XXL extensions
+- **[Zabbix XXL](https://hub.docker.com/r/monitoringartist/zabbix-xxl/)** - standard Zabbix 3.x server/proxy/UI/snmpd/java gateway with additional XXL extensions
 - **[Zabbix agent XXL](https://hub.docker.com/r/monitoringartist/zabbix-agent-xxl-limited/)** - Zabbix 3.0 agent with [Docker (Mesos/Chronos/Marathon) monitoring](https://github.com/monitoringartist/zabbix-docker-monitoring) and [systemd monitoring](https://github.com/monitoringartist/zabbix-systemd-monitoring)
 - **[Zabbix templates](https://hub.docker.com/r/monitoringartist/zabbix-templates/)** - tiny (5MB) image for easy template deployment of selected Zabbix monitoring templates
 - **[Zabbix extension - all templates](https://hub.docker.com/r/monitoringartist/zabbix-ext-all-templates/)** - storage image for Zabbix XXL with 200+ [community templates](https://github.com/monitoringartist/zabbix-community-repos)
@@ -20,13 +20,13 @@ If you like or use this project, please provide feedback to author - Star it ★
 Available Docker images
 =======================
 
-### 1. [Docker image zabbix-3.0-xxl](https://hub.docker.com/r/monitoringartist/zabbix-3.0-xxl/) [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-3.0/) [![](https://badge.imagelayers.io/monitoringartist/zabbix-3.0-xxl:latest.svg)](https://imagelayers.io/?images=monitoringartist/zabbix-3.0-xxl:latest)
+### 1. [Docker image zabbix-xxl (Zabbix 3.x)](https://hub.docker.com/r/monitoringartist/zabbix-xxl/) [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-xxl/) [![](https://badge.imagelayers.io/monitoringartist/zabbix-xxl:latest.svg)](https://imagelayers.io/?images=monitoringartist/zabbix-xxl:latest)
 
-See [README of zabbix-3.0-xxl](https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-3.0) for more details.
+See [README of zabbix-xxl](https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-xxl) for more details.
 
 Compiled Zabbix (server, proxy, agent, java gateway, snmpd daemon) with almost all features (MySQL support, Java, SNMP, Curl, Ipmi, SSH, fping) and Zabbix web UI based on CentOS 7, Supervisor, Nginx, PHP. Image requires external MySQL/MariDB database (you can run MySQL/MariaDB as a Docker container). Integated XXL extensions: Searcher, Grapher, Zapix, template auto import, API command/script execution.
 
-![Zabbix 3.0 XXL Zabbix searcher](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-3.0-xxl-zabbix-searcher.png)
+![Zabbix XXL Zabbix searcher](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-3.0-xxl-zabbix-searcher.png)
 
 ### 2. [Docker image zabbix-db-mariadb](https://registry.hub.docker.com/u/monitoringartist/zabbix-db-mariadb/) [![](https://badge.imagelayers.io/monitoringartist/zabbix-db-mariadb:latest.svg)](https://imagelayers.io/?images=monitoringartist/zabbix-db-mariadb:latest)
 
@@ -69,7 +69,7 @@ docker exec -ti zabbix /bin/bash
 
 History of an image and size of layers: 
 ``` 
-docker history --no-trunc=true monitoringartist/zabbix-3.0-xxl | tr -s ' ' | tail -n+2 | awk -F " ago " '{print $2}'
+docker history --no-trunc=true monitoringartist/zabbix-xxl | tr -s ' ' | tail -n+2 | awk -F " ago " '{print $2}'
 ```
 
 Run specific Zabbix version, e.g. 3.0.0 - just specify 3.0.0 tag for image:
@@ -83,7 +83,7 @@ Run specific Zabbix version, e.g. 3.0.0 - just specify 3.0.0 tag for image:
 		--env="ZS_DBHost=database_ip" \
 		--env="ZS_DBUser=username" \
 		--env="ZS_DBPassword=my_password" \
-		monitoringartist/zabbix-3.0-xxl:3.0.3
+		monitoringartist/zabbix-xxl:3.0.3
 ```
 
 Customized Zabbix Docker images
@@ -96,7 +96,7 @@ It provides custom features, such as Push notification, Slack and SMTP auth.
 Support
 =======
 
-Public Docker image monitoringartist/zabbix-3.0-xxl has best effort support.
+Public Docker image monitoringartist/zabbix-xxl has best effort support.
 Please contact info@monitoringartist.com for commercial support.
 
 Security issues

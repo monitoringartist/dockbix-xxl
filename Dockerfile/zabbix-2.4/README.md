@@ -7,7 +7,7 @@ If you like or use this project, please provide feedback to author - Star it ★
 
 **Overview of Monitoring Artist (dockerized) monitoring ecosystem:**
 
-- **[Zabbix XXL](https://hub.docker.com/r/monitoringartist/zabbix-3.0-xxl/)** - standard Zabbix 3.0 server/proxy/UI/snmpd/java gateway with additional XXL extensions
+- **[Zabbix XXL](https://hub.docker.com/r/monitoringartist/zabbix-xxl/)** - standard Zabbix 3.x server/proxy/UI/snmpd/java gateway with additional XXL extensions
 - **[Zabbix agent XXL](https://hub.docker.com/r/monitoringartist/zabbix-agent-xxl-limited/)** - Zabbix 3.0 agent with [Docker (Mesos/Chronos/Marathon) monitoring](https://github.com/monitoringartist/zabbix-docker-monitoring) and [systemd monitoring](https://github.com/monitoringartist/zabbix-systemd-monitoring)
 - **[Zabbix templates](https://hub.docker.com/r/monitoringartist/zabbix-templates/)** - tiny (5MB) image for easy template deployment of selected Zabbix monitoring templates
 - **[Zabbix extension - all templates](https://hub.docker.com/r/monitoringartist/zabbix-ext-all-templates/)** - storage image for Zabbix XXL with 200+ [community templates](https://github.com/monitoringartist/zabbix-community-repos)
@@ -20,7 +20,7 @@ If you like or use this project, please provide feedback to author - Star it ★
 zabbix-2.4 [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-2.4/) [![](https://badge.imagelayers.io/monitoringartist/zabbix-2.4:latest.svg)](https://imagelayers.io/?images=monitoringartist/zabbix-2.4:latest)
 =================
 
-**Zabbix 2.4 is not supported** - please use 3.0 version - http://www.zabbix.com/life_cycle_and_release_policy.php
+**Zabbix 2.4 is not supported** - please use 3.x version - http://www.zabbix.com/life_cycle_and_release_policy.php
 
 Compiled Zabbix with almost all features (MySQL support, Java, SNMP, 
 Curl, Ipmi, fping) and Zabbix web UI based on CentOS 7, Supervisor, Nginx, PHP. 

@@ -7,7 +7,7 @@ If you like or use this project, please provide feedback to author - Star it ★
 
 **Overview of Monitoring Artist (dockerized) monitoring ecosystem:**
 
-- **[Zabbix XXL](https://hub.docker.com/r/monitoringartist/zabbix-3.0-xxl/)** - standard Zabbix 3.0 server/proxy/UI/snmpd/java gateway with additional XXL extensions
+- **[Zabbix XXL](https://hub.docker.com/r/monitoringartist/zabbix-xxl/)** - standard Zabbix 3.x server/proxy/UI/snmpd/java gateway with additional XXL extensions
 - **[Zabbix agent XXL](https://hub.docker.com/r/monitoringartist/zabbix-agent-xxl-limited/)** - Zabbix 3.0 agent with [Docker (Mesos/Chronos/Marathon) monitoring](https://github.com/monitoringartist/zabbix-docker-monitoring) and [systemd monitoring](https://github.com/monitoringartist/zabbix-systemd-monitoring)
 - **[Zabbix templates](https://hub.docker.com/r/monitoringartist/zabbix-templates/)** - tiny (5MB) image for easy template deployment of selected Zabbix monitoring templates
 - **[Zabbix extension - all templates](https://hub.docker.com/r/monitoringartist/zabbix-ext-all-templates/)** - storage image for Zabbix XXL with 200+ [community templates](https://github.com/monitoringartist/zabbix-community-repos)
@@ -17,14 +17,14 @@ If you like or use this project, please provide feedback to author - Star it ★
 - **[Monitoring Analytics](https://hub.docker.com/r/monitoringartist/monitoring-analytics/)** - R statistical computing and graphics for monitoring from data scientists
 - **[Docker killer](https://hub.docker.com/r/monitoringartist/docker-killer/)** - Docker image for Docker stress and Docker orchestration testing
 
-zabbix-3.0 [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-3.0/) [![](https://badge.imagelayers.io/monitoringartist/zabbix-3.0-xxl:latest.svg)](https://imagelayers.io/?images=monitoringartist/zabbix-3.0-xxl:latest)
-=================
+zabbix-xxl (Zabbix 3.0/3.2) [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-xxl/) [![](https://badge.imagelayers.io/monitoringartist/zabbix-xxl:latest.svg)](https://imagelayers.io/?images=monitoringartist/zabbix-xxl:latest)
+=======================
 
 Compiled Zabbix (server, proxy, agent, java gateway, snmpd daemon) with almost all features (MySQL support, Java, SNMP, Curl, Ipmi, SSH, fping) and Zabbix web UI based on CentOS 7, Supervisor, Nginx, PHP. Image requires external MySQL/MariDB database (you can run MySQL/MariaDB as a Docker container). Integated XXL extensions: Searcher, Grapher, Zapix, template auto import, API command/script execution (some extensions must be explicitly enabled - see env variables section).
 
-![Zabbix 3.0 XXL Zabbix searcher](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-3.0-xxl-zabbix-searcher.png)
-![Zabbix 3.0 XXL Zapix](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-3.0-xxl-zapix.png)
-![Zabbix 3.0 XXL Grapher](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-3.0-xxl-grapher.png)
+![Zabbix XXL Zabbix searcher](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-3.0-xxl-zabbix-searcher.png)
+![Zabbix XXL Zapix](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-3.0-xxl-zapix.png)
+![Zabbix XXL Grapher](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-3.0-xxl-grapher.png)
 
 #### Standard Dockerized Zabbix deployment
 
@@ -54,7 +54,7 @@ docker run \
     --env="ZS_DBHost=zabbix.db" \
     --env="ZS_DBUser=zabbix" \
     --env="ZS_DBPassword=my_password" \
-    monitoringartist/zabbix-3.0-xxl:latest
+    monitoringartist/zabbix-xxl:latest
 # wait ~60 seconds for Zabbix initialization
 # Zabbix web will be available on the port 80, Zabbix server on the port 10051
 ```
@@ -228,7 +228,7 @@ Example:
 		--env="ZS_DBHost=zabbix.db" \
 		--env="ZS_DBUser=zabbix" \
 		--env="ZS_DBPassword=my_password" \
-		monitoringartist/zabbix-3.0-xxl:latest
+		monitoringartist/zabbix-xxl:latest
 
 #### Access to Zabbix web interface
 To log in into Zabbix web interface for the first time use credentials
@@ -238,7 +238,7 @@ Access web interface under [http://docker_host_ip]()
 
 #### HTTPS web interface
 
-Set up nginx - customize [default.conf](https://github.com/monitoringartist/zabbix-xxl/blob/master/Dockerfile/zabbix-3.0/container-files-zabbix/etc/nginx/hosts.d/default.conf)
+Set up nginx - customize [default.conf](https://github.com/monitoringartist/zabbix-xxl/blob/master/Dockerfile/zabbix-xxl/container-files-zabbix/etc/nginx/hosts.d/default.conf)
 and then use volume to mount custom nginx configuration (for example `-v /etc/https-zabbix-nginx.conf:/etc/nginx/hosts.d/default.conf`) + mount also certificates used in your custom nginx conf file.
 
 XXL API features
@@ -282,7 +282,7 @@ docker exec -ti zabbix /bin/bash
 
 History of an image and size of layers:
 ```
-docker history --no-trunc=true monitoringartist/zabbix-3.0-xxl | tr -s ' ' | tail -n+2 | awk -F " ago " '{print $2}'
+docker history --no-trunc=true monitoringartist/zabbix-xxl | tr -s ' ' | tail -n+2 | awk -F " ago " '{print $2}'
 ```
 
 Run specific Zabbix version, e.g. 3.0.0 - just specify 3.0.0 tag for image:
@@ -297,18 +297,13 @@ Run specific Zabbix version, e.g. 3.0.0 - just specify 3.0.0 tag for image:
 		--env="ZS_DBHost=zabbix.db" \
 		--env="ZS_DBUser=zabbix" \
 		--env="ZS_DBPassword=my_password" \
-		monitoringartist/zabbix-3.0-xxl:3.0.0
+		monitoringartist/zabbix-xxl:3.0.0
 ```
-
-Experimental
-============
-
-- Distributed Application Bundle (Docker 1.12+) - [zabbix-3.0-xxl.dsb](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/Dockerfile/zabbix-3.0/zabbix-3.0-xxl.dsb)
 
 Related Zabbix Docker projects
 ==============================
 
-* [Zabbix agent 3.0 XXL with Docker monitoring support](https://github.com/monitoringartist/zabbix-agent-xxl)
+* [Zabbix agent XXL with Docker monitoring support](https://github.com/monitoringartist/zabbix-agent-xxl)
 * Dockerized project [Grafana XXL](https://github.com/monitoringartist/grafana-xxl), which includes also [Grafana Zabbix datasource](https://github.com/alexanderzobnin/grafana-zabbix)
 * Scale your Dockerized [Zabbix with Kubernetes](https://github.com/monitoringartist/kubernetes-zabbix)
 

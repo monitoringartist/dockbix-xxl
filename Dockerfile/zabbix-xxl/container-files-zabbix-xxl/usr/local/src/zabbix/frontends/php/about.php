@@ -19,20 +19,20 @@
 **/
 
 require_once dirname(__FILE__).'/include/config.inc.php';
-$page['title'] = _('About Zabbix 3.0 XXL');
+$page['title'] = _('About Zabbix XXL');
 $page['file'] = 'about.php';
 $page['type'] = detect_page_type(PAGE_TYPE_HTML);
 require_once dirname(__FILE__).'/include/page_header.php';
 
 $widget = (new CWidget())
-        ->setTitle(_('Zabbix 3.0 XXL'))
+        ->setTitle(_('Zabbix XXL'))
         ->setControls((new CList())
                 ->addItem(get_icon('fullscreen', ['fullscreen' => getRequest('fullscreen')]))
         );
 $widget->show();
 ?>
 <p>
-Zabbix 3.0 XXL contains standard Zabbix + additional XXL (community) 
+Zabbix XXL contains standard Zabbix + additional XXL (community)
 extensions and everything is packaged into Docker image for easy deployment.<br />
 Source repo: <a target="_blank" href="https://github.com/monitoringartist/zabbix-xxl">https://github.com/monitoringartist/zabbix-xxl</a>
 </p>
