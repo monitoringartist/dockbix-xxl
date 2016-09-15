@@ -58,10 +58,8 @@ fix_permissions() {
   mkdir -p /usr/local/src/zabbix/frontends/php/conf/
   chmod 777 /usr/local/src/zabbix/frontends/php/conf/
   chmod u+s /usr/bin/ping
-  chown root:$ZS_User /usr/sbin/fping
-  chown root:$ZS_User /usr/sbin/fping6
-  chmod 4710 /usr/sbin/fping
-  chmod 4710 /usr/sbin/fping6
+  chmod 4711 /usr/sbin/fping
+  chmod 4711 /usr/sbin/fping6
 }
 update_config() {
   # ^ZS_: /usr/local/etc/zabbix_server.conf
