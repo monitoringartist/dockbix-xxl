@@ -99,7 +99,7 @@ RUN \
   yum update -y && \
   yum install -y tar svn gcc automake make nmap traceroute iptstate wget \
               net-snmp-devel net-snmp-libs net-snmp net-snmp-perl iksemel \
-              net-snmp-python net-snmp-utils java-1.8.0-openjdk python-pip \
+              net-snmp-python net-snmp-utils java-1.8.0-openjdk \
               java-1.8.0-openjdk-devel mariadb-devel libxml2-devel gettext \
               libcurl-devel OpenIPMI-devel mysql iksemel-devel libssh2-devel \
               unixODBC unixODBC-devel mysql-connector-odbc postgresql-odbc \
@@ -124,10 +124,9 @@ RUN \
   make -j"$(nproc)" dbschema && \
   gem install sass && \
   make css && \
-  make -j"$(nproc)"  install && \
+  make -j"$(nproc)" install && \
   mv /health/ /usr/local/src/zabbix/frontends/php/ && \
   cp /usr/local/etc/web/zabbix.conf.php /usr/local/src/zabbix/frontends/php/conf/ && \
-  pip install py-zabbix && \
   wget https://github.com/schweikert/fping/archive/3.10.tar.gz && \
   tar -xvf 3.10.tar.gz && \
   cd fping-3.10/ && \
@@ -145,7 +144,7 @@ RUN \
   rm -rf 3.10.tar.gz && \
   cd /usr/local/src/zabbix/frontends/php && \
   locale/make_mo.sh && \
-  yum autoremove -y gettext python-pip tar svn gcc automake mariadb-devel \
+  yum autoremove -y gettext tar svn gcc automake mariadb-devel \
                     java-1.8.0-openjdk-devel libxml2-devel libcurl-devel \
                     OpenIPMI-devel iksemel-devel rubygems kernel-headers && \
   yum install -y OpenIPMI-libs && \

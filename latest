@@ -1,5 +1,5 @@
 {
-	"version": "3.2.0 (2016-09-25)",
-	"tag": "3.2.0",
-	"text": "New Docker image is available. Please pull monitoringartist/zabbix-xxl:latest. Update is recommended."
+	"xxl-version": "3.2.0 (2016-09-25)",
+	"xxl-docker-tag": "3.2.0",
+	"xxl-text": "<p>New updated Docker image is available. Please ask your administrator to pull <b><a href='https://hub.docker.com/r/monitoringartist/zabbix-xxl/' target='_blank'>monitoringartist/zabbix-xxl:latest</a></b>.</p>"
 }
