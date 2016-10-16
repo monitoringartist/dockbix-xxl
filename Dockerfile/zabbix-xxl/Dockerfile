@@ -183,6 +183,10 @@ RUN \
   grep 'UA-72810204-2' /usr/local/src/zabbix/frontends/php/include/page_footer.php && \
   sed -i "s#echo '</body></html>';#echo \"<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-72810204-2','auto');ga('send','pageview');</script></body></html>\";#g" /usr/local/src/zabbix/frontends/php/app/views/layout.htmlpage.php && \
   grep 'UA-72810204-2' /usr/local/src/zabbix/frontends/php/app/views/layout.htmlpage.php && \
+  sed -i "s#</body></html>#<script type='text/javascript' src='updatechecker/updatechecker.js'></script></body></html>#g" /usr/local/src/zabbix/frontends/php/include/page_footer.php && \
+  grep 'updatechecker.js' /usr/local/src/zabbix/frontends/php/include/page_footer.php && \
+  sed -i "s#</body></html>#<script type='text/javascript' src='updatechecker/updatechecker.js'></script></body></html>#g" /usr/local/src/zabbix/frontends/php/app/views/layout.htmlpage.php && \
+  grep 'updatechecker.js' /usr/local/src/zabbix/frontends/php/app/views/layout.htmlpage.php && \
   sed -i "s#'login' => \[#'xxl' => \n[\n'label' => _('XXL extensions'),\n'user_type' => USER_TYPE_SUPER_ADMIN,\n'default_page_id' => 0,\n'pages' => [\n['url' => 'searcher.php','label' => _('Searcher'),],\n['url' => 'zapix.php','label' => _('Zapix'),],\n['url' => 'grapher.php','label' => _('Grapher'),],\n['url' => 'about.php','label' => _('About'),]\n]],\n'login' => [#g" /usr/local/src/zabbix/frontends/php/include/menu.inc.php && \
   grep 'XXL extensions' /usr/local/src/zabbix/frontends/php/include/menu.inc.php && \
   sed -i "s#'admin': 0},# 'admin': 0, 'xxl': 0},#g" /usr/local/src/zabbix/frontends/php/js/main.js && \
