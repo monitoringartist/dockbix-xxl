@@ -6,7 +6,7 @@ TARGET_BRANCH="master"
 
 function doCompile {
   docker rmi monitoringartist/zabbix-xxl:latest || true
-  ZVERSION=$(docker run --rm -ti monitoringartist/zabbix-xxl:latest zabbix_agentd -V | grep ^zabbix_agentd | awk -F'\\(Zabbix\\) ' '{print $2}' | sed -e 's/[\t ]$//g;/^$/d')
+  ZVERSION=$(docker run --rm -ti monitoringartist/zabbix-xxl:latest zabbix_agentd -V | grep ^zabbix_agentd | awk -F'\\(Zabbix\\) ' '{print $2}' | sed -e 's/[[:blank:],[:cntrl:]]$//g;/^$/d')
   echo $ZVERSION
   sed -i "s#.*\"version\":.*#\"version\": \"$ZVERSION\",#" latest
 }
@@ -29,9 +29,6 @@ git checkout $TARGET_BRANCH || git checkout --orphan $TARGET_BRANCH
 
 # Run our compile script
 doCompile
-
-git status
-git diff
 
 # Now let's go have some fun with the cloned repo
 git config user.name "Travis CI"
