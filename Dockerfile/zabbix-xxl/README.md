@@ -166,7 +166,7 @@ Default container variables or default Zabbix are used:
 | ZP_DBPort | 3306 |
 | ZP_User | zabbix |
 
-You add more variables, just add correct variable prefix (`ZS_` for Zabbix Server,
+You can add more variables, just add correct variable prefix (`ZS_` for Zabbix Server,
 `ZP_` for Zabbix Proxy) and set your custom value. Use numeric suffix (`_<NUM>`)
 for multiple config parameters. Example:
 
