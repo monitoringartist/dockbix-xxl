@@ -5,7 +5,7 @@ SOURCE_BRANCH="master"
 TARGET_BRANCH="master"
 
 function doCompile {
-  docker rmi monitoringartist/zabbix-xxl:latest
+  docker rmi monitoringartist/zabbix-xxl:latest || true
   ZVERSION=$(docker run --rm -ti monitoringartist/zabbix-xxl:latest zabbix_agentd -V | grep ^zabbix_agentd | awk -F'\\(Zabbix\\) ' '{print $2}' | sed -e 's/[\t ]$//g;/^$/d')
   sed -i "s#.*\"version\":.*#\"version\": \"$ZVERSION\",#" latest
 }
