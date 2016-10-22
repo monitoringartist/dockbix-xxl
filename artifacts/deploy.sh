@@ -30,7 +30,6 @@ git checkout $TARGET_BRANCH || git checkout --orphan $TARGET_BRANCH
 doCompile
 
 # Now let's go have some fun with the cloned repo
-cd out
 git config user.name "Travis CI"
 git config user.email "$COMMIT_AUTHOR_EMAIL"
 
