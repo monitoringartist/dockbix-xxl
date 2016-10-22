@@ -20,5 +20,5 @@ after_success:
 
 env:
   global:
-  - ENCRYPTION_LABEL: "469b4b5a68a6"
+  - ENCRYPTION_LABEL: "42099b4af021"
   - COMMIT_AUTHOR_EMAIL: "jan.garaj@gmail.com"
