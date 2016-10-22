@@ -45,6 +45,12 @@ xxl_config() {
       curl -ks -o /dev/null "http://www.google-analytics.com/r/collect?v=1&tid=UA-72810204-2&cid=${cid}&t=event&ec=Stat&ea=XXL_grapher&el=${XXL_grapher}&ev=1&dp=%2F&dl=http%3A%2F%2Fgithub.com%2Fmonitoringartist%2Fzabbix-xxl" &> /dev/null &
     fi
   fi
+  if ! $XXL_updatechecker; then
+    rm -rf /usr/local/src/zabbix/frontends/php/updatechecker/
+    sed -i "s#echo \"<script.*updatechecker/updatechecker.*>.*</script>\";##g" /usr/local/src/zabbix/frontends/php/include/page_footer.php
+  else
+    curl -ks -o /dev/null "http://www.google-analytics.com/r/collect?v=1&tid=UA-72810204-2&cid=${cid}&t=event&ec=Stat&ea=XXL_updatechecker&el=${XXL_grapher}&ev=1&dp=%2F&dl=http%3A%2F%2Fgithub.com%2Fmonitoringartist%2Fzabbix-xxl" &> /dev/null &
+  fi
   if ! $XXL_analytics; then
     # remove analytics
     sed -i "s#<script>.*</script></body></html>#</body></html>#g" /usr/local/src/zabbix/frontends/php/include/page_footer.php
