@@ -5,6 +5,8 @@ services:
 
 language: go
 
+script: echo "OK"
+
 after_success:
 - docker version
 - docker rmi monitoringartist/zabbix-xxl:latest
