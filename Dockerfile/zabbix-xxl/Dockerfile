@@ -184,7 +184,7 @@ RUN \
   sed -i "s#echo '</body></html>';#echo \"<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-72810204-2','auto');ga('send','pageview');</script></body></html>\";#g" /usr/local/src/zabbix/frontends/php/app/views/layout.htmlpage.php && \
   grep 'UA-72810204-2' /usr/local/src/zabbix/frontends/php/app/views/layout.htmlpage.php && \
   ZVERSION=$(zabbix_agentd -V | grep ^zabbix_agentd | awk -F'\\(Zabbix\\) ' '{print $2}') && \
-  sed -i "s#^var xxlCurrentVersion =.*#var xxlCurrentVersion = \"$ZVERSION\"#" /usr/local/src/zabbix/frontends/php/updatechecker/updatechecker.js && \
+  sed -i "s#^var xxlCurrentVersion =.*#var xxlCurrentVersion = \"$ZVERSION\";#" /usr/local/src/zabbix/frontends/php/updatechecker/updatechecker.js && \
   grep "$ZVERSION" /usr/local/src/zabbix/frontends/php/updatechecker/updatechecker.js && \
   sed -i "s#.*</body></html>.*#echo \"<script type='text/javascript' src='updatechecker/updatechecker.js'></script>\";\n&#" /usr/local/src/zabbix/frontends/php/include/page_footer.php && \
   grep 'updatechecker.js' /usr/local/src/zabbix/frontends/php/include/page_footer.php && \

@@ -1,6 +1,6 @@
 var xxlUpdateCheck = "xxl_update_version_check";
 var xxlCurrentVersion = "";
-var xxlUpdateUrl = 'https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/latest'
+var xxlUpdateUrl = 'https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/latest';
 
 // check version once per day
 function updateCheck() {
