@@ -19,6 +19,7 @@ log() {
 
 xxl_config() {
   cid=$(md5sum <<< $(hostname) | awk -F - '{print $1}' | tr -d ' ')
+  XXL_updatechecker=${XXL_updatechecker:-true}
   XXL_analytics=${XXL_analytics:-true}
   # disable/enable XXL features
   if ! $XXL_searcher; then

@@ -56,6 +56,7 @@ ENV \
   ZP_DBPassword=zabbix \
   ZP_User=zabbix \
   XXL_searcher=true \
+  XXL_updatechecker=true \
   XXL_zapix=false \
   XXL_grapher=false \
   XXL_api=true \
