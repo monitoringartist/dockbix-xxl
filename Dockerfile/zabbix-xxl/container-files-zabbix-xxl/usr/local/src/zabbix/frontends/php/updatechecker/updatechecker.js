@@ -1,4 +1,4 @@
-var xxlUpdateCheck = "xxl_update_version_check";
+var xxlUpdateCheck = "xxl_updatechecker";
 var xxlCurrentVersion = "";
 var xxlUpdateUrl = 'https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/latest';
 
