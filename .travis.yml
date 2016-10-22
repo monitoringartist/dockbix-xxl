@@ -11,14 +11,6 @@ script: echo "OK"
 
 after_success:
 - docker version
-- docker rmi monitoringartist/zabbix-xxl:latest
-- export ZVERSION=$(docker run --rm -ti monitoringartist/zabbix-xxl:latest zabbix_agentd -V | grep ^zabbix_agentd | awk -F'\\(Zabbix\\) ' '{print $2}' | sed -e 's/[\t ]$//g;/^$/d')
-- sed -i "s#.*\"version\":.*#\"version\": \"$ZVERSION\",#" latest
-- export DATE=`date +"%Y-%m-%d %H:%M:%S"`
-- git commit -am "latest version update $DATE"
-- if [ $? -eq 0 ]; then
--   git push git@github.com:monitoringartist/zabbix-xxl.git master
-- fi
 - "cd /home/travis/build/monitoringartist/zabbix-xxl/"
 - "bash ./artifacts/deploy.sh"
 
