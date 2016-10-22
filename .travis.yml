@@ -5,6 +5,8 @@ services:
 
 language: go
 
+install: echo "OK"
+
 script: echo "OK"
 
 after_success:
