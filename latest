@@ -1,5 +1,5 @@
 {
 "display": 1,
-"version": "3.2.1 (2016-10-09)",
+"version": "3.2.1 (2016-10-09)",
 "text": "<p>New updated Docker image is available. Please ask administrator to pull <b><a href='https://hub.docker.com/r/monitoringartist/zabbix-xxl/' target='_blank'>monitoringartist/zabbix-xxl:latest</a></b>.</p>"
 }
