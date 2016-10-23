@@ -25,7 +25,7 @@ Compiled Zabbix (server, proxy, agent, java gateway, snmpd daemon) with almost a
 ![Zabbix XXL Zabbix searcher](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-3.0-xxl-zabbix-searcher.png)
 ![Zabbix XXL Zapix](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-3.0-xxl-zapix.png)
 ![Zabbix XXL Grapher](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-3.0-xxl-grapher.png)
-![Zabbix XXL Update Checker](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-xxl-updatechecker.png)
+![Zabbix XXL Update Checker](doc/zabbix-xxl-updatechecker.png)
 
 #### Standard Dockerized Zabbix deployment
 
