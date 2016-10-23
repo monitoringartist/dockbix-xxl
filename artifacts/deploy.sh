@@ -9,6 +9,7 @@ function doCompile {
   ZVERSION=$(docker run --rm -ti monitoringartist/zabbix-xxl:latest zabbix_agentd -V | grep ^zabbix_agentd | awk -F'\\(Zabbix\\) ' '{print $2}' | sed -e 's/[[:blank:],[:cntrl:]]$//g;/^$/d')
   echo $ZVERSION
   sed -i "s#.*\"version\":.*#\"version\": \"$ZVERSION\",#" latest
+  sed -i "s#Docker image.*has been released#Docker image $ZVERSION has been released#" latest
 }
 
 # Pull requests and commits to other branches shouldn't try to deploy
