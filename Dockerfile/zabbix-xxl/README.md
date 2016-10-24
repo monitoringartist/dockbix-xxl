@@ -25,7 +25,7 @@ Compiled Zabbix (server, proxy, agent, java gateway, snmpd daemon) with almost a
 ![Zabbix XXL Zabbix searcher](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-3.0-xxl-zabbix-searcher.png)
 ![Zabbix XXL Zapix](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-3.0-xxl-zapix.png)
 ![Zabbix XXL Grapher](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-3.0-xxl-grapher.png)
-![Zabbix XXL Update Checker](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/update-checker/doc/zabbix-xxl-updatechecker.png)
+![Zabbix XXL Update Checker](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-xxl-updatechecker.png)
 
 #### Standard Dockerized Zabbix deployment
 
@@ -124,6 +124,7 @@ Available variables related to XXL features:
 | XXL_apiuser | Admin | username used for API commands |
 | XXL_apipass | zabbix | password used for API commands |
 | XXL_analytics | true | enable/disable collecting of statistics via Google Analytics |
+| XXL_updatechecker | true | enable/disable check of latest available Docker image |
 
 Use environment variables to config Zabbix and Zabbix web UI (PHP).
 Default container variables or default Zabbix are used:
