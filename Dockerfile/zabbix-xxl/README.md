@@ -111,7 +111,15 @@ Example:
 
 Remember to use the same credentials when deploying zabbix image.
 
-#### Environmental variables
+#### Environment variables
+
+Environment variables for Zabbix server/proxy are not hardcoded. Just
+add correct variable prefix (`ZS_` for Zabbix server,`ZP_` for Zabbix Proxy) and
+setting name with value. For example if you need to set `StartPollers=1000`
+for Zabbix server =>  use variable `ZS_StartPollers=1000`. If you don't specify
+environment variable for some setting, then default Zabbix value or Docker image
+variable value is used. See lists below for
+predefined Docker image variables.
 
 Available variables related to XXL features:
 
