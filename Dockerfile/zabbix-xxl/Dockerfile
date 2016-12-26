@@ -167,6 +167,15 @@ RUN \
 # Layer: zabbix-xxl
 COPY container-files-zabbix-xxl /
 RUN \
+  ### locales fix && \
+  yum -y -q reinstall glibc-common && \
+  cd /tmp && \
+  yumdownloader glibc-common && \
+  rpm2cpio glibc-common*.rpm | cpio -idmv && \
+  rm -vf /usr/lib/locale/locale-archive.tmpl && \
+  cp -vf ./usr/lib/locale/locale-archive.tmpl /usr/lib/locale/ && \
+  build-locale-archive && \
+  rm -rf /tmp/* && \
   ### japanese font and boto ### && \
   yum install -y ipa-pgothic-fonts python-boto python-pip && \
   cp /usr/share/fonts/ipa-pgothic/ipagp.ttf /usr/local/src/zabbix/frontends/php/fonts && \
