@@ -1,5 +1,5 @@
 FROM centos:centos7
-MAINTAINER Jan Garaj info@monitoringartist.com
+LABEL maintainer "Jan Garaj <info@monitoringartist.com>"
 
 # ZABBIX_VERSION=trunk tags/3.0.1 branches/dev/ZBXNEXT-1263-1
 
@@ -105,7 +105,8 @@ RUN \
               libcurl-devel OpenIPMI-devel mysql iksemel-devel libssh2-devel \
               unixODBC unixODBC-devel mysql-connector-odbc postgresql-odbc \
               openldap-devel telnet net-tools snmptt sudo rubygems jq \
-              openssh-clients python-httplib2 python-simplejson && \
+              openssh-clients python-httplib2 python-simplejson \
+              libevent-devel openldap-clients && \
  `# reinstall glibc for locales` \
   yum -y -q reinstall glibc-common && \
   cp /usr/local/etc/zabbix_agentd.conf /tmp && \
@@ -212,6 +213,6 @@ RUN \
 
 CMD ["/config/bootstrap.sh"]
 
-VOLUME ["/etc/custom-config", "/usr/local/share/zabbix/alertscripts", "/usr/local/share/zabbix/externalscripts", "/usr/local/share/zabbix/ssl/certs", "/usr/local/share/zabbix/ssl/keys", "/usr/lib/zabbix/modules", "/usr/share/snmp/mibs", "/etc/snmp"]
+VOLUME ["/etc/custom-config", "/usr/local/share/zabbix/alertscripts", "/usr/local/share/zabbix/externalscripts", "/usr/local/share/zabbix/ssl/certs", "/usr/local/share/zabbix/ssl/keys", "/usr/lib/zabbix/modules", "/usr/share/snmp/mibs", "/etc/snmp", "/etc/openldap/"]
 
 EXPOSE 80/TCP 162/UDP 10051/TCP 10052/TCP
