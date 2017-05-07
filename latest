@@ -1,5 +1,5 @@
 {
 "display": 0,
-"version": "3.2.5 (2017-04-28)",
-"text": "<p style=\"font-size:80%\">New latest Docker image 3.2.5 (2017-04-28) has been released. Please ask administrator to pull <b><a href=\"https://hub.docker.com/r/monitoringartist/zabbix-xxl/\" target=\"_blank\">monitoringartist/zabbix-xxl:latest</a></b>.</p>"         
+"version": "3.2.5 (2017-05-06)",
+"text": "<p style=\"font-size:80%\">New latest Docker image 3.2.5 (2017-05-06) has been released. Please ask administrator to pull <b><a href=\"https://hub.docker.com/r/monitoringartist/zabbix-xxl/\" target=\"_blank\">monitoringartist/zabbix-xxl:latest</a></b>.</p>"         
 }
