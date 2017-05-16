@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+  zabbix-db:
+    image: monitoringartist/zabbix-db-mariadb
+    environment:
+    - MARIADB_USER=zabbix
+    - MARIADB_PASS=password
+    volumes:
+    - ./containerdata/zabbix-db_mysql:/var/lib/mysql
+    - ./containerdata/zabbix-db_backups:/backups
+    - /etc/localtime:/etc/localtime:ro
+
+  zabbix-xxl:
+    image: monitoringartist/zabbix-xxl:latest
+    environment:
+    - ZS_DBHost=zabbix.db
+    - ZS_DBUser=zabbix
+    - ZS_DBPassword=password
+    volumes:
+    - ./containerdata/zabbix-xxl_backups:/backups
+    - /etc/localtime:/etc/localtime:ro
+    ports:
+    - 10051:10051
+    links:
+    - zabbix-db:zabbix.db
+  zabbix-frontend:
+    image: steveltn/https-portal
+    ports:
+    - 80:80
+    - 443:443
+    links:
+    - zabbix-xxl
+    environment:
+      DOMAINS: 'zabbix -> http://zabbix-xxl'
+      STAGE: 'local'
