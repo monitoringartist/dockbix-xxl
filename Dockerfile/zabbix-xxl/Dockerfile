@@ -104,7 +104,7 @@ RUN \
               java-1.8.0-openjdk-devel mariadb-devel libxml2-devel gettext \
               libcurl-devel OpenIPMI-devel mysql iksemel-devel libssh2-devel \
               unixODBC unixODBC-devel mysql-connector-odbc postgresql-odbc \
-              openldap-devel telnet net-tools snmptt sudo rubygems jq \
+              openldap-devel telnet net-tools snmptt sudo rubygems ruby-devel jq \
               openssh-clients python-httplib2 python-simplejson \
               libevent-devel openldap-clients && \
  `# reinstall glibc for locales` \
@@ -148,7 +148,7 @@ RUN \
   locale/make_mo.sh && \
   yum autoremove -y gettext svn gcc automake mariadb-devel \
                     java-1.8.0-openjdk-devel libxml2-devel libcurl-devel \
-                    OpenIPMI-devel iksemel-devel rubygems kernel-headers && \
+                    OpenIPMI-devel iksemel-devel rubygems ruby-devel kernel-headers && \
   yum install -y OpenIPMI-libs && \
   chmod +x /config/bootstrap.sh && \
   chmod +x /config/ds.sh && \
