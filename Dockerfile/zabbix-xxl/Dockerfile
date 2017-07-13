@@ -4,7 +4,7 @@ LABEL maintainer "Jan Garaj <info@monitoringartist.com>"
 # ZABBIX_VERSION=trunk tags/3.0.1 branches/dev/ZBXNEXT-1263-1
 
 ENV \
-  ZABBIX_VERSION=tags/3.2.0 \
+  ZABBIX_VERSION=tags/3.2.1 \
   ZS_enabled=true \
   ZA_enabled=true \
   ZW_enabled=true \
