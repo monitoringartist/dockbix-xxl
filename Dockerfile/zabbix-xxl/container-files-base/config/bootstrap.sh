@@ -22,7 +22,7 @@ fi
 # We have TTY, so probably an interactive container...
 if test -t 0; then
   # Run supervisord detached...
-  supervisord $SUPERVISOR_PARAMS
+  exec supervisord $SUPERVISOR_PARAMS
   
   # Some command(s) has been passed to container? Execute them and exit.
   # No commands provided? Run bash.
@@ -44,5 +44,5 @@ else
   if [[ $@ ]]; then 
     eval $@
   fi
-  supervisord -n $SUPERVISOR_PARAMS
+  exec supervisord -n $SUPERVISOR_PARAMS
 fi

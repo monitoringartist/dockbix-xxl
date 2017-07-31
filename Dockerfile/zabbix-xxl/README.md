@@ -111,15 +111,7 @@ Example:
 
 Remember to use the same credentials when deploying zabbix image.
 
-#### Environment variables
-
-Environment variables for Zabbix server/proxy are not hardcoded. Just
-add correct variable prefix (`ZS_` for Zabbix server,`ZP_` for Zabbix Proxy) and
-setting name with value. For example if you need to set `StartPollers=1000`
-for Zabbix server =>  use variable `ZS_StartPollers=1000`. If you don't specify
-environment variable for some setting, then default Zabbix value or Docker image
-variable value is used. See lists below for
-predefined Docker image variables.
+#### Environmental variables
 
 Available variables related to XXL features:
 
@@ -158,6 +150,8 @@ Default container variables or default Zabbix are used:
 | ZS_SSLCertLocation | /usr/local/share/zabbix/ssl/certs |
 | ZS_SSLKeyLocation | /usr/local/share/zabbix/ssl/keys |
 | ZS_LoadModulePath | /usr/lib/zabbix/modules |
+| ZS_JavaGateway | 127.0.0.1 |
+| ZS_JavaGatewayPort | 10052 |
 | ZW_ZBX_SERVER | localhost |
 | ZW_ZBX_SERVER_PORT | 10051 |
 | ZW_ZBX_SERVER_NAME | Zabbix Server |

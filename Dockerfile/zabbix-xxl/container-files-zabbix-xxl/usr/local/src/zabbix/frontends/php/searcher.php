@@ -27,10 +27,9 @@ require_once dirname(__FILE__).'/include/page_header.php';
 $widget = (new CWidget())
         ->setTitle(_('Search Zabbix projects'))
         ->setControls((new CList())
-                ->addItem(get_icon('fullscreen', ['fullscreen' => getRequest('fullscreen')]))
+        ->addItem(get_icon('fullscreen', ['fullscreen' => getRequest('fullscreen')]))
         );
 $widget->show();
-
 ?>
 <link rel="stylesheet" type="text/css" href="searcher/stylesheets/style.css" />
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">

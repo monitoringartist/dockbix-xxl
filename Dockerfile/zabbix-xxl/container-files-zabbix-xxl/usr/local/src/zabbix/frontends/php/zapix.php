@@ -27,7 +27,7 @@ require_once dirname(__FILE__).'/include/page_header.php';
 $widget = (new CWidget())
         ->setTitle(_('Online API tool'))
         ->setControls((new CList())
-                ->addItem(get_icon('fullscreen', ['fullscreen' => getRequest('fullscreen')]))
+        ->addItem(get_icon('fullscreen', ['fullscreen' => getRequest('fullscreen')]))
         );
 $widget->show();
 

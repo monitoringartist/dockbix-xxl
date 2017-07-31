@@ -13,14 +13,14 @@ separator=$(echo && printf '=%.0s' {1..100} && echo)
 
 # Logging functions
 log() {
-  if [[ "$@" ]]; then echo "${bold}${green}[LOG `date +'%T'`]${reset} $@";
+  if [[ "$@" ]]; then echo "${bold}${green}`date +'%Y-%m-%d %H:%M:%S,000'` INFO${reset} $@";
   else echo -n; fi
 }
 warning() {
-  echo "${bold}${yellow}[WARNING `date +'%T'`]${reset} ${yellow}$@${reset}";
+  echo "${bold}${yellow}`date +'%Y-%m-%d %H:%M:%S,000'` WARN${reset} $@";
 }
 error() {
-  echo "${bold}${red}[ERROR `date +'%T'`]${reset} ${red}$@${reset}";
+  echo "${bold}${red}`date +'%Y-%m-%d %H:%M:%S,000'` WARN${reset} $@";
 }
 create_db() {
   mysql -u ${ZS_DBUser} -p${ZS_DBPassword} -h ${ZS_DBHost} -P ${ZS_DBPort} -e "CREATE DATABASE IF NOT EXISTS ${ZS_DBName} CHARACTER SET utf8;"
@@ -276,6 +276,6 @@ if ! $SNMPTRAP_enabled; then
 fi
 
 # Zabbix version detection
-export ZABBIX_VERSION=$(zabbix_server -V | grep Zabbix | awk '{print $3}')
+export ZABBIX_VERSION_FULL=$(zabbix_server -V | grep "(Zabbix)" | awk '{print $3" "$4}')
 
-log "Starting Zabbix version $ZABBIX_VERSION"
+log "Starting Zabbix version $ZABBIX_VERSION_FULL"
