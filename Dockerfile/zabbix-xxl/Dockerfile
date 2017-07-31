@@ -4,7 +4,7 @@ LABEL maintainer "Jan Garaj <info@monitoringartist.com>"
 # ZABBIX_VERSION=trunk tags/3.0.1 branches/dev/ZBXNEXT-1263-1
 
 ENV \
-  ZABBIX_VERSION=tags/3.2.3 \
+  ZABBIX_VERSION=trunk \
   ZS_enabled=true \
   ZA_enabled=true \
   ZW_enabled=true \
@@ -98,7 +98,7 @@ ADD container-files-base /
 # Layer: zabbix
 COPY container-files-zabbix /
 RUN \
-  export FPING_VERSION=3.16 && \
+  export FPING_VERSION=v4.0 && \
   yum clean all && \
   yum update -y && \
   yum install -y tar svn gcc automake make nmap traceroute iptstate wget \
@@ -107,8 +107,8 @@ RUN \
               java-1.8.0-openjdk-devel mariadb-devel libxml2-devel gettext \
               libcurl-devel OpenIPMI-devel mysql iksemel-devel libssh2-devel \
               unixODBC unixODBC-devel mysql-connector-odbc postgresql-odbc \
-              openldap-devel telnet net-tools snmptt sudo rubygems jq \
-              openssh-clients python-httplib2 python-simplejson \
+              openldap-devel telnet net-tools snmptt sudo rubygems ruby-devel \
+              jq openssh-clients python-httplib2 python-simplejson \
               libevent-devel openldap-clients && \
  `# reinstall glibc for locales` \
   yum -y -q reinstall glibc-common && \
@@ -152,8 +152,8 @@ RUN \
   locale/make_mo.sh && \
   yum autoremove -y gettext svn gcc automake mariadb-devel zlib-devel \
                     java-1.8.0-openjdk-devel libxml2-devel libcurl-devel \
-                    OpenIPMI-devel iksemel-devel rubygems kernel-headers \
-                    unixODBC-devel && \
+                    OpenIPMI-devel iksemel-devel rubygems ruby-devel \
+                    kernel-headers ruby-devel unixODBC-devel && \
   yum install -y OpenIPMI-libs && \
   chmod +x /config/bootstrap.sh && \
   chmod +x /config/ds.sh && \
@@ -162,7 +162,7 @@ RUN \
   sed -i -e "s/Defaults    requiretty.*/ #Defaults    requiretty/g" /etc/sudoers && \
   localedef -i en_US -f UTF-8 en_US.UTF-8 && \
   yum clean all && \
-  mkdir -p /usr/local/share/ssl/certfs && \
+  mkdir -p /usr/local/share/ssl/certs && \
   mkdir -p /usr/local/share/ssl/keys && \
   mkdir -p /usr/lib/zabbix/modules && \
   mkdir -p /etc/zabbix/snmp/mibs && \

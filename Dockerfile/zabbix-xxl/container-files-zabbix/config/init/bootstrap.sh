@@ -20,7 +20,7 @@ warning() {
   echo "${bold}${yellow}`date +'%Y-%m-%d %H:%M:%S,000'` WARN${reset} $@";
 }
 error() {
-  echo "${bold}${red}`date +'%Y-%m-%d %H:%M:%S,000'` WARN${reset} $@";
+  echo "${bold}${red}`date +'%Y-%m-%d %H:%M:%S,000'` ERROR${reset} $@";
 }
 create_db() {
   mysql -u ${ZS_DBUser} -p${ZS_DBPassword} -h ${ZS_DBHost} -P ${ZS_DBPort} -e "CREATE DATABASE IF NOT EXISTS ${ZS_DBName} CHARACTER SET utf8;"
