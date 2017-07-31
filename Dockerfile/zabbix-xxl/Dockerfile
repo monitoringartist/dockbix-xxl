@@ -98,7 +98,7 @@ ADD container-files-base /
 # Layer: zabbix
 COPY container-files-zabbix /
 RUN \
-  export FPING_VERSION=v4.0 && \
+  export FPING_VERSION=4.0 && \
   yum clean all && \
   yum update -y && \
   yum install -y tar svn gcc automake make nmap traceroute iptstate wget \
@@ -137,7 +137,8 @@ RUN \
   tar -xvf ${FPING_VERSION}.tar.gz && \
   cd fping-${FPING_VERSION}/ && \
   ./autogen.sh && \
-  ./configure --prefix=/usr --enable-ipv6 --enable-ipv4 && \
+  ./configure --disable-ipv6; make clean install && \
+  ./configure --disable-ipv4 --program-suffix=6; make clean install && \
   make -j"$(nproc)" && \
   make -j"$(nproc)" install && \
   setcap cap_net_raw+ep /usr/sbin/fping || echo 'Warning: setcap cap_net_raw+ep /usr/sbin/fping' && \
