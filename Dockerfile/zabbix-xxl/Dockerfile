@@ -87,8 +87,8 @@ RUN \
   openssl genrsa -out /etc/nginx/ssl/dummy.key 2048 && \
   openssl req -new -key /etc/nginx/ssl/dummy.key -out /etc/nginx/ssl/dummy.csr -subj "/C=GB/L=London/O=Company Ltd/CN=zabbix-docker" && \
   openssl x509 -req -days 3650 -in /etc/nginx/ssl/dummy.csr -signkey /etc/nginx/ssl/dummy.key -out /etc/nginx/ssl/dummy.crt && \
-  yum install -y http://rpms.famillecollet.com/enterprise/remi-release-7.rpm && \
-  yum install -y --enablerepo=remi-php56 php-fpm \
+  yum install -y http://rpms.remirepo.net/enterprise/remi-release-7.rpm && \
+  yum install -y --enablerepo=remi-php70 php-fpm \
        php-gd php-bcmath php-ctype php-xml php-xmlreader php-xmlwriter \
        php-session php-net-socket php-mbstring php-gettext php-cli \
        php-mysqlnd php-opcache php-pdo php-snmp php-ldap && \
@@ -128,19 +128,14 @@ RUN \
               --enable-ipv6 --with-jabber --with-openssl --with-ssh2 \
               --enable-proxy --with-ldap --with-unixodbc && \
   make -j"$(nproc)" dbschema && \
-  gem install sass && \
-  make css && \
   make -j"$(nproc)" install && \
   mv /health/ /usr/local/src/zabbix/frontends/php/ && \
   cp /usr/local/etc/web/zabbix.conf.php /usr/local/src/zabbix/frontends/php/conf/ && \
-  wget https://github.com/schweikert/fping/archive/${FPING_VERSION}.tar.gz && \
-  tar -xvf ${FPING_VERSION}.tar.gz && \
+  wget https://github.com/schweikert/fping/releases/download/v${FPING_VERSION}/fping-${FPING_VERSION}.tar.gz && \
+  tar -xvf fping-${FPING_VERSION}.tar.gz && \
   cd fping-${FPING_VERSION}/ && \
-  ./autogen.sh && \
-  ./configure --disable-ipv6; make clean install && \
-  ./configure --disable-ipv4 --program-suffix=6; make clean install && \
-  make -j"$(nproc)" && \
-  make -j"$(nproc)" install && \
+  ./configure --prefix=/usr --disable-ipv6; make clean install && \
+  ./configure --prefix=/usr --disable-ipv4 --program-suffix=6; make clean install && \
   setcap cap_net_raw+ep /usr/sbin/fping || echo 'Warning: setcap cap_net_raw+ep /usr/sbin/fping' && \
   setcap cap_net_raw+ep /usr/sbin/fping6 || echo 'Warning: setcap cap_net_raw+ep /usr/sbin/fping6' && \
   chmod 4710 /usr/sbin/fping && \
