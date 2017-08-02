@@ -41,7 +41,7 @@ $widget->show();
   <a href="#" class="button js-clear-search clear-search" title="Clear search">&times;</a>
   
   <div class="fright">
-    <div class="tfright">List of Zabbix projects is updated on daily basis by </div><a href="http://www.monitoringartist.com" target="_blank" title="DevOps / Docker / Kubernetes / Monitoring / Zabbix / Zenoss">
+    <div class="tfright">List of Zabbix projects is updated by </div><a href="http://www.monitoringartist.com" target="_blank" title="DevOps / Docker / Kubernetes / Monitoring / Zabbix / Zenoss">
     <img src="searcher/assets/Monitoring-Artist-logo.png">
     </a>
   </div>
