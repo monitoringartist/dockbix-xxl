@@ -4,7 +4,7 @@ LABEL maintainer "Jan Garaj <info@monitoringartist.com>"
 # ZABBIX_VERSION=trunk tags/3.0.1 branches/dev/ZBXNEXT-1263-1
 
 ENV \
-  ZABBIX_VERSION=trunk \
+  ZABBIX_VERSION=branches/3.4 \
   ZS_enabled=true \
   ZA_enabled=true \
   ZW_enabled=true \
@@ -110,7 +110,7 @@ RUN \
               openldap-devel telnet net-tools snmptt sudo rubygems ruby-devel \
               jq openssh-clients python-httplib2 python-simplejson \
               libevent-devel openldap-clients && \
- `# reinstall glibc for locales` \
+  `# reinstall glibc for locales` \
   yum -y -q reinstall glibc-common && \
   cp /usr/local/etc/zabbix_agentd.conf /tmp && \
   svn co svn://svn.zabbix.com/${ZABBIX_VERSION} /usr/local/src/zabbix && \
