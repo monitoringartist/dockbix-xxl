@@ -1091,7 +1091,7 @@
                     <logtimefmt/>
                 </item>
                 <item>
-                    <name>Checksum of $1</name>
+                    <name>Checksum of /etc/passwd</name>
                     <type>0</type>
                     <snmp_community/>
                     <multiplier>0</multiplier>
@@ -1910,7 +1910,7 @@
     </templates>
     <triggers>
         <trigger>
-            <expression>{Template OS Linux for Dockbix Agent XXL - www.monitoringartist.com:vfs.file.cksum[/etc/passwd].diff(0)}&gt;0</expression>
+            <expression>{Template OS Linux for Dockbix Agent XXL - www.monitoringartist.com:vfs.file.cksum[/rootfs/etc/passwd].diff(0)}&gt;0</expression>
             <recovery_mode>0</recovery_mode>
             <recovery_expression/>
             <name>/etc/passwd has been changed on {HOST.NAME}</name>
