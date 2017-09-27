@@ -57,6 +57,7 @@ margin-bottom: 14px;
    height: 95%;
    display:none;
    background-color: #fff;
+   z-index: 1000;
 }
 .spinner {
   display: inline-block;
