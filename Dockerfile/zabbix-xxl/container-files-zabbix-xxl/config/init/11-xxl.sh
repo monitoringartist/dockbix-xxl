@@ -105,6 +105,7 @@ xxl_api() {
       ID=1
       LAST_ID=0
       files=$(find /etc/zabbix/api -regex  '.*\(.xml\|.api\|.sh\|.sql\)$' -type f|sort)
+      set +e
       for file in $files; do
         if $XXL_analytics; then
           curl -ks -o /dev/null "http://www.google-analytics.com/r/collect?v=1&tid=UA-72810204-2&cid=${cid}&t=event&ec=Stat&ea=API&el=${file}&ev=1&dp=%2F&dl=http%3A%2F%2Fgithub.com%2Fmonitoringartist%2Fzabbix-xxl" &> /dev/null &
@@ -132,7 +133,7 @@ xxl_api() {
           done < $file
         elif [[ "$file" == *sql ]]; then
           log "SQL command: $file"
-          output=$(/usr/bin/mysql --host=${ZS_DBHost} --port=$ZS_DBPort --user=$ZS_DBUser --password=$ZS_DBPassword --database=$ZS_DBName < $file)
+          output=$(/usr/bin/mysql --host=${ZS_DBHost} --port=$ZS_DBPort --user=$ZS_DBUser --password=$ZS_DBPassword --database=$ZS_DBName < $file 2>&1)
           log "SQL command output: $output"
         elif [[ "$file" == *sh ]]; then
           # bash script - environment variable are available in the script
@@ -141,6 +142,7 @@ xxl_api() {
           log "API script output: $output"
         fi
       done
+      set -e
     fi
   else
     log "API access not succesfull - try to set up env. variables XXL_apiuser/XXL_apipass"
