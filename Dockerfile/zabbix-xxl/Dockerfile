@@ -4,7 +4,7 @@ LABEL maintainer "Jan Garaj <info@monitoringartist.com>"
 # ZABBIX_VERSION=trunk tags/3.0.1 branches/dev/ZBXNEXT-1263-1
 
 ENV \
-  ZABBIX_VERSION=branches/3.4 \
+  ZABBIX_VERSION=tags/3.4.2 \
   ZS_enabled=true \
   ZA_enabled=true \
   ZW_enabled=true \
@@ -72,17 +72,13 @@ RUN \
   yum clean all && \
   yum update -y && \
   yum install -y epel-release && \
-  sed -i -e "\|^https://\"http://|d" /etc/yum.repos.d/epel.repo && \
   yum clean all && \
   yum install -y supervisor && \
   yum install -y http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm && \
   yum install -y nginx inotify-tools && \
-  `# Rename nginx:nginx user/group to www:www, also set uid:gid to 80:80 (just to make it nice)` \
   groupmod --gid 80 --new-name www nginx && \
   usermod --uid 80 --home /data/www --gid 80 --login www --shell /bin/bash --comment www nginx && \
-  `# Clean-up /etc/nginx/ directory from all not needed stuff...` \
   rm -rf /etc/nginx/*.d /etc/nginx/*_params && \
-  `# Prepare dummy SSL certificates` \
   mkdir -p /etc/nginx/ssl && \
   openssl genrsa -out /etc/nginx/ssl/dummy.key 2048 && \
   openssl req -new -key /etc/nginx/ssl/dummy.key -out /etc/nginx/ssl/dummy.csr -subj "/C=GB/L=London/O=Company Ltd/CN=zabbix-docker" && \
@@ -110,13 +106,12 @@ RUN \
               openldap-devel telnet net-tools snmptt sudo rubygems ruby-devel \
               jq openssh-clients python-httplib2 python-simplejson \
               libevent-devel openldap-clients && \
-  `# reinstall glibc for locales` \
   yum -y -q reinstall glibc-common && \
   cp /usr/local/etc/zabbix_agentd.conf /tmp && \
   svn co svn://svn.zabbix.com/${ZABBIX_VERSION} /usr/local/src/zabbix && \
   cd /usr/local/src/zabbix && \
   DATE=$(date +%Y-%m-%d) && \
-  sed -i "s/ZABBIX_VERSION.*'\(.*\)'/ZABBIX_VERSION', '\1 Dockbix XXL($DATE)'/g" frontends/php/include/defines.inc.php && \
+  sed -i "s/ZABBIX_VERSION.*'\(.*\)'/ZABBIX_VERSION', '\1 Dockbix XXL ($DATE)'/g" frontends/php/include/defines.inc.php && \
   sed -i "s/ZABBIX_VERSION_RC.*\"\(.*\)\"/ZABBIX_VERSION_RC \"\1 Dockbix XXL (${DATE})\"/g" include/version.h && \
   sed -i "s/String VERSION =.*\"\(.*\)\"/String VERSION = \"\1 Dockbix XXL (${DATE})\"/g" src/zabbix_java/src/com/zabbix/gateway/GeneralInformation.java && \
   zabbix_revision=$(svn info svn://svn.zabbix.com/${ZABBIX_VERSION} |grep "Last Changed Rev"|awk '{print $4;}') && \
@@ -171,7 +166,6 @@ RUN \
 COPY container-files-zabbix-xxl /
 RUN \
   chmod +x /usr/local/src/zabbix/supervisord-listener.py && \
-  ### locales fix && \
   yum -y -q reinstall glibc-common && \
   cd /tmp && \
   yumdownloader glibc-common && \
@@ -180,14 +174,11 @@ RUN \
   cp -vf ./usr/lib/locale/locale-archive.tmpl /usr/lib/locale/ && \
   build-locale-archive && \
   rm -rf /tmp/* && \
-  ### japanese font and boto ### && \
   yum install -y ipa-pgothic-fonts python-boto python-pip && \
   cp /usr/share/fonts/ipa-pgothic/ipagp.ttf /usr/local/src/zabbix/frontends/php/fonts && \
   pip install pyzabbix && \
   yum autoremove -y ipa-pgothic-fonts python-pip && \
   yum clean all && \
-  ### branding / menu ### && \
-  #sed -i "s/ZABBIX_VERSION.*'\(.*\)'/ZABBIX_VERSION', '\1 XXL'/g" /usr/local/src/zabbix/frontends/php/include/defines.inc.php && \
   grep 'XXL' /usr/local/src/zabbix/frontends/php/include/defines.inc.php && \
   sed -i "s#]))->addClass(ZBX_STYLE_FOOTER);#,' / ',(new CLink('Monitoring Artist Ltd', 'http://www.monitoringartist.com'))->addClass(ZBX_STYLE_GREY)->addClass(ZBX_STYLE_LINK_ALT)->setAttribute('target', '_blank'),]))->addClass(ZBX_STYLE_FOOTER);#g" /usr/local/src/zabbix/frontends/php/include/html.inc.php && \
   grep 'www.monitoringartist.com' /usr/local/src/zabbix/frontends/php/include/html.inc.php && \
@@ -208,10 +199,6 @@ RUN \
   grep 'XXL extensions' /usr/local/src/zabbix/frontends/php/include/menu.inc.php && \
   sed -i "s#'admin': 0},# 'admin': 0, 'xxl': 0},#g" /usr/local/src/zabbix/frontends/php/js/main.js && \
   grep "'xxl': 0}" /usr/local/src/zabbix/frontends/php/js/main.js && \
-  #sed -i "s#case PAGE_TYPE_XML:#case PAGE_TYPE_PEM:\nheader('Content-Type: application/x-pem-file');\nheader('Content-Disposition: attachment; filename=\"'.\$page['file'].'\"');\nbreak;\ncase PAGE_TYPE_XML:#g" /usr/local/src/zabbix/frontends/php/include/page_header.php && \
-  #grep 'case PAGE_TYPE_PEM:' /usr/local/src/zabbix/frontends/php/include/page_header.php && \
-  #sed -i "s#define('PAGE_TYPE_HTML'#define('PAGE_TYPE_PEM',-1);\ndefine('PAGE_TYPE_HTML'#g" /usr/local/src/zabbix/frontends/php/include/defines.inc.php && \
-  #grep 'PAGE_TYPE_PEM' /usr/local/src/zabbix/frontends/php/include/defines.inc.php
   rm -rf /tmp/*
 
 CMD ["/config/bootstrap.sh"]

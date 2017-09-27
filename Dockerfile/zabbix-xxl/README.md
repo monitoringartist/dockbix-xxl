@@ -22,7 +22,7 @@ If you like or use this project, please provide feedback to author - Star it ★
 
 ----
 
-Compiled Zabbix (server, proxy, agent, java gateway, snmpd daemon) with almost all features (MySQL support, Java, SNMP, Curl, Ipmi, SSH, fping) and Zabbix web UI based on CentOS 7, Supervisor, Nginx, PHP. Image requires external MySQL/MariDB database (you can run MySQL/MariaDB as a Docker container). Integrated XXL extensions: Searcher, Grapher, Zapix, template auto import, API command/script execution (some extensions must be explicitly enabled - see env variables section).
+Compiled Zabbix (server, proxy, agent, java gateway, snmpd daemon) with almost all features (MySQL support, Java, SNMP, Curl, Ipmi, SSH, fping) and Zabbix web UI based on CentOS 7, Supervisor, Nginx, PHP 7. Image requires external MySQL/MariDB database (you can run MySQL/MariaDB as a Docker container). Integrated XXL extensions: Searcher, Grapher, Zapix, template auto import, API command/script execution (some extensions must be explicitly enabled - see env variables section).
 
 ![Dockbix XXL Zabbix searcher](https://raw.githubusercontent.com/monitoringartist/dockbix-xxl/master/doc/dockbix-xxl-zabbix-searcher.png)
 ![Dockbix XXL Zapix](https://raw.githubusercontent.com/monitoringartist/dockbix-xxl/master/doc/dockbix-xxl-zapix.png)
