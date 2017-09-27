@@ -1,14 +1,17 @@
-Zabbix XXL
-==========
+[<img src="https://monitoringartist.github.io/managed-by-monitoringartist.png" alt="Managed by Monitoring Artist: DevOps / Docker / Kubernetes / AWS ECS / Zabbix / Zenoss / Terraform / Monitoring" align="right"/>](http://www.monitoringartist.com 'DevOps / Docker / Kubernetes / AWS ECS / Zabbix / Zenoss / Terraform / Monitoring')
 
-[Zabbix XXL](https://github.com/monitoringartist/zabbix-server-xxl-docker) is a standard Zabbix prepared for Docker world. You must install Zabbix package (rpm, deb, ...) in the old world. Similarly you need to pull Zabbix Docker image in the Docker world. This Docker image contains standard Zabbix + additional XXL (community) extensions. Routine tasks such as import of Zabbix DB are automated, so it's prepared for easy deployment.
+# Dockbix XXL
+
+[Dockbix XXL](https://github.com/monitoringartist/dockbix-xxl) is a standard Zabbix preconfigured for Docker world and out of the box Docker monitoring o. This Docker image contains standard Zabbix + additional XXL (community) extensions. Routine tasks are included: import of Zabbix DB, import of Docker monitoring template, autoregistration rule of Dockbix agents, ...
 
 If you like or use this project, please provide feedback to author - Star it ★.
 
+----
+
 **Overview of Monitoring Artist (dockerized) monitoring ecosystem:**
 
-- **[Zabbix XXL](https://hub.docker.com/r/monitoringartist/zabbix-xxl/)** - standard Zabbix 3.x server/proxy/UI/snmpd/java gateway with additional XXL extensions
-- **[Zabbix agent XXL](https://hub.docker.com/r/monitoringartist/zabbix-agent-xxl-limited/)** - Zabbix 3.0 agent with [Docker (Mesos/Chronos/Marathon) monitoring](https://github.com/monitoringartist/zabbix-docker-monitoring) and [systemd monitoring](https://github.com/monitoringartist/zabbix-systemd-monitoring)
+- **[Dockbix XXL](https://hub.docker.com/r/monitoringartist/dockbix-xxl/)** - standard Zabbix preconfigured for Docker monitoring with additional XXL extensions
+- **[Dockbix agent XXL](https://hub.docker.com/r/monitoringartist/dockbix-agent-xxl-limited/)** - Zabbix agent with [Docker (Kubernetes/Mesos/Chronos/Marathon) monitoring](https://github.com/monitoringartist/zabbix-docker-monitoring)
 - **[Zabbix templates](https://hub.docker.com/r/monitoringartist/zabbix-templates/)** - tiny (5MB) image for easy template deployment of selected Zabbix monitoring templates
 - **[Zabbix extension - all templates](https://hub.docker.com/r/monitoringartist/zabbix-ext-all-templates/)** - storage image for Zabbix XXL with 200+ [community templates](https://github.com/monitoringartist/zabbix-community-repos)
 - **[Kubernetized Zabbix](https://github.com/monitoringartist/kubernetes-zabbix)** - containerized Zabbix cluster based on Kubernetes
@@ -17,29 +20,43 @@ If you like or use this project, please provide feedback to author - Star it ★
 - **[Monitoring Analytics](https://hub.docker.com/r/monitoringartist/monitoring-analytics/)** - R statistical computing and graphics for monitoring from data scientists
 - **[Docker killer](https://hub.docker.com/r/monitoringartist/docker-killer/)** - Docker image for Docker stress and Docker orchestration testing
 
-Available Docker images
-=======================
+----
 
-### 1. [Docker image zabbix-xxl (Zabbix 3.x)](https://hub.docker.com/r/monitoringartist/zabbix-xxl/) [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-xxl/) [![](https://badge.imagelayers.io/monitoringartist/zabbix-xxl:latest.svg)](https://imagelayers.io/?images=monitoringartist/zabbix-xxl:latest)
+# Quick start
 
-See [README of zabbix-xxl](https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-xxl) for more details.
+```bash
+docker run \
+    -d \
+    --name zabbix-db \
+    --env="MARIADB_USER=zabbix" \
+    --env="MARIADB_PASS=my_password" \
+    monitoringartist/zabbix-db-mariadb
+```
+
+This DB container requires 1GB of memory by default. See [README of zabbix-db-mariadb](https://github.com/monitoringartist/dockbix-xxl/tree/master/Dockerfile/zabbix-db-mariadb)
+for more details and configurable options via environment variables.
+
+# Configuration
+
+# Support / issues
+
+This project support only issues related to this Docker image.
+
+
+# Legacy Docker images
+
+Previous versions of current Docbix XXL image:
+
+### 1. [Docker image zabbix-xxl (Zabbix 3.0/3.2)](https://hub.docker.com/r/monitoringartist/zabbix-xxl/)
+
+See [README of zabbix-xxl](https://github.com/monitoringartist/dockbix-xxl/tree/master/Dockerfile/zabbix-xxl) for more details.
 
 Compiled Zabbix (server, proxy, agent, java gateway, snmpd daemon) with almost all features (MySQL support, Java, SNMP, Curl, Ipmi, SSH, fping) and Zabbix web UI based on CentOS 7, Supervisor, Nginx, PHP. Image requires external MySQL/MariDB database (you can run MySQL/MariaDB as a Docker container). Integated XXL extensions: Searcher, Grapher, Zapix, template auto import, API command/script execution.
 
-![Zabbix XXL Zabbix searcher](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-3.0-xxl-zabbix-searcher.png)
 
-### 2. [Docker image zabbix-db-mariadb](https://registry.hub.docker.com/u/monitoringartist/zabbix-db-mariadb/) [![](https://badge.imagelayers.io/monitoringartist/zabbix-db-mariadb:latest.svg)](https://imagelayers.io/?images=monitoringartist/zabbix-db-mariadb:latest)
+### 2. [Docker image zabbix-2.4](https://registry.hub.docker.com/u/monitoringartist/zabbix-2.4/)
 
-See [README of zabbix-db-mariadb](https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-db-mariadb) 
-for more details.
-
-MariaDB container customized for Zabbix.
-
-### 3. [Docker image zabbix-2.4](https://registry.hub.docker.com/u/monitoringartist/zabbix-2.4/) [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-2.4/) [![](https://badge.imagelayers.io/monitoringartist/zabbix-2.4:latest.svg)](https://imagelayers.io/?images=monitoringartist/zabbix-2.4:latest)
-
-**2.4 is not supported version** - please use 3.0 version.
-
-See [README of zabbix-2.4](https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-2.4) 
+See [README of zabbix-2.4](https://github.com/monitoringartist/dockbix-xxl/tree/master/Dockerfile/zabbix-2.4)
 for more details.
 
 Compiled Zabbix with almost all features (MySQL support, Java, SNMP, 
@@ -47,80 +64,50 @@ Curl, Ipmi, fping) and Zabbix web UI based on CentOS 7, Supervisor, Nginx, PHP.
 Image requires external MySQL database (you can run MySQL also as Docker 
 container).
 
-Docker troubleshooting
-======================
+# Docker troubleshooting
 
 Use docker command to see if all required containers are up and running: 
-```
-$ docker ps -f
+
+```bash
+docker ps -f
 ```
 
 Check online logs of Zabbix container:
-```
-$ docker logs zabbix
+
+```bash
+docker logs zabbix
 ```
 
 Sometimes you might just want to review how things are deployed inside a running
  container, you can do this by executing a _bash shell_ through _docker's 
- exec_ command: 
-```
+ exec_ command:
+  
+```bash
 docker exec -ti zabbix /bin/bash
 ```
 
-History of an image and size of layers: 
-``` 
-docker history --no-trunc=true monitoringartist/zabbix-xxl | tr -s ' ' | tail -n+2 | awk -F " ago " '{print $2}'
-```
+Run specific Zabbix version, e.g. 3.4.0 - just specify 3.4.0 tag for image:
 
-Run specific Zabbix version, e.g. 3.0.0 - just specify 3.0.0 tag for image:
-```
-	docker run \
-		-d \
-		--name zabbix \
+```bash
+	docker run -d \
+		--name dockbix \
 		-p 80:80 \
 		-p 10051:10051 \
-    	-v /etc/localtime:/etc/localtime:ro \
-		--env="ZS_DBHost=database_ip" \
-		--env="ZS_DBUser=username" \
-		--env="ZS_DBPassword=my_password" \
-		monitoringartist/zabbix-xxl:3.0.3
+    -v /etc/localtime:/etc/localtime:ro \
+		-e "ZS_DBHost=database_ip" \
+		-e "ZS_DBUser=username" \
+		-e "ZS_DBPassword=my_password" \
+		monitoringartist/dockbix-xxl:3.4.0
 ```
 
-Customized Zabbix Docker images
-===============================
+# Legacy images
 
-Recommended example how to build custom Zabbix server on top of base image is 
-[million12/docker-zabbix-server](https://github.com/million12/docker-zabbix-server). 
-It provides custom features, such as Push notification, Slack and SMTP auth.
+Project contains specification for legacy images:
 
-Support
-=======
+monitoringartist/zabbix-xxl
+monitoringartist/zabbix-server-3.0
 
-Public Docker image monitoringartist/zabbix-xxl has best effort support.
-Please contact info@monitoringartist.com for commercial support.
-
-Security issues
-===============
-
-Our Docker images are security scanned regularly. All detected vulnerabilities are fixed*:
-
-- Critical vulnerabilities - within 72 hours of notification
-- Major vulnerabilities - within 7 days of notification
-
-*except Zabbix security issues, which will be reported directly to Zabbix vendor  
-
-Related Zabbix Docker projects
-==============================
-
-* [Zabbix agent 3.0 XXL with Docker monitoring support](https://github.com/monitoringartist/zabbix-agent-xxl)
-* Dockerized project [Grafana XXL](https://github.com/monitoringartist/grafana-xxl), which includes also [Grafana Zabbix datasource](https://github.com/alexanderzobnin/grafana-zabbix)
-* Scale your Dockerized [Zabbix with Kubernetes](https://github.com/monitoringartist/kubernetes-zabbix)
-
-About Docker
-============
-
-* [Official Docker Doc](https://docs.docker.com/)
-* [Awesome Docker](http://veggiemonk.github.io/awesome-docker/)
+It's no recommended to use them in the production.
 
 # Author
 
@@ -130,9 +117,9 @@ Kubernetes, ECS, AWS, Google GCP, Terraform, Lambda, Zabbix, Grafana, Elasticsea
 Kibana, Prometheus, Sysdig, ...
 
 Summary:
-* 1000+ [GitHub](https://github.com/monitoringartist/) stars
-* 6000+ [Grafana dashboard](https://grafana.net/monitoringartist) downloads
-* 800 000+ [Docker image](https://hub.docker.com/u/monitoringartist/) pulls
+* 2000+ [GitHub](https://github.com/monitoringartist/) stars
+* 10 000+ [Grafana dashboard](https://grafana.net/monitoringartist) downloads
+* 1 000 000+ [Docker image](https://hub.docker.com/u/monitoringartist/) pulls
 
 Professional devops / monitoring / consulting services:
 

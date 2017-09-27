@@ -1,14 +1,17 @@
-Zabbix XXL
-==========
+[<img src="https://monitoringartist.github.io/managed-by-monitoringartist.png" alt="Managed by Monitoring Artist: DevOps / Docker / Kubernetes / AWS ECS / Zabbix / Zenoss / Terraform / Monitoring" align="right"/>](http://www.monitoringartist.com 'DevOps / Docker / Kubernetes / AWS ECS / Zabbix / Zenoss / Terraform / Monitoring')
 
-[Zabbix XXL](https://github.com/monitoringartist/zabbix-xxl) is a standard Zabbix prepared for Docker world. You must install Zabbix package (rpm, deb, ...) in the old world. Similarly, you need to pull Zabbix Docker image in the Docker world. This Docker image contains standard Zabbix + additional XXL (community) extensions. Routine tasks such as import of Zabbix DB are automated, so it's prepared for easy deployment.
+# Dockbix XXL
 
-If you like or use this project, please provide feedback to author - Star it ★.
+[Dockbix XXL](https://github.com/monitoringartist/dockbix-xxl) is a **Dock**erized Zab**bix** preconfigured for easy Docker monitoring. This Docker image contains standard Zabbix + additional XXL community extensions. Routine tasks are included: import of Zabbix DB, import of Docker monitoring template, autoregistration rule of Dockbix agents, ...
+
+If you like or use this project, please provide feedback to author - Star it ★ or star upstream projects ★.
+
+----
 
 **Overview of Monitoring Artist (dockerized) monitoring ecosystem:**
 
-- **[Zabbix XXL](https://hub.docker.com/r/monitoringartist/zabbix-xxl/)** - standard Zabbix 3.x server/proxy/UI/snmpd/java gateway with additional XXL extensions
-- **[Zabbix agent XXL](https://hub.docker.com/r/monitoringartist/zabbix-agent-xxl-limited/)** - Zabbix 3.0 agent with [Docker (Mesos/Chronos/Marathon) monitoring](https://github.com/monitoringartist/zabbix-docker-monitoring) and [systemd monitoring](https://github.com/monitoringartist/zabbix-systemd-monitoring)
+- **[Dockbix XXL](https://hub.docker.com/r/monitoringartist/dockbix-xxl/)** - standard Zabbix server/proxy/UI/snmpd/java gateway with additional XXL extensions
+- **[Dockbix agent XXL](https://hub.docker.com/r/monitoringartist/dockbix-agent-xxl-limited/)** - Zabbix agent with [Docker (Kubernetes/Mesos/Chronos/Marathon) monitoring](https://github.com/monitoringartist/zabbix-docker-monitoring)
 - **[Zabbix templates](https://hub.docker.com/r/monitoringartist/zabbix-templates/)** - tiny (5MB) image for easy template deployment of selected Zabbix monitoring templates
 - **[Zabbix extension - all templates](https://hub.docker.com/r/monitoringartist/zabbix-ext-all-templates/)** - storage image for Zabbix XXL with 200+ [community templates](https://github.com/monitoringartist/zabbix-community-repos)
 - **[Kubernetized Zabbix](https://github.com/monitoringartist/kubernetes-zabbix)** - containerized Zabbix cluster based on Kubernetes
@@ -17,34 +20,33 @@ If you like or use this project, please provide feedback to author - Star it ★
 - **[Monitoring Analytics](https://hub.docker.com/r/monitoringartist/monitoring-analytics/)** - R statistical computing and graphics for monitoring from data scientists
 - **[Docker killer](https://hub.docker.com/r/monitoringartist/docker-killer/)** - Docker image for Docker stress and Docker orchestration testing
 
-zabbix-xxl (Zabbix 3.0/3.2) [![Deploy to Docker Cloud](https://files.cloud.docker.com/images/deploy-to-dockercloud.svg)](https://cloud.docker.com/stack/deploy/?repo=https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-xxl/) [![](https://badge.imagelayers.io/monitoringartist/zabbix-xxl:latest.svg)](https://imagelayers.io/?images=monitoringartist/zabbix-xxl:latest)
-=======================
+----
 
-Compiled Zabbix (server, proxy, agent, java gateway, snmpd daemon) with almost all features (MySQL support, Java, SNMP, Curl, Ipmi, SSH, fping) and Zabbix web UI based on CentOS 7, Supervisor, Nginx, PHP. Image requires external MySQL/MariDB database (you can run MySQL/MariaDB as a Docker container). Integated XXL extensions: Searcher, Grapher, Zapix, template auto import, API command/script execution (some extensions must be explicitly enabled - see env variables section).
+Compiled Zabbix (server, proxy, agent, java gateway, snmpd daemon) with almost all features (MySQL support, Java, SNMP, Curl, Ipmi, SSH, fping) and Zabbix web UI based on CentOS 7, Supervisor, Nginx, PHP. Image requires external MySQL/MariDB database (you can run MySQL/MariaDB as a Docker container). Integrated XXL extensions: Searcher, Grapher, Zapix, template auto import, API command/script execution (some extensions must be explicitly enabled - see env variables section).
 
-![Zabbix XXL Zabbix searcher](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-3.0-xxl-zabbix-searcher.png)
-![Zabbix XXL Zapix](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-3.0-xxl-zapix.png)
-![Zabbix XXL Grapher](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-3.0-xxl-grapher.png)
-![Zabbix XXL Update Checker](https://raw.githubusercontent.com/monitoringartist/zabbix-xxl/master/doc/zabbix-xxl-updatechecker.png)
+![Dockbix XXL Zabbix searcher](https://raw.githubusercontent.com/monitoringartist/dockbix-xxl/master/doc/dockbix-xxl-zabbix-searcher.png)
+![Dockbix XXL Zapix](https://raw.githubusercontent.com/monitoringartist/dockbix-xxl/master/doc/dockbix-xxl-zapix.png)
+![Dockbix XXL Grapher](https://raw.githubusercontent.com/monitoringartist/dockbix-xxl/master/doc/dockbix-xxl-grapher.png)
+![Dockbix XXL Update Checker](https://raw.githubusercontent.com/monitoringartist/dockbix-xxl/master/doc/dockbix-xxl-updatechecker.png)
 
-#### Standard Dockerized Zabbix deployment
+# Quick start
 
-```
-# create /var/lib/mysql as persistent volume storage
-docker run -d -v /var/lib/mysql --name zabbix-db-storage busybox:latest
+```sh
+# Create data container with persistent storage in /var/lib/mysql folder
+docker run -d -v /var/lib/mysql --name dockbix-db-storage busybox:latest
 
-# start DB for Zabbix - default 1GB innodb_buffer_pool_size is used
+# Start DB for Dockbix - default 1GB innodb_buffer_pool_size is used
 docker run \
     -d \
-    --name zabbix-db \
+    --name dockbix-db \
     -v /backups:/backups \
     -v /etc/localtime:/etc/localtime:ro \
-    --volumes-from zabbix-db-storage \
+    --volumes-from dockbix-db-storage \
     --env="MARIADB_USER=zabbix" \
     --env="MARIADB_PASS=my_password" \
     monitoringartist/zabbix-db-mariadb
 
-# start Zabbix linked to started DB
+# Start Dockbix linked to the started DB
 docker run \
     -d \
     --name zabbix \
@@ -52,35 +54,36 @@ docker run \
     -p 10051:10051 \
     -v /etc/localtime:/etc/localtime:ro \
     --link zabbix-db:zabbix.db \
-    --env="ZS_DBHost=zabbix.db" \
+    --env="ZS_DBHost=dockbix.db" \
     --env="ZS_DBUser=zabbix" \
     --env="ZS_DBPassword=my_password" \
-    monitoringartist/zabbix-xxl:latest
-# wait ~60 seconds for Zabbix initialization
+    monitoringartist/dockbix-xxl:latest
+# Wait ~60 seconds for Zabbix initialization
 # Zabbix web will be available on the port 80, Zabbix server on the port 10051
+# Default credentials: Admin/zabbix
 ```
 
-Examples of admin tasks:
+# Examples of admin tasks
 
-```
-# Backup of DB Zabbix - configuration data only, no item history/trends
+```sh
+## Backup of DB Zabbix - configuration data only, no item history/trends
 docker exec \
-    -ti zabbix-db \
+    -ti dockbix-db \
     /zabbix-backup/zabbix-mariadb-dump -u zabbix -p my_password -o /backups
 
-# Full backup of Zabbix DB
+## Full compressed backup of Zabbix DB
 docker exec \
-    -ti zabbix-db \
+    -ti dockbix-db \
     bash -c "\
     mysqldump -u zabbix -pmy_password zabbix | \
     bzip2 -cq9 > /backups/zabbix_db_dump_$(date +%Y-%m-%d-%H.%M.%S).sql.bz2"
 
-# Restore Zabbix DB
-# remove zabbix server container
-docker rm -f zabbix
-# restore data from dump (all current data will be dropped!!!)
-docker exec -i zabbix-db sh -c 'bunzip2 -dc /backups/zabbix_db_dump_2016-05-25-02.57.46.sql.bz2 | mysql -uzabbix -p --password=my_password zabbix'
-# run zabbix server again
+## DB data restore
+# Remove Dockbix container
+docker rm -f dockbix
+# Restore DB data from the dump (all your current data will be dropped!!!)
+docker exec -i dockbix-db sh -c 'bunzip2 -dc /backups/zabbix_db_dump_2016-05-25-02.57.46.sql.bz2 | mysql -uzabbix -p --password=my_password zabbix'
+# Run Dockbix container again
 docker run ...
 ```
 
@@ -96,38 +99,51 @@ The easiest way to do that is to use another docker image. For this purpose you
 can use [zabbix/zabbix-db-mariadb](https://registry.hub.docker.com/u/monitoringartist/zabbix-db-mariadb) image as database.
 
 For more information about monitoringartist/zabbix-db-mariadb see
-[README of zabbix-db-mariadb](https://github.com/monitoringartist/zabbix-xxl/tree/master/Dockerfile/zabbix-db-mariadb).
+[README of zabbix-db-mariadb](https://github.com/monitoringartist/dockbix-xxl/tree/master/Dockerfile/zabbix-db-mariadb).
 
 Example:
 
 	docker run \
 		-d \
-		--name zabbix-db \
+		--name dockbix-db \
 		-p 3306:3306 \
 		-v /etc/localtime:/etc/localtime:ro \
 		--env="MARIADB_USER=zabbix" \
 		--env="MARIADB_PASS=my_password" \
 		monitoringartist/zabbix-db-mariadb
 
-Remember to use the same credentials when deploying zabbix image.
+Remember to use the same DB credentials when deploying Dockbix image.
 
-#### Environmental variables
+# Environmental variables
 
 Available variables related to XXL features:
 
-| Variable | Default value in the container | Description |
-| -------- | ------------------------------ | ----------- |
-| XXL_searcher | true | enable/disable [Zabbix searcher project](https://github.com/monitoringartist/zabbix-searcher) |
-| XXL_zapix | false | enable/disable [Zapix project](https://github.com/monitoringartist/zapix) |
-| XXL_grapher | false | enable/disable [Grapher project](https://github.com/sepich/zabbixGrapher) |
+| Variable | Default value | Description |
+| -------- | ------------- | ----------- |
+| XXL_searcher | true | enable/disable integrated [Zabbix searcher project](https://github.com/monitoringartist/zabbix-searcher) |
+| XXL_zapix | false | enable/disable integrated [Zapix project](https://github.com/monitoringartist/zapix) |
+| XXL_grapher | false | enable/disable integrated [Grapher project](https://github.com/sepich/zabbixGrapher) |
 | XXL_api | true | enable/disable auto import of templates (`.xml`), API curl commands (`.curl`) or API scripts (`.sh`) located in path `/etc/zabbix/api/<custom_folder>` |
 | XXL_apiuser | Admin | username used for API commands |
 | XXL_apipass | zabbix | password used for API commands |
 | XXL_analytics | true | enable/disable collecting of statistics via Google Analytics |
-| XXL_updatechecker | true | enable/disable check of latest available Docker image |
+| XXL_updatechecker | true | enable/disable check of the latest available Docker image |
 
-Use environment variables to config Zabbix and Zabbix web UI (PHP).
-Default container variables or default Zabbix are used:
+Use environment variables to config Zabbix server and Zabbix web UI (PHP). You
+can add any Zabbix config variables, just add correct variable prefix
+(`ZS_` for Zabbix Server, `ZP_` for Zabbix Proxy) and set a variable value.
+Use numeric suffix (`_<NUM>`) for multiple config parameters.
+Example: you need to increase CacheSize and load two modules for Zabbix server:
+
+```
+ZS_CacheSize=50M
+ZS_LoadModule_1=module1.so
+ZS_LoadModule_2=module2.so
+```
+
+If you don't specify env variable confuguration and variable is not listes in the
+default container variables, then default Zabbix config values are used. Default
+container variables:
 
 | Variable | Default value in the container |
 | -------- | ------------------------------ |
@@ -170,30 +186,21 @@ Default container variables or default Zabbix are used:
 | ZP_DBPort | 3306 |
 | ZP_User | zabbix |
 
-You can add more variables, just add correct variable prefix (`ZS_` for Zabbix Server,
-`ZP_` for Zabbix Proxy) and set your custom value. Use numeric suffix (`_<NUM>`)
-for multiple config parameters. Example:
+Note: Japanese users might want to set env variable `ZBX_GRAPH_FONT_NAME=ipagp` to support japanese font in graphs.
 
-```
-ZS_LoadModule_1=module1.so
-ZS_LoadModule_2=module2.so
-```
-
-Note: Japanese users might want to set env. variable `ZBX_GRAPH_FONT_NAME=ipagp` to support japanese font in graphs.
-
-#### Configuration from volume
-Full config files can be also used. Environment configs will be overridden by
-values from config files in this case. You need only to add */etc/custom-config/*
+# Configuration from the volume
+Zabbix config files can be also used. Environment configs will be overridden by
+values from the config files in this case. You need only to add */etc/custom-config/*
  volume:
 
 ```
 -v /host/custom-config/:/etc/custom-config/
 ```
 
-Available files:
+Available config file names:
 
-| File | Description |
-| ---- | ----------- |
+| File name | Description |
+| --------- | ----------- |
 | php-zabbix.ini | PHP configuration file |
 | zabbix_server.conf | Zabbix server configuration file |
 | zabbix_proxy.conf | Zabbix proxy configuration file |
@@ -203,94 +210,66 @@ Zabbix role environment variables:
 
 | Variable | Default value in the container | Description |
 | -------- | ------------------------------ | ----------- |
-| ZS_enabled | true | Zabbix Server start |
-| ZA_enabled | true | Zabbix Agent start |
-| ZW_enabled | true | Zabbix Web UI start |
-| ZP_enabled | false | Zabbix Proxy start |
-| ZJ_enabled | false | Zabbix Java Gateway start |
-| SNMPTRAP_enabled | false | SNMP trap process (port 162) start |
+| ZS_enabled | true | Enable Zabbix Server |
+| ZA_enabled | true | Enable Zabbix Agent |
+| ZW_enabled | true | Enable Zabbix Web UI (Nginx/PHP 7) |
+| ZP_enabled | false | Enable Zabbix Proxy |
+| ZJ_enabled | false | Enable Zabbix Java Gateway |
+| SNMPTRAP_enabled | false | Enable SNMP trap process (port 162) |
 
-All Zabbix server components are enabled by default except SNMP traps processing. However, users
+All Zabbix server components are enabled by default except SNMP traps processing. However, some users
 want to run dedicated Zabbix component per container. Typical use case is Zabbix
 web UI. Thanks to role environment variables are users able to execute many web
 UI containers, which helps to scale Zabbix as a service.
 
-
-#### Zabbix deployment
-Now when we have Zabbix database running we can deploy Zabbix image with
-appropriate environment variables set.
-
-Example:
-
-	docker run \
-		-d \
-		--name zabbix \
-		-p 80:80 \
-		-p 10051:10051 \
-		-v /etc/localtime:/etc/localtime:ro \
-		--link zabbix-db:zabbix.db \
-		--env="ZS_DBHost=zabbix.db" \
-		--env="ZS_DBUser=zabbix" \
-		--env="ZS_DBPassword=my_password" \
-		monitoringartist/zabbix-xxl:latest
-
-#### Access to Zabbix web interface
-To log in into Zabbix web interface for the first time use credentials
-`Admin:zabbix`.
-
-Access web interface under [http://docker_host_ip]()
-
-#### HTTPS web interface
-
-Set up nginx - customize [default.conf](https://github.com/monitoringartist/zabbix-xxl/blob/master/Dockerfile/zabbix-xxl/container-files-zabbix/etc/nginx/hosts.d/default.conf)
-and then use volume to mount custom nginx configuration (for example `-v /etc/https-zabbix-nginx.conf:/etc/nginx/hosts.d/default.conf`) + mount also certificates used in your custom nginx conf file.
-
-XXL API features
-================
+# XXL API features
 
 If env variable `XXL_api` is `true` (default value), then bootstrap script will try to find recursively any `.xml, .api, .sh` in `/etc/zabbix/api`. For example mount folder with your XML templates and script will try to import all your templates:
 
-```
+```sh
 -v /myhosttemplatefolder/:/etc/zabbix/api/mytemplates
 ```
 
 - **XML files**: All `*.xml` file are processed as Zabbix XML template and script tries to import them by using Zabbix API. Default additional imported templates are [basic Docker templates](https://github.com/monitoringartist/zabbix-docker-monitoring/tree/master/template).
 
-- **Api files**: All `*.api` files are processed as data commands for Zabbix API. Standard curl command is used for execution. Request id `<ID>` and auth token `<AUTH_TOKEN>` are replaced automatically. Defaul API command is used to enable Zabbix server host:
+- **Api files**: All `*.api` files are processed as data commands for Zabbix API. Standard curl command is used for execution. Request id `<ID>` and auth token `<AUTH_TOKEN>` are replaced automatically. Example API command, which is used to enable Zabbix server host:
 
-```
+```json
 {"jsonrpc":"2.0","method":"host.update","id":<ID>,"auth":"<AUTH_TOKEN>","params":{"hostid":"10084","status":0}}
 ```
 
-- **Sh files**: All `*.sh*` files are processed as scripts and they are intended  for user custom API scripting. Env variables `XXL_apiuser, XXL_apipass` should be used for API authentication.
+- **Sh files**: All `*.sh*` files are processed as scripts and they are intended for user custom API scripting. Env variables `XXL_apiuser, XXL_apipass` should be used for API authentication.
 
-Docker troubleshooting
-======================
+# HTTPS web interface
+
+Example: set up nginx - customize [default.conf](https://github.com/monitoringartist/dockbix-xxl/blob/master/Dockerfile/dockbix-xxl/container-files-zabbix/etc/nginx/hosts.d/default.conf)
+and then use volume to mount custom nginx configuration (for example `-v /etc/https-zabbix-nginx.conf:/etc/nginx/hosts.d/default.conf`) + mount also certificates used in your custom nginx conf file.
+
+
+# Docker container troubleshooting
 
 Use docker command to see if all required containers are up and running:
+
 ```
 $ docker ps
 ```
 
-Check logs of Zabbix container:
-```
-$ docker logs zabbix
+Check logs of Dockbix container:
+
+```sh
+$ docker logs dockbix
 ```
 
 Sometimes you might just want to review how things are deployed inside a running
  container, you can do this by executing a _bash shell_ through _docker's
  exec_ command:
-```
+
+```sh
 docker exec -ti zabbix /bin/bash
 ```
 
-History of an image and size of layers:
-```
-docker history --no-trunc=true monitoringartist/zabbix-xxl | tr -s ' ' | tail -n+2 | awk -F " ago " '{print $2}'
-```
-
-Run specific Zabbix version, e.g. 3.0.0 - just specify 3.0.0 tag for image:
-```
+Run specific Zabbix version, e.g. 3.4.0 - just specify 3.4.0 tag for image:
+```sh
 	docker run \
 		-d \
 		--name zabbix \
@@ -301,22 +280,32 @@ Run specific Zabbix version, e.g. 3.0.0 - just specify 3.0.0 tag for image:
 		--env="ZS_DBHost=zabbix.db" \
 		--env="ZS_DBUser=zabbix" \
 		--env="ZS_DBPassword=my_password" \
-		monitoringartist/zabbix-xxl:3.0.0
+		monitoringartist/dockbix-xxl:3.4.0
 ```
 
-Related Zabbix Docker projects
-==============================
+# Legacy images
 
-* [Zabbix agent XXL with Docker monitoring support](https://github.com/monitoringartist/zabbix-agent-xxl)
-* Dockerized project [Grafana XXL](https://github.com/monitoringartist/grafana-xxl), which includes also [Grafana Zabbix datasource](https://github.com/alexanderzobnin/grafana-zabbix)
-* Scale your Dockerized [Zabbix with Kubernetes](https://github.com/monitoringartist/kubernetes-zabbix)
+This GitHub project has been used also to build previous Docker images.  Usage
+of previous images is strongly discouraged for production use. Please migrate
+them to the Docker image `monitoringartist/dockbix-xxl`. Don't forget to backup
+your DB data before any migration.
 
-Author
-======
+- `monitoringartist/zabbix-xxl` - full compatibility with the image `monitoringartist/dockbix-xxl`; migration: just change name of the used image
+- `monitoringartist/zabbix-server-3.0` - full compatibility with the image `monitoringartist/dockbix-xxl`; migration: just change name of the used image
+- `monitoringartist/zabbix-2.4` - not compatible with the image `monitoringartist/dockbix-xxl`; migration: read readme and create new container config
 
-[Devops Monitoring Expert](http://www.jangaraj.com 'DevOps / Docker / Kubernetes / AWS ECS / Zabbix / Zenoss / Terraform / Monitoring'),
-who loves monitoring systems, which start with letter Z. Those are Zabbix and Zenoss.
+# Author
 
-Professional devops / monitoring services:
+[Devops Monitoring Expert](http://www.jangaraj.com 'DevOps / Docker / Kubernetes / AWS ECS / Google GCP / Zabbix / Zenoss / Terraform / Monitoring'),
+who loves monitoring systems and cutting/bleeding edge technologies: Docker,
+Kubernetes, ECS, AWS, Google GCP, Terraform, Lambda, Zabbix, Grafana, Elasticsearch,
+Kibana, Prometheus, Sysdig,...
 
-[![Monitoring Artist](http://monitoringartist.com/img/github-monitoring-artist-logo.jpg)](http://www.monitoringartist.com 'DevOps / Docker / Kubernetes / AWS ECS / Zabbix / Zenoss / Terraform / Monitoring')
+Summary:
+* 2000+ [GitHub](https://github.com/monitoringartist/) stars
+* 10 000+ [Grafana dashboard](https://grafana.net/monitoringartist) downloads
+* 1 000 000+ [Docker image](https://hub.docker.com/u/monitoringartist/) pulls
+
+Professional devops / monitoring / consulting services:
+
+[![Monitoring Artist](http://monitoringartist.com/img/github-monitoring-artist-logo.jpg)](http://www.monitoringartist.com 'DevOps / Docker / Kubernetes / AWS ECS / Google GCP / Zabbix / Zenoss / Terraform / Monitoring')
