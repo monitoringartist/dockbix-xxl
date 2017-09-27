@@ -162,8 +162,8 @@ RUN \
   rm -rf /tmp/*
   # TODO apply http://geofrogger.net/review/snmptt-hide-generic-part.patch
 
-# Layer: zabbix-xxl
-COPY container-files-zabbix-xxl /
+# Layer: dockbix-xxl
+COPY container-files-dockbix-xxl /
 RUN \
   chmod +x /usr/local/src/zabbix/supervisord-listener.py && \
   yum -y -q reinstall glibc-common && \
