@@ -2,9 +2,9 @@
 
 # Dockbix XXL
 
-[Dockbix XXL](https://github.com/monitoringartist/dockbix-xxl) is a **Dock**erized Zab**bix** preconfigured for easy Docker monitoring. This Docker image contains standard Zabbix + additional XXL community extensions. Routine tasks are included: import of Zabbix DB, import of Docker monitoring template, autoregistration rule of Dockbix agents, ...
+[Dockbix XXL](https://github.com/monitoringartist/dockbix-xxl) is a Dockerized Zabbix preconfigured for easy Docker monitoring. This Docker image contains standard Zabbix + additional XXL community extensions. Routine tasks are included: auto import of Zabbix DB, auto import of Docker monitoring templates, autoregistration rule for [Dockbix agent XXL](https://github.com/monitoringartist/dockbix-agent-xxl), ...
 
-If you like or use this project, please provide feedback to author - Star it ★ or star upstream projects ★.
+If you like or use this project, please provide feedback to the author - Star it ★ or star upstream projects ★.
 
 ----
 
@@ -22,17 +22,16 @@ If you like or use this project, please provide feedback to author - Star it ★
 
 ----
 
-Compiled Zabbix (server, proxy, agent, java gateway, snmpd daemon) with almost all features (MySQL support, Java, SNMP, Curl, Ipmi, SSH, fping) and Zabbix web UI based on CentOS 7, Supervisor, Nginx, PHP 7. Image requires external MySQL/MariDB database (you can run MySQL/MariaDB as a Docker container). Integrated XXL extensions: Searcher, Grapher, Zapix, template auto import, API command/script execution (some extensions must be explicitly enabled - see env variables section).
+Compiled Zabbix (server, proxy, agent, java gateway, snmpd daemon) with almost all features (MySQL support, Java, SNMP, Curl, Ipmi, SSH, fping) and Zabbix web UI based on CentOS 7, Supervisor, Nginx, PHP 7. Image requires external MySQL/MariaDB database (you can run MySQL/MariaDB as a Docker container). Integrated XXL extensions: Searcher, Grapher, Zapix, template auto import, API command/script execution (some extensions must be explicitly enabled - see env variables section).
 
 ![Dockbix XXL Zabbix searcher](https://raw.githubusercontent.com/monitoringartist/dockbix-xxl/master/doc/dockbix-xxl-zabbix-searcher.png)
 ![Dockbix XXL Zapix](https://raw.githubusercontent.com/monitoringartist/dockbix-xxl/master/doc/dockbix-xxl-zapix.png)
 ![Dockbix XXL Grapher](https://raw.githubusercontent.com/monitoringartist/dockbix-xxl/master/doc/dockbix-xxl-grapher.png)
-![Dockbix XXL Update Checker](https://raw.githubusercontent.com/monitoringartist/dockbix-xxl/master/doc/dockbix-xxl-updatechecker.png)
 
 # Quick start
 
 ```sh
-# Create data container with persistent storage in /var/lib/mysql folder
+# Create data container with persistent storage in the /var/lib/mysql folder
 docker run -d -v /var/lib/mysql --name dockbix-db-storage busybox:latest
 
 # Start DB for Dockbix - default 1GB innodb_buffer_pool_size is used
@@ -49,16 +48,18 @@ docker run \
 # Start Dockbix linked to the started DB
 docker run \
     -d \
-    --name zabbix \
+    --name dockbix \
     -p 80:80 \
     -p 10051:10051 \
     -v /etc/localtime:/etc/localtime:ro \
-    --link zabbix-db:zabbix.db \
+    --link dockbix-db:dockbix.db \
     --env="ZS_DBHost=dockbix.db" \
     --env="ZS_DBUser=zabbix" \
     --env="ZS_DBPassword=my_password" \
+    --env="XXL_zapix=true" \
+    --env="XXL_grapher=true" \
     monitoringartist/dockbix-xxl:latest
-# Wait ~60 seconds for Zabbix initialization
+# Wait ~30 seconds for Zabbix initialization
 # Zabbix web will be available on the port 80, Zabbix server on the port 10051
 # Default credentials: Admin/zabbix
 ```
@@ -82,7 +83,7 @@ docker exec \
 # Remove Dockbix container
 docker rm -f dockbix
 # Restore DB data from the dump (all your current data will be dropped!!!)
-docker exec -i dockbix-db sh -c 'bunzip2 -dc /backups/zabbix_db_dump_2016-05-25-02.57.46.sql.bz2 | mysql -uzabbix -p --password=my_password zabbix'
+docker exec -i dockbix-db sh -c 'bunzip2 -dc /backups/zabbix_db_dump_2017-28-09-02.57.46.sql.bz2 | mysql -uzabbix -p --password=my_password zabbix'
 # Run Dockbix container again
 docker run ...
 ```
@@ -93,10 +94,10 @@ docker run ...
 docker-compose up -d
 ```
 
-### Zabbix database as Docker container
-To be able to connect to database we would need one to be running first.
+### Dockbix/Zabbix database as a Docker container
+To be able to connect to the database we would need one to be running first.
 The easiest way to do that is to use another docker image. For this purpose you
-can use [zabbix/zabbix-db-mariadb](https://registry.hub.docker.com/u/monitoringartist/zabbix-db-mariadb) image as database.
+can use [monitoringartist/zabbix-db-mariadb](https://registry.hub.docker.com/u/monitoringartist/zabbix-db-mariadb) image as database.
 
 For more information about monitoringartist/zabbix-db-mariadb see
 [README of zabbix-db-mariadb](https://github.com/monitoringartist/dockbix-xxl/tree/master/Dockerfile/zabbix-db-mariadb).
@@ -291,7 +292,7 @@ problem with Zabbix configuration.
 
 # Legacy images
 
-This GitHub project has been used also to build previous Docker images.  Usage
+This GitHub project also been used to build previous Docker images. Use
 of previous images is strongly discouraged for production use. Please migrate
 them to the Docker image `monitoringartist/dockbix-xxl`. Don't forget to backup
 your DB data before any migration.
