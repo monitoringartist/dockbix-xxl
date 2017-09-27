@@ -1859,50 +1859,6 @@
                             <max_columns>3</max_columns>
                             <application/>
                         </screen_item>
-                        <screen_item>
-                            <resourcetype>1</resourcetype>
-                            <width>500</width>
-                            <height>100</height>
-                            <x>0</x>
-                            <y>2</y>
-                            <colspan>1</colspan>
-                            <rowspan>1</rowspan>
-                            <elements>0</elements>
-                            <valign>0</valign>
-                            <halign>0</halign>
-                            <style>0</style>
-                            <url/>
-                            <dynamic>0</dynamic>
-                            <sort_triggers>0</sort_triggers>
-                            <resource>
-                                <key>proc.num[]</key>
-                                <host>Template OS Linux for Dockbix Agent XXL - www.monitoringartist.com</host>
-                            </resource>
-                            <max_columns>3</max_columns>
-                            <application/>
-                        </screen_item>
-                        <screen_item>
-                            <resourcetype>1</resourcetype>
-                            <width>500</width>
-                            <height>100</height>
-                            <x>1</x>
-                            <y>2</y>
-                            <colspan>1</colspan>
-                            <rowspan>1</rowspan>
-                            <elements>0</elements>
-                            <valign>0</valign>
-                            <halign>0</halign>
-                            <style>0</style>
-                            <url/>
-                            <dynamic>0</dynamic>
-                            <sort_triggers>0</sort_triggers>
-                            <resource>
-                                <key>proc.num[,,run]</key>
-                                <host>Template OS Linux for Dockbix Agent XXL - www.monitoringartist.com</host>
-                            </resource>
-                            <max_columns>3</max_columns>
-                            <application/>
-                        </screen_item>
                     </screen_items>
                 </screen>
             </screens>
@@ -2042,38 +1998,6 @@
             <recovery_mode>0</recovery_mode>
             <recovery_expression/>
             <name>Processor load is too high on {HOST.NAME}</name>
-            <correlation_mode>0</correlation_mode>
-            <correlation_tag/>
-            <url/>
-            <status>0</status>
-            <priority>2</priority>
-            <description/>
-            <type>0</type>
-            <manual_close>0</manual_close>
-            <dependencies/>
-            <tags/>
-        </trigger>
-        <trigger>
-            <expression>{Template OS Linux for Dockbix Agent XXL - www.monitoringartist.com:proc.num[].avg(5m)}&gt;300</expression>
-            <recovery_mode>0</recovery_mode>
-            <recovery_expression/>
-            <name>Too many processes on {HOST.NAME}</name>
-            <correlation_mode>0</correlation_mode>
-            <correlation_tag/>
-            <url/>
-            <status>0</status>
-            <priority>2</priority>
-            <description/>
-            <type>0</type>
-            <manual_close>0</manual_close>
-            <dependencies/>
-            <tags/>
-        </trigger>
-        <trigger>
-            <expression>{Template OS Linux for Dockbix Agent XXL - www.monitoringartist.com:proc.num[,,run].avg(5m)}&gt;30</expression>
-            <recovery_mode>0</recovery_mode>
-            <recovery_expression/>
-            <name>Too many processes running on {HOST.NAME}</name>
             <correlation_mode>0</correlation_mode>
             <correlation_tag/>
             <url/>
