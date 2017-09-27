@@ -6,7 +6,7 @@ LABEL maintainer "Jan Garaj <info@monitoringartist.com>"
 ENV \
   ZABBIX_VERSION=tags/3.4.2 \
   ZS_enabled=true \
-  ZA_enabled=true \
+  ZA_enabled=false \
   ZW_enabled=true \
   ZJ_enabled=false \
   ZP_enabled=false \
