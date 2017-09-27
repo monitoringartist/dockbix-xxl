@@ -13,7 +13,7 @@ separator=$(echo && printf '=%.0s' {1..100} && echo)
 
 # Logging functions
 log() {
-  if [[ "$@" ]]; then echo "${bold}${green}`date +'%Y-%m-%d %H:%M:%S,000'` INFO${reset} $@";
+  if [[ "$@" ]]; then echo "${bold}${green}[LOG `date +'%T'`]${reset} $@";
   else echo -n; fi
 }
 
@@ -57,9 +57,9 @@ xxl_config() {
     sed -i "s#<script>.*</script></body></html>#</body></html>#g" /usr/local/src/zabbix/frontends/php/include/page_footer.php
     sed -i "s#<script>.*</script></body></html>#</body></html>#g" /usr/local/src/zabbix/frontends/php/app/views/layout.htmlpage.php
   else
-    export ZABBIX_VERSION_FULL=$(zabbix_server -V | grep "(Zabbix)" | awk '{print $3" "$4}')
-    curl --connect-timeout 20 --max-time 30 -ks -o /dev/null "http://www.google-analytics.com/r/collect?v=1&tid=UA-72810204-2&cid=${cid}&t=event&ec=Ping&ea=Version&el=${ZABBIX_VERSION_FULL}&ev=1&dp=%2F&dl=http%3A%2F%2Fgithub.com%2Fmonitoringartist%2Fzabbix-xxl" &> /dev/null &
-    curl --connect-timeout 20 --max-time 30 -ks -o /dev/null "http://www.google-analytics.com/r/collect?v=1&tid=UA-72810204-2&cid=${cid}&t=event&ec=Stat&ea=Version&el=${ZABBIX_VERSION_FULL}&ev=1&dp=%2F&dl=http%3A%2F%2Fgithub.com%2Fmonitoringartist%2Fzabbix-xxl" &> /dev/null &
+    export ZABBIX_VERSIONP=$(echo $ZABBIX_VERSION | tr -d '/')
+    curl --connect-timeout 20 --max-time 30 -ks -o /dev/null "http://www.google-analytics.com/r/collect?v=1&tid=UA-72810204-2&cid=${cid}&t=event&ec=Ping&ea=Version&el=${ZABBIX_VERSIONP}&ev=1&dp=%2F&dl=http%3A%2F%2Fgithub.com%2Fmonitoringartist%2Fzabbix-xxl" &> /dev/null &
+    curl --connect-timeout 20 --max-time 30 -ks -o /dev/null "http://www.google-analytics.com/r/collect?v=1&tid=UA-72810204-2&cid=${cid}&t=event&ec=Stat&ea=Version&el=${ZABBIX_VERSIONP}&ev=1&dp=%2F&dl=http%3A%2F%2Fgithub.com%2Fmonitoringartist%2Fzabbix-xxl" &> /dev/null &
     if $ZS_enabled; then
       curl --connect-timeout 20 --max-time 30 -ks -o /dev/null "http://www.google-analytics.com/r/collect?v=1&tid=UA-72810204-2&cid=${cid}&t=event&ec=Stat&ea=ZS_enabled&el=${ZS_enabled}&ev=1&dp=%2F&dl=http%3A%2F%2Fgithub.com%2Fmonitoringartist%2Fzabbix-xxl" &> /dev/null &
     fi
@@ -104,8 +104,7 @@ xxl_api() {
     if [ -d "/etc/zabbix/api" ]; then
       ID=1
       LAST_ID=0
-      files=$(find /etc/zabbix/api -regex  '.*\(.xml\|.api\|.sh\|.sql\)$' -type f|sort)
-      set +e
+      files=$(find /etc/zabbix/api -regex  '.*\(.xml\|.api\|.sh\)$' -type f|sort)
       for file in $files; do
         if $XXL_analytics; then
           curl -ks -o /dev/null "http://www.google-analytics.com/r/collect?v=1&tid=UA-72810204-2&cid=${cid}&t=event&ec=Stat&ea=API&el=${file}&ev=1&dp=%2F&dl=http%3A%2F%2Fgithub.com%2Fmonitoringartist%2Fzabbix-xxl" &> /dev/null &
@@ -114,7 +113,7 @@ xxl_api() {
           # API XML import
           log "API XML import: $file"
           template=$(cat $file | sed -e 's/\"/\\\"/g' | sed -e 's/^[ \t]*//' | tr --delete '\n')
-          apicall="{\"jsonrpc\":\"2.0\",\"method\":\"configuration.import\",\"id\":<ID>,\"auth\":\"<AUTH_TOKEN>\",\"params\":{\"format\":\"xml\",\"rules\":{\"templates\":{\"createMissing\":true,\"updateExisting\":true},\"images\":{\"createMissing\":true,\"updateExisting\":true},\"groups\":{\"createMissing\":true},\"triggers\":{\"createMissing\":true,\"updateExisting\":true},\"valueMaps\":{\"createMissing\":true,\"updateExisting\":true},\"hosts\":{\"createMissing\":true,\"updateExisting\":true},\"items\":{\"createMissing\":true,\"updateExisting\":true},\"maps\":{\"createMissing\":true,\"updateExisting\":true},\"screens\":{\"createMissing\":true,\"updateExisting\":true},\"templateScreens\":{\"createMissing\":true,\"updateExisting\":true},\"templateLinkage\":{\"createMissing\":true},\"applications\":{\"createMissing\":true},\"graphs\":{\"createMissing\":true,\"updateExisting\":true},\"discoveryRules\":{\"createMissing\":true,\"updateExisting\":true}},\"source\":\"${template}\"}}"
+          apicall="{\"jsonrpc\":\"2.0\",\"method\":\"configuration.import\",\"id\":<ID>,\"auth\":\"<AUTH_TOKEN>\",\"params\":{\"format\":\"xml\",\"rules\":{\"templates\":{\"createMissing\":true,\"updateExisting\":true},\"images\":{\"createMissing\":true,\"updateExisting\":true},\"groups\":{\"createMissing\":true},\"triggers\":{\"createMissing\":true,\"updateExisting\":true},\"valueMaps\":{\"createMissing\":true,\"updateExisting\":true},\"hosts\":{\"createMissing\":true,\"updateExisting\":true},\"items\":{\"createMissing\":true,\"updateExisting\":true},\"maps\":{\"createMissing\":true,\"updateExisting\":true},\"screens\":{\"createMissing\":true,\"updateExisting\":true},\"templateScreens\":{\"createMissing\":true,\"updateExisting\":true},\"templateLinkage\":{\"createMissing\":true},\"applications\":{\"createMissing\":true,\"updateExisting\":true},\"graphs\":{\"createMissing\":true,\"updateExisting\":true},\"discoveryRules\":{\"createMissing\":true,\"updateExisting\":true}},\"source\":\"${template}\"}}"
           command=$(echo $apicall | sed -e "s/<ID>/$ID/g" | sed -e "s/<AUTH_TOKEN>/$AUTH_TOKEN/g")
           output=$(echo $command | curl -s -X POST -H 'Content-Type: application/json-rpc' -d @- http://0.0.0.0/api_jsonrpc.php)
           log "API response: $output"
@@ -122,27 +121,21 @@ xxl_api() {
         elif [[ "$file" == *api ]]; then
           # API command
           log "API command: $file"
-          while read line
-          do
+          for line in $(cat $file); do
             log "API call: $line"
             command=$(echo $line | sed -e "s/<ID>/$ID/g" | sed -e "s/<AUTH_TOKEN>/$AUTH_TOKEN/g" | sed -e "s/<LAST_ID>/$LAST_ID/g")
             output=$(curl -s -X POST -H 'Content-Type: application/json-rpc' -d "${command}" http://0.0.0.0/api_jsonrpc.php)
             log "API response: $output"
             LAST_ID=$(echo $output | jq -r 'first(.result[]?)|.[]?')
             ID=$((ID+1))
-          done < $file
-        elif [[ "$file" == *sql ]]; then
-          log "SQL command: $file"
-          output=$(/usr/bin/mysql --host=${ZS_DBHost} --port=$ZS_DBPort --user=$ZS_DBUser --password=$ZS_DBPassword --database=$ZS_DBName < $file 2>&1)
-          log "SQL command output: $output"
-        elif [[ "$file" == *sh ]]; then
+          done
+        else
           # bash script - environment variable are available in the script
           log "API script: $file"
           output=$(bash $file)
           log "API script output: $output"
         fi
       done
-      set -e
     fi
   else
     log "API access not succesfull - try to set up env. variables XXL_apiuser/XXL_apipass"

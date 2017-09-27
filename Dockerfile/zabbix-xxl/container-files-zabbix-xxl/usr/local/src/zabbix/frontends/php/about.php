@@ -19,22 +19,22 @@
 **/
 
 require_once dirname(__FILE__).'/include/config.inc.php';
-$page['title'] = _('About Dockbix XXL');
+$page['title'] = _('About Zabbix XXL');
 $page['file'] = 'about.php';
 $page['type'] = detect_page_type(PAGE_TYPE_HTML);
 require_once dirname(__FILE__).'/include/page_header.php';
 
 $widget = (new CWidget())
-        ->setTitle(_('Dockbix XXL'))
+        ->setTitle(_('Zabbix XXL'))
         ->setControls((new CList())
-        ->addItem(get_icon('fullscreen', ['fullscreen' => getRequest('fullscreen')]))
+                ->addItem(get_icon('fullscreen', ['fullscreen' => getRequest('fullscreen')]))
         );
 $widget->show();
 ?>
 <p>
-Dockbix XXL contains standard Zabbix + additional XXL (community)
+Zabbix XXL contains standard Zabbix + additional XXL (community)
 extensions and everything is packaged into Docker image for easy deployment.<br />
-Source repo: <a target="_blank" href="https://github.com/monitoringartist/dockbix-xxl">https://github.com/monitoringartist/dockbix-xxl</a>
+Source repo: <a target="_blank" href="https://github.com/monitoringartist/zabbix-xxl">https://github.com/monitoringartist/zabbix-xxl</a>
 </p>
 <p>
   <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8LB6J222WRUZ4" target="_blank">
@@ -53,7 +53,7 @@ Source repo: <a target="_blank" href="https://github.com/monitoringartist/dockbi
   <a title="DevOps / Docker / Kubernetes / AWS ECS / Zabbix / Zenoss / Terraform / Monitoring" href="http://www.monitoringartist.com" target="_blank">
   Monitoring Artist</a> is a company, which provides professional devops, automation, cloud and monitoring services.<br />
   Most of the projects are related to open source monitoring tools such as Zabbix, Zenoss, Grafana, ...<br /><br />
-  Feel free to contact us (<a href="mailto:info@monitoringartist.com">info@monitoringartist.com</a>) for commercial support of your Dockerized Zabbix or Docker/Kubernetes/AWS ECS/Mesos monitoring.
+  Feel free to contact us (<a href="mailto:info@monitoringartist.com">info@monitoringartist.com</a>) for commercial support of your Dockerized Zabbix or Docker/Kubernete/AWS ECS monitoring.
   <div style="clear:both; width: 100%; height:0;font-size:0;"></div>
 </div>
 <p>
@@ -82,10 +82,6 @@ Source repo: <a target="_blank" href="https://github.com/monitoringartist/dockbi
       Zabbix Docker monitoring - basic templates
     </a>
   </li>        
-  <li>
-      Update checker
-  </li>
-
   </ul>
 </p>
 </div>

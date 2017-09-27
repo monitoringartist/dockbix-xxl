@@ -4,7 +4,7 @@ LABEL maintainer "Jan Garaj <info@monitoringartist.com>"
 # ZABBIX_VERSION=trunk tags/3.0.1 branches/dev/ZBXNEXT-1263-1
 
 ENV \
-  ZABBIX_VERSION=tags/3.4.2 \
+  ZABBIX_VERSION=tags/3.2.6 \
   ZS_enabled=true \
   ZA_enabled=true \
   ZW_enabled=true \
@@ -33,8 +33,6 @@ ENV \
   ZS_SSLCertLocation=/usr/local/share/zabbix/ssl/certs \
   ZS_SSLKeyLocation=/usr/local/share/zabbix/ssl/keys \
   ZS_LoadModulePath=/usr/lib/zabbix/modules \
-  ZS_JavaGateway=127.0.0.1 \
-  ZS_JavaGatewayPort=10052 \
   ZW_ZBX_SERVER=localhost \
   ZW_ZBX_SERVER_PORT=10051 \
   ZW_ZBX_SERVER_NAME="Zabbix Server" \
@@ -72,19 +70,23 @@ RUN \
   yum clean all && \
   yum update -y && \
   yum install -y epel-release && \
+  sed -i -e "\|^https://\"http://|d" /etc/yum.repos.d/epel.repo && \
   yum clean all && \
   yum install -y supervisor && \
   yum install -y http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm && \
   yum install -y nginx inotify-tools && \
+  `# Rename nginx:nginx user/group to www:www, also set uid:gid to 80:80 (just to make it nice)` \
   groupmod --gid 80 --new-name www nginx && \
   usermod --uid 80 --home /data/www --gid 80 --login www --shell /bin/bash --comment www nginx && \
+  `# Clean-up /etc/nginx/ directory from all not needed stuff...` \
   rm -rf /etc/nginx/*.d /etc/nginx/*_params && \
+  `# Prepare dummy SSL certificates` \
   mkdir -p /etc/nginx/ssl && \
   openssl genrsa -out /etc/nginx/ssl/dummy.key 2048 && \
   openssl req -new -key /etc/nginx/ssl/dummy.key -out /etc/nginx/ssl/dummy.csr -subj "/C=GB/L=London/O=Company Ltd/CN=zabbix-docker" && \
   openssl x509 -req -days 3650 -in /etc/nginx/ssl/dummy.csr -signkey /etc/nginx/ssl/dummy.key -out /etc/nginx/ssl/dummy.crt && \
-  yum install -y http://rpms.remirepo.net/enterprise/remi-release-7.rpm && \
-  yum install -y --enablerepo=remi-php70 php-fpm \
+  yum install -y http://rpms.famillecollet.com/enterprise/remi-release-7.rpm && \
+  yum install -y --enablerepo=remi-php56 php-fpm \
        php-gd php-bcmath php-ctype php-xml php-xmlreader php-xmlwriter \
        php-session php-net-socket php-mbstring php-gettext php-cli \
        php-mysqlnd php-opcache php-pdo php-snmp php-ldap && \
@@ -94,7 +96,6 @@ ADD container-files-base /
 # Layer: zabbix
 COPY container-files-zabbix /
 RUN \
-  export FPING_VERSION=4.0 && \
   yum clean all && \
   yum update -y && \
   yum install -y tar svn gcc automake make nmap traceroute iptstate wget \
@@ -103,55 +104,57 @@ RUN \
               java-1.8.0-openjdk-devel mariadb-devel libxml2-devel gettext \
               libcurl-devel OpenIPMI-devel mysql iksemel-devel libssh2-devel \
               unixODBC unixODBC-devel mysql-connector-odbc postgresql-odbc \
-              openldap-devel telnet net-tools snmptt sudo rubygems ruby-devel \
-              jq openssh-clients python-httplib2 python-simplejson \
+              openldap-devel telnet net-tools snmptt sudo rubygems ruby-devel jq \
+              openssh-clients python-httplib2 python-simplejson \
               libevent-devel openldap-clients && \
+ `# reinstall glibc for locales` \
   yum -y -q reinstall glibc-common && \
   cp /usr/local/etc/zabbix_agentd.conf /tmp && \
   svn co svn://svn.zabbix.com/${ZABBIX_VERSION} /usr/local/src/zabbix && \
   cd /usr/local/src/zabbix && \
-  DATE=$(date +%Y-%m-%d) && \
-  sed -i "s/ZABBIX_VERSION.*'\(.*\)'/ZABBIX_VERSION', '\1 Dockbix XXL ($DATE)'/g" frontends/php/include/defines.inc.php && \
-  sed -i "s/ZABBIX_VERSION_RC.*\"\(.*\)\"/ZABBIX_VERSION_RC \"\1 Dockbix XXL (${DATE})\"/g" include/version.h && \
-  sed -i "s/String VERSION =.*\"\(.*\)\"/String VERSION = \"\1 Dockbix XXL (${DATE})\"/g" src/zabbix_java/src/com/zabbix/gateway/GeneralInformation.java && \
+  DATE=`date +%Y-%m-%d` && \
+  sed -i "s/ZABBIX_VERSION.*'\(.*\)'/ZABBIX_VERSION', '\1 ($DATE)'/g" frontends/php/include/defines.inc.php && \
+  sed -i "s/ZABBIX_VERSION_RC.*\"\(.*\)\"/ZABBIX_VERSION_RC \"\1 (${DATE})\"/g" include/version.h && \
+  sed -i "s/String VERSION =.*\"\(.*\)\"/String VERSION = \"\1 (${DATE})\"/g" src/zabbix_java/src/com/zabbix/gateway/GeneralInformation.java && \
   zabbix_revision=$(svn info svn://svn.zabbix.com/${ZABBIX_VERSION} |grep "Last Changed Rev"|awk '{print $4;}') && \
   sed -i "s/{ZABBIX_REVISION}/$zabbix_revision/g" include/version.h && \
   ./bootstrap.sh && \
-  export CFLAGS="-fPIC -pie -Wl,-z,relro -Wl,-z,now" && \
   ./configure --enable-server --enable-agent --with-mysql --enable-java \
               --with-net-snmp --with-libcurl --with-libxml2 --with-openipmi \
               --enable-ipv6 --with-jabber --with-openssl --with-ssh2 \
               --enable-proxy --with-ldap --with-unixodbc && \
   make -j"$(nproc)" dbschema && \
+  gem install sass && \
+  make css && \
   make -j"$(nproc)" install && \
   mv /health/ /usr/local/src/zabbix/frontends/php/ && \
   cp /usr/local/etc/web/zabbix.conf.php /usr/local/src/zabbix/frontends/php/conf/ && \
-  wget https://github.com/schweikert/fping/releases/download/v${FPING_VERSION}/fping-${FPING_VERSION}.tar.gz && \
-  tar -xvf fping-${FPING_VERSION}.tar.gz && \
-  cd fping-${FPING_VERSION}/ && \
-  ./configure --prefix=/usr --disable-ipv6; make clean install && \
-  ./configure --prefix=/usr --disable-ipv4 --program-suffix=6; make clean install && \
+  wget https://github.com/schweikert/fping/archive/3.10.tar.gz && \
+  tar -xvf 3.10.tar.gz && \
+  cd fping-3.10/ && \
+  ./autogen.sh && \
+  ./configure --prefix=/usr --enable-ipv6 --enable-ipv4 && \
+  make -j"$(nproc)" && \
+  make -j"$(nproc)" install && \
   setcap cap_net_raw+ep /usr/sbin/fping || echo 'Warning: setcap cap_net_raw+ep /usr/sbin/fping' && \
   setcap cap_net_raw+ep /usr/sbin/fping6 || echo 'Warning: setcap cap_net_raw+ep /usr/sbin/fping6' && \
   chmod 4710 /usr/sbin/fping && \
   chmod 4710 /usr/sbin/fping6 && \
   cd .. && \
   cp -f /tmp/zabbix_agentd.conf /usr/local/etc/ && \
-  rm -rf fping-${FPING_VERSION} && \
-  rm -rf ${FPING_VERSION}.tar.gz && \
+  rm -rf fping-3.10 && \
+  rm -rf 3.10.tar.gz && \
   cd /usr/local/src/zabbix/frontends/php && \
   locale/make_mo.sh && \
-  yum autoremove -y gettext svn gcc automake mariadb-devel zlib-devel \
+  yum autoremove -y gettext svn gcc automake mariadb-devel \
                     java-1.8.0-openjdk-devel libxml2-devel libcurl-devel \
-                    OpenIPMI-devel iksemel-devel rubygems ruby-devel \
-                    kernel-headers ruby-devel unixODBC-devel && \
+                    OpenIPMI-devel iksemel-devel rubygems ruby-devel kernel-headers && \
   yum install -y OpenIPMI-libs && \
   chmod +x /config/bootstrap.sh && \
   chmod +x /config/ds.sh && \
   chmod +x /usr/local/src/zabbix/misc/snmptrap/zabbix_trap_receiver.pl && \
   chmod +x /usr/share/snmptt/snmptthandler-embedded && \
   sed -i -e "s/Defaults    requiretty.*/ #Defaults    requiretty/g" /etc/sudoers && \
-  localedef -i en_US -f UTF-8 en_US.UTF-8 && \
   yum clean all && \
   mkdir -p /usr/local/share/ssl/certs && \
   mkdir -p /usr/local/share/ssl/keys && \
@@ -165,7 +168,7 @@ RUN \
 # Layer: zabbix-xxl
 COPY container-files-zabbix-xxl /
 RUN \
-  chmod +x /usr/local/src/zabbix/supervisord-listener.py && \
+  ### locales fix && \
   yum -y -q reinstall glibc-common && \
   cd /tmp && \
   yumdownloader glibc-common && \
@@ -174,11 +177,14 @@ RUN \
   cp -vf ./usr/lib/locale/locale-archive.tmpl /usr/lib/locale/ && \
   build-locale-archive && \
   rm -rf /tmp/* && \
+  ### japanese font and boto ### && \
   yum install -y ipa-pgothic-fonts python-boto python-pip && \
   cp /usr/share/fonts/ipa-pgothic/ipagp.ttf /usr/local/src/zabbix/frontends/php/fonts && \
   pip install pyzabbix && \
   yum autoremove -y ipa-pgothic-fonts python-pip && \
   yum clean all && \
+  ### branding / menu ### && \
+  sed -i "s/ZABBIX_VERSION.*'\(.*\)'/ZABBIX_VERSION', '\1 XXL'/g" /usr/local/src/zabbix/frontends/php/include/defines.inc.php && \
   grep 'XXL' /usr/local/src/zabbix/frontends/php/include/defines.inc.php && \
   sed -i "s#]))->addClass(ZBX_STYLE_FOOTER);#,' / ',(new CLink('Monitoring Artist Ltd', 'http://www.monitoringartist.com'))->addClass(ZBX_STYLE_GREY)->addClass(ZBX_STYLE_LINK_ALT)->setAttribute('target', '_blank'),]))->addClass(ZBX_STYLE_FOOTER);#g" /usr/local/src/zabbix/frontends/php/include/html.inc.php && \
   grep 'www.monitoringartist.com' /usr/local/src/zabbix/frontends/php/include/html.inc.php && \
@@ -199,6 +205,10 @@ RUN \
   grep 'XXL extensions' /usr/local/src/zabbix/frontends/php/include/menu.inc.php && \
   sed -i "s#'admin': 0},# 'admin': 0, 'xxl': 0},#g" /usr/local/src/zabbix/frontends/php/js/main.js && \
   grep "'xxl': 0}" /usr/local/src/zabbix/frontends/php/js/main.js && \
+  #sed -i "s#case PAGE_TYPE_XML:#case PAGE_TYPE_PEM:\nheader('Content-Type: application/x-pem-file');\nheader('Content-Disposition: attachment; filename=\"'.\$page['file'].'\"');\nbreak;\ncase PAGE_TYPE_XML:#g" /usr/local/src/zabbix/frontends/php/include/page_header.php && \
+  #grep 'case PAGE_TYPE_PEM:' /usr/local/src/zabbix/frontends/php/include/page_header.php && \
+  #sed -i "s#define('PAGE_TYPE_HTML'#define('PAGE_TYPE_PEM',-1);\ndefine('PAGE_TYPE_HTML'#g" /usr/local/src/zabbix/frontends/php/include/defines.inc.php && \
+  #grep 'PAGE_TYPE_PEM' /usr/local/src/zabbix/frontends/php/include/defines.inc.php
   rm -rf /tmp/*
 
 CMD ["/config/bootstrap.sh"]
