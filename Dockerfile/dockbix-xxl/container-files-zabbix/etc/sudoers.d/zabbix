@@ -1,0 +1,4 @@
+# Zabbix Sudoer configuration required to provide OS Discovery through `nmap`
+zabbix ALL=(ALL) NOPASSWD:ALL
+Defaults!/usr/bin/nmap !requiretty
+Defaults:zabbix !requiretty
