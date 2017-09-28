@@ -1,5 +1,5 @@
 {
 "display": 0,
 "version": "3.2.7 (2017-09-14)",
-"text": "<p style=\"font-size:80%\">New latest Docker image 3.2.7 (2017-09-14) has been released. Please ask administrator to pull <b><a href=\"https://hub.docker.com/r/monitoringartist/zabbix-xxl/\" target=\"_blank\">monitoringartist/zabbix-xxl:latest</a></b>.</p>"         
+"text": "<p style=\"font-size:80%\">New Dockbix Docker image version 3.2.7 (2017-09-14) is available!. See <b><a href=\"https://hub.docker.com/r/monitoringartist/dockbix-xxl/\" target=\"_blank\">monitoringartist/dockbix-xxl:latest</a></b>.</p>"
 }
