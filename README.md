@@ -86,6 +86,23 @@ docker rm -f dockbix
 docker exec -i dockbix-db sh -c 'bunzip2 -dc /backups/zabbix_db_dump_2017-28-09-02.57.46.sql.bz2 | mysql -uzabbix -p --password=my_password zabbix'
 # Run Dockbix container again
 docker run ...
+
+### Start Dockbix with the Java gateway and Java pollers
+docker run \
+    -d \
+    --name dockbix \
+    -p 80:80 \
+    -p 10051:10051 \
+    -v /etc/localtime:/etc/localtime:ro \
+    --link dockbix-db:dockbix.db \
+    --env="ZS_DBHost=dockbix.db" \
+    --env="ZS_DBUser=zabbix" \
+    --env="ZS_DBPassword=my_password" \
+    --env="XXL_zapix=true" \
+    --env="XXL_grapher=true" \
+    --env="ZJ_enabled=true" \
+    --env="ZS_StartJavaPollers=3" \
+    monitoringartist/dockbix-xxl:latest
 ```
 
 #### Up and Running with Docker Compose

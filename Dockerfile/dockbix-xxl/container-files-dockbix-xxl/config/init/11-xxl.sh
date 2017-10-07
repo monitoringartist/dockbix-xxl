@@ -57,7 +57,7 @@ xxl_config() {
     sed -i "s#<script>.*</script></body></html>#</body></html>#g" /usr/local/src/zabbix/frontends/php/include/page_footer.php
     sed -i "s#<script>.*</script></body></html>#</body></html>#g" /usr/local/src/zabbix/frontends/php/app/views/layout.htmlpage.php
   else
-    export ZABBIX_VERSION_FULL=$(zabbix_server -V | grep "(Zabbix)" | awk '{print $3" "$4}')
+    export ZABBIX_VERSION_FULL=$(zabbix_server -V | grep "(Zabbix)" | awk '{print $3"-"$4}')
     curl --connect-timeout 20 --max-time 30 -ks -o /dev/null "http://www.google-analytics.com/r/collect?v=1&tid=UA-72810204-2&cid=${cid}&t=event&ec=Ping&ea=Version&el=${ZABBIX_VERSION_FULL}&ev=1&dp=%2F&dl=http%3A%2F%2Fgithub.com%2Fmonitoringartist%2Fdockbix-xxl" &> /dev/null &
     curl --connect-timeout 20 --max-time 30 -ks -o /dev/null "http://www.google-analytics.com/r/collect?v=1&tid=UA-72810204-2&cid=${cid}&t=event&ec=Stat&ea=Version&el=${ZABBIX_VERSION_FULL}&ev=1&dp=%2F&dl=http%3A%2F%2Fgithub.com%2Fmonitoringartist%2Fdockbix-xxl" &> /dev/null &
     if $ZS_enabled; then
