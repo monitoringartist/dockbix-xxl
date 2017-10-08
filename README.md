@@ -2,7 +2,7 @@
 
 # Dockbix XXL
 
-[Dockbix XXL](https://github.com/monitoringartist/dockbix-xxl) is a Dockerized Zabbix preconfigured for easy Docker monitoring. This Docker image contains standard Zabbix + additional XXL community extensions. Routine tasks are included: auto import of Zabbix DB, auto import of Docker monitoring templates, autoregistration rule for [Dockbix agent XXL](https://github.com/monitoringartist/dockbix-agent-xxl), ...
+[Dockbix XXL](https://github.com/monitoringartist/dockbix-xxl) is a Dockerized Zabbix preconfigured for easy Docker monitoring. This Docker image contains standard Zabbix + additional XXL community extensions. Routine tasks are included: auto-import of Zabbix DB, auto-import of Docker monitoring templates, autoregistration rule for [Dockbix agent XXL](https://github.com/monitoringartist/dockbix-agent-xxl), ...
 
 If you like or use this project, please provide feedback to the author - Star it ★ or star upstream projects ★.
 
@@ -258,6 +258,8 @@ If env variable `XXL_api` is `true` (default value), then bootstrap script will 
 
 - **Sh files**: All `*.sh*` files are processed as scripts and they are intended for user custom API scripting. Env variables `XXL_apiuser, XXL_apipass` should be used for API authentication.
 
+- **SQL files**: All `*.sql*` files are processed as SQL commands on Zabbix DB. It's useful for features, which are not available through Zabbix API, such as regular expression definition, etc.
+
 # HTTPS web interface
 
 Example: set up nginx - customize [default.conf](https://github.com/monitoringartist/dockbix-xxl/blob/master/Dockerfile/dockbix-xxl/container-files-zabbix/etc/nginx/hosts.d/default.conf)
@@ -301,6 +303,12 @@ Run specific Zabbix version, e.g. 3.4.0 - just specify 3.4.0 tag for image:
 		monitoringartist/dockbix-xxl:3.4.0
 ```
 
+# PostgreSQL version
+
+Unfortunately, this project has only MySQL support due to specific XXL SQL API
+feature. You can use forked repo with PostgreSQL support
+https://github.com/luchnck/zabbix-xxl-postgresql.
+
 # Support / issues
 
 This project supports only issues related to this Docker image.
@@ -309,8 +317,8 @@ problem with Zabbix configuration.
 
 # Legacy images
 
-This GitHub project also been used to build previous Docker images. Use
-of previous images is strongly discouraged for production use. Please migrate
+This GitHub project has been used to build previous Docker images. Use
+of prior images is strongly discouraged for production use. Please migrate
 them to the Docker image `monitoringartist/dockbix-xxl`. Don't forget to backup
 your DB data before any migration.
 
