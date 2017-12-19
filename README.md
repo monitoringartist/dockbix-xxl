@@ -103,6 +103,23 @@ docker run \
     --env="ZJ_enabled=true" \
     --env="ZS_StartJavaPollers=3" \
     monitoringartist/dockbix-xxl:latest
+
+## HTTPS; for more complex setup overwrite /etc/nginx/hosts.d/ssl-nginx.conf
+docker run \
+    -d \
+    --name dockbix \
+    -p 443:443 \
+    -p 10051:10051 \
+    -v /etc/localtime:/etc/localtime:ro \
+    -v /<PATH_TO_SSL_CERT>/<CERT_FILE>:/etc/nginx/ssl/dummy.crt:ro \
+    -v /<PATH_TO_SSL_KEY>/<KEY_FILE>:/etc/nginx/ssl/dummy.key:ro \
+    --link dockbix-db:dockbix.db \
+    --env="ZS_DBHost=dockbix.db" \
+    --env="ZS_DBUser=zabbix" \
+    --env="ZS_DBPassword=my_password" \
+    --env="XXL_zapix=true" \
+    --env="XXL_grapher=true" \
+    monitoringartist/dockbix-xxl:latest
 ```
 
 #### Up and Running with Docker Compose
