@@ -2,9 +2,17 @@
 
 # Dockbix XXL
 
-[Dockbix XXL](https://github.com/monitoringartist/dockbix-xxl) is a Dockerized Zabbix preconfigured for easy Docker monitoring. This Docker image contains standard Zabbix + additional XXL community extensions. Routine tasks are included: auto import of Zabbix DB, auto import of Docker monitoring templates, autoregistration rule for [Dockbix agent XXL](https://github.com/monitoringartist/dockbix-agent-xxl), ...
+[Dockbix XXL](https://github.com/monitoringartist/dockbix-xxl) is a Dockerized Zabbix preconfigured for easy Docker monitoring. This Docker image contains standard Zabbix + additional XXL community extensions. Routine tasks are included: auto-import of Zabbix DB, auto-import of Docker monitoring templates, autoregistration rule for [Dockbix agent XXL](https://github.com/monitoringartist/dockbix-agent-xxl), ...
 
 If you like or use this project, please provide feedback to the author - Star it ★ or star upstream projects ★.
+
+# Free test Dockbix instance
+
+**Test Dockbix for free** in your browser. You need only free [Docker ID](https://cloud.docker.com/), and you will
+be able to start full containerized Dockbix XXL for 4 hours for free. You may also test latest dev version (compiled from the `trunk` svn branch):
+[![Docker Playground](https://img.shields.io/badge/Start_on_Docker_Playground-LATEST_version-green.svg?style=for-the-badge)](http://play-with-docker.com/?stack=https://raw.githubusercontent.com/monitoringartist/dockbix-xxl/master/stack-play-with-docker.yml) [![Docker Playground](https://img.shields.io/badge/Start_on_Docker_Playground-DEV_version-orange.svg?style=for-the-badge)](http://play-with-docker.com/?stack=https://raw.githubusercontent.com/monitoringartist/dockbix-xxl/master/stack-play-with-docker-dev.yml)
+
+![Dockbix on Docker Playground](doc/dockbix-docker-playground.gif)
 
 ----
 
@@ -87,6 +95,40 @@ docker rm -f dockbix
 docker exec -i dockbix-db sh -c 'bunzip2 -dc /backups/zabbix_db_dump_2017-28-09-02.57.46.sql.bz2 | mysql -uzabbix -p --password=my_password zabbix'
 # Run Dockbix container again
 docker run ...
+
+### Start Dockbix with the Java gateway and Java pollers
+docker run \
+    -d \
+    --name dockbix \
+    -p 80:80 \
+    -p 10051:10051 \
+    -v /etc/localtime:/etc/localtime:ro \
+    --link dockbix-db:dockbix.db \
+    --env="ZS_DBHost=dockbix.db" \
+    --env="ZS_DBUser=zabbix" \
+    --env="ZS_DBPassword=my_password" \
+    --env="XXL_zapix=true" \
+    --env="XXL_grapher=true" \
+    --env="ZJ_enabled=true" \
+    --env="ZS_StartJavaPollers=3" \
+    monitoringartist/dockbix-xxl:latest
+
+## HTTPS; for more complex setup overwrite /etc/nginx/hosts.d/ssl-nginx.conf
+docker run \
+    -d \
+    --name dockbix \
+    -p 443:443 \
+    -p 10051:10051 \
+    -v /etc/localtime:/etc/localtime:ro \
+    -v /<PATH_TO_SSL_CERT>/<CERT_FILE>:/etc/nginx/ssl/dummy.crt:ro \
+    -v /<PATH_TO_SSL_KEY>/<KEY_FILE>:/etc/nginx/ssl/dummy.key:ro \
+    --link dockbix-db:dockbix.db \
+    --env="ZS_DBHost=dockbix.db" \
+    --env="ZS_DBUser=zabbix" \
+    --env="ZS_DBPassword=my_password" \
+    --env="XXL_zapix=true" \
+    --env="XXL_grapher=true" \
+    monitoringartist/dockbix-xxl:latest
 ```
 
 #### Up and Running with Docker Compose
@@ -129,7 +171,7 @@ Available variables related to XXL features:
 | XXL_apiuser | Admin | username used for API commands |
 | XXL_apipass | zabbix | password used for API commands |
 | XXL_analytics | true | enable/disable collecting of statistics via Google Analytics |
-| XXL_updatechecker | true | enable/disable check of the latest available Docker image |
+| XXL_updatechecker | true | enable/disable check of the latest Docker image - checks are executed in the user browser once per day |
 
 Use environment variables to config Zabbix server and Zabbix web UI (PHP). You
 can add any Zabbix config variables, just add correct variable prefix
@@ -242,6 +284,8 @@ If env variable `XXL_api` is `true` (default value), then bootstrap script will 
 
 - **Sh files**: All `*.sh*` files are processed as scripts and they are intended for user custom API scripting. Env variables `XXL_apiuser, XXL_apipass` should be used for API authentication.
 
+- **SQL files**: All `*.sql*` files are processed as SQL commands on Zabbix DB. It's useful for features, which are not available through Zabbix API, such as regular expression definition, etc.
+
 # HTTPS web interface
 
 Example: set up nginx - customize [default.conf](https://github.com/monitoringartist/dockbix-xxl/blob/master/Dockerfile/dockbix-xxl/container-files-zabbix/etc/nginx/hosts.d/default.conf)
@@ -285,6 +329,12 @@ Run specific Zabbix version, e.g. 3.4.0 - just specify 3.4.0 tag for image:
 		monitoringartist/dockbix-xxl:3.4.0
 ```
 
+# PostgreSQL version
+
+Unfortunately, this project has only MySQL support due to specific XXL SQL API
+feature. You can use forked repo with PostgreSQL support
+https://github.com/luchnck/zabbix-xxl-postgresql.
+
 # Support / issues
 
 This project supports only issues related to this Docker image.
@@ -293,8 +343,8 @@ problem with Zabbix configuration.
 
 # Legacy images
 
-This GitHub project also been used to build previous Docker images. Use
-of previous images is strongly discouraged for production use. Please migrate
+This GitHub project has been used to build previous Docker images. Use
+of prior images is strongly discouraged for production use. Please migrate
 them to the Docker image `monitoringartist/dockbix-xxl`. Don't forget to backup
 your DB data before any migration.
 

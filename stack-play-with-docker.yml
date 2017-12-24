@@ -1,0 +1,29 @@
+version: '3.1'
+
+services:
+
+  zabbixdb:
+    image: monitoringartist/zabbix-db-mariadb:latest
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - MARIADB_USER=zabbix
+      - MARIADB_PASS=my_password
+
+  zabbixserver:
+    image: monitoringartist/dockbix-xxl:latest
+    depends_on:
+      - zabbixdb
+    ports:
+      - "80:80"
+      - "10051:10051"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    links:
+      - zabbixdb:zabbixdb
+    environment:
+      - ZS_DBHost=zabbixdb
+      - ZS_DBUser=zabbix
+      - ZS_DBPassword=my_password
+      - XXL_zapix=true
+      - XXL_grapher=true

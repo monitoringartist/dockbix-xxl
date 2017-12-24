@@ -64,6 +64,12 @@ fix_permissions() {
 update_config() {
   # ^ZS_: /usr/local/etc/zabbix_server.conf
   > /usr/local/etc/zabbix_server.conf
+  # enable default one java poller for Java gateway
+  if $ZJ_enabled; then
+    if [ -z ${ZS_StartJavaPollers+x} ]; then
+      export ZS_StartJavaPollers=1
+    fi
+  fi
   for i in $( printenv | grep ^ZS_ | grep -v '^ZS_enabled' | awk -F'=' '{print $1}' | sort -rn ); do
     reg=$(echo ${i} | sed 's|^ZS_||' | sed -E "s/_[0-9]+$//")
     val=$(echo ${!i})
