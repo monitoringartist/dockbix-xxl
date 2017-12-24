@@ -1,9 +1,6 @@
 <!--
 
-Have you read SUPPORT page?
-Please read: https://github.com/monitoringartist/dockbix-xxl/blob/master/SUPPORT.md
-
-Do you want to ask a question about Zabbix? Are you looking for Zabbix support?
+Do you want to ask a question about Zabbix or are you looking Zabbix support?
 Please find better place: http://zabbix.org/wiki/Getting_help
 
 Do you want commercial paid support from Monitoring Artist?
