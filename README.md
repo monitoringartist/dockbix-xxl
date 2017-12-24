@@ -10,6 +10,8 @@ If you like or use this project, please provide feedback to the author - Star it
 be able to start full containerized Dockbix XXL for 4 hours for free. You may also test latest dev version (compiled from the `trunk` svn branch):
 [![Docker Playground](https://img.shields.io/badge/Start_on_Docker_Playground-LATEST_version-green.svg?style=for-the-badge)](http://play-with-docker.com/?stack=https://raw.githubusercontent.com/monitoringartist/dockbix-xxl/master/stack-play-with-docker.yml) [![Docker Playground](https://img.shields.io/badge/Start_on_Docker_Playground-DEV_version-orange.svg?style=for-the-badge)](http://play-with-docker.com/?stack=https://raw.githubusercontent.com/monitoringartist/dockbix-xxl/master/stack-play-with-docker-dev.yml)
 
+![Dockbix Agent XXL Docker container](doc/dockbix-docker-playground.gif)
+
 ----
 
 **Overview of Monitoring Artist (dockerized) monitoring ecosystem:**
