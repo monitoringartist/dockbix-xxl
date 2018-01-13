@@ -38,6 +38,8 @@ ENV \
   ZW_ZBX_SERVER=localhost \
   ZW_ZBX_SERVER_PORT=10051 \
   ZW_ZBX_SERVER_NAME="Zabbix Server" \
+  ZW_HISTORY_URL= \
+  ZW_HISTORY_TYPES="['uint', 'dbl', 'str', 'log', 'text']" \
   ZA_LogType=console \
   ZA_Hostname="Zabbix Server" \
   ZA_User=zabbix \
