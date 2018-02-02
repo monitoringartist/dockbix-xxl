@@ -19,8 +19,6 @@ services:
       - "10051:10051"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-    links:
-      - zabbixdb:zabbixdb
     environment:
       - ZS_DBHost=zabbixdb
       - ZS_DBUser=zabbix

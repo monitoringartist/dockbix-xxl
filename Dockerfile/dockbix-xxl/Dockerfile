@@ -35,6 +35,7 @@ ENV \
   ZS_LoadModulePath=/usr/lib/zabbix/modules \
   ZS_JavaGateway=127.0.0.1 \
   ZS_JavaGatewayPort=10052 \
+  ZS_SNMPTrapperFile=/tmp/zabbix_traps.tmp \
   ZW_ZBX_SERVER=localhost \
   ZW_ZBX_SERVER_PORT=10051 \
   ZW_ZBX_SERVER_NAME="Zabbix Server" \
@@ -141,10 +142,10 @@ RUN \
   rm -rf ${FPING_VERSION}.tar.gz && \
   cd /usr/local/src/zabbix/frontends/php && \
   locale/make_mo.sh && \
-  yum autoremove -y gettext svn gcc automake mariadb-devel zlib-devel \
+  yum autoremove -y gettext svn gcc automake mariadb-devel \
                     java-1.8.0-openjdk-devel libxml2-devel libcurl-devel \
                     OpenIPMI-devel iksemel-devel rubygems ruby-devel \
-                    kernel-headers ruby-devel unixODBC-devel && \
+                    ruby-devel unixODBC-devel && \
   yum install -y OpenIPMI-libs && \
   chmod +x /config/bootstrap.sh && \
   chmod +x /config/ds.sh && \
@@ -199,7 +200,8 @@ RUN \
   grep 'XXL extensions' /usr/local/src/zabbix/frontends/php/include/menu.inc.php && \
   sed -i "s#'admin': 0},# 'admin': 0, 'xxl': 0},#g" /usr/local/src/zabbix/frontends/php/js/main.js && \
   grep "'xxl': 0}" /usr/local/src/zabbix/frontends/php/js/main.js && \
-  rm -rf /tmp/*
+  rm -rf /tmp/* && \
+  touch /tmp/zabbix_traps.tmp
 
 CMD ["/config/bootstrap.sh"]
 
