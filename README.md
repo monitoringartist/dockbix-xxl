@@ -128,6 +128,23 @@ docker run \
     --env="XXL_zapix=true" \
     --env="XXL_grapher=true" \
     monitoringartist/dockbix-xxl:latest
+
+## SNMP Trapper
+docker run \
+    -d \
+    --name dockbix \
+    -p 80:80 \
+    -p 10051:10051 \
+    -v /etc/localtime:/etc/localtime:ro \
+    --link dockbix-db:dockbix.db \
+    --env="SNMPTRAP_enabled=true" \
+    --env="ZS_DBHost=dockbix.db" \
+    --env="ZS_DBUser=zabbix" \
+    --env="ZS_DBPassword=my_password" \
+    --env="ZS_StartSNMPTrapper=1" \
+    --env="XXL_zapix=true" \
+    --env="XXL_grapher=true" \
+    monitoringartist/dockbix-xxl:latest
 ```
 
 #### Up and Running with Docker Compose
