@@ -200,6 +200,7 @@ RUN \
   grep 'XXL extensions' /usr/local/src/zabbix/frontends/php/include/menu.inc.php && \
   sed -i "s#'admin': 0},# 'admin': 0, 'xxl': 0},#g" /usr/local/src/zabbix/frontends/php/js/main.js && \
   grep "'xxl': 0}" /usr/local/src/zabbix/frontends/php/js/main.js && \
+  sed -i 's/HTTPS, true);/HTTPS);/#/q/' /usr/local/src/zabbix/frontends/php/include/func.inc.php && \
   rm -rf /tmp/* && \
   touch /tmp/zabbix_traps.tmp
 
