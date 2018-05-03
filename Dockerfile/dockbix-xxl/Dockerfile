@@ -200,6 +200,10 @@ RUN \
   grep 'XXL extensions' /usr/local/src/zabbix/frontends/php/include/menu.inc.php && \
   sed -i "s#'admin': 0},# 'admin': 0, 'xxl': 0},#g" /usr/local/src/zabbix/frontends/php/js/main.js && \
   grep "'xxl': 0}" /usr/local/src/zabbix/frontends/php/js/main.js && \
+  INITIAL_ADMIN_SEARCH="'Admin','Zabbix','Administrator','5fce1b3e34b520afeffb37ce08c7cd66'" && \
+  INITIAL_ADMIN_REPLACE="'$XXL_apiuser','Zabbix','Administrator','$(echo -n $XXL_apipass | md5sum | awk '{print $1}')'" && \
+  grep "$INITIAL_ADMIN_SEARCH" /usr/local/src/zabbix/database/mysql/data.sql && \
+  sed -i "s/$INITIAL_ADMIN_SEARCH/$INITIAL_ADMIN_REPLACE/" /usr/local/src/zabbix/database/mysql/data.sql && \
   rm -rf /tmp/* && \
   touch /tmp/zabbix_traps.tmp
 
