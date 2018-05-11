@@ -18,7 +18,7 @@ git push origin master
 git push origin --tags
 
 # create tags from the list
-tags=('3.4.0' '3.4.1' '3.4.2' '3.4.3' '3.4.4' '3.4.5' '3.4.6');
+tags=('3.4.0' '3.4.1' '3.4.2' '3.4.3' '3.4.4' '3.4.5' '3.4.6' '3.4.7' '3.4.8' '3.4.9');
 for t in "${tags[@]}"
 do
     echo "Creating tag $t"
@@ -44,4 +44,3 @@ git add Dockerfile
 sleep 5
 git commit -m "Master = the latest stable tag"
 git push origin master
-
