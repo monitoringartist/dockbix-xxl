@@ -35,6 +35,7 @@ ENV \
   ZS_LoadModulePath=/usr/lib/zabbix/modules \
   ZS_JavaGateway=127.0.0.1 \
   ZS_JavaGatewayPort=10052 \
+  ZS_SNMPTrapperFile=/tmp/zabbix_traps.tmp \
   ZW_ZBX_SERVER=localhost \
   ZW_ZBX_SERVER_PORT=10051 \
   ZW_ZBX_SERVER_NAME="Zabbix Server" \
@@ -141,10 +142,10 @@ RUN \
   rm -rf ${FPING_VERSION}.tar.gz && \
   cd /usr/local/src/zabbix/frontends/php && \
   locale/make_mo.sh && \
-  yum autoremove -y gettext svn gcc automake mariadb-devel zlib-devel \
+  yum autoremove -y gettext svn gcc automake mariadb-devel \
                     java-1.8.0-openjdk-devel libxml2-devel libcurl-devel \
                     OpenIPMI-devel iksemel-devel rubygems ruby-devel \
-                    kernel-headers ruby-devel unixODBC-devel && \
+                    ruby-devel unixODBC-devel && \
   yum install -y OpenIPMI-libs && \
   chmod +x /config/bootstrap.sh && \
   chmod +x /config/ds.sh && \
@@ -186,7 +187,7 @@ RUN \
   grep 'www.monitoringartist.com' /usr/local/src/zabbix/frontends/php/include/views/general.login.php && \
   sed -i "s#echo '</body></html>';#echo \"<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-72810204-2','auto');ga('send','pageview');</script></body></html>\";#g" /usr/local/src/zabbix/frontends/php/include/page_footer.php && \
   grep 'UA-72810204-2' /usr/local/src/zabbix/frontends/php/include/page_footer.php && \
-  sed -i "s#echo '</body></html>';#echo \"<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-72810204-2','auto');ga('send','pageview');</script></body></html>\";#g" /usr/local/src/zabbix/frontends/php/app/views/layout.htmlpage.php && \
+  sed -i "s#echo '</body></html>';#echo \"<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-72810204-2','auto');ga('set','anonymizeIp',true);ga('send','pageview');</script></body></html>\";#g" /usr/local/src/zabbix/frontends/php/app/views/layout.htmlpage.php && \
   grep 'UA-72810204-2' /usr/local/src/zabbix/frontends/php/app/views/layout.htmlpage.php && \
   ZVERSION=$(zabbix_agentd -V | grep ^zabbix_agentd | awk -F'\\(Zabbix\\) ' '{print $2}') && \
   sed -i "s#^var xxlCurrentVersion =.*#var xxlCurrentVersion = \"$ZVERSION\";#" /usr/local/src/zabbix/frontends/php/updatechecker/updatechecker.js && \
@@ -199,7 +200,12 @@ RUN \
   grep 'XXL extensions' /usr/local/src/zabbix/frontends/php/include/menu.inc.php && \
   sed -i "s#'admin': 0},# 'admin': 0, 'xxl': 0},#g" /usr/local/src/zabbix/frontends/php/js/main.js && \
   grep "'xxl': 0}" /usr/local/src/zabbix/frontends/php/js/main.js && \
-  rm -rf /tmp/*
+  INITIAL_ADMIN_SEARCH="'Admin','Zabbix','Administrator','5fce1b3e34b520afeffb37ce08c7cd66'" && \
+  INITIAL_ADMIN_REPLACE="'$XXL_apiuser','Zabbix','Administrator','$(echo -n $XXL_apipass | md5sum | awk '{print $1}')'" && \
+  grep "$INITIAL_ADMIN_SEARCH" /usr/local/src/zabbix/database/mysql/data.sql && \
+  sed -i "s/$INITIAL_ADMIN_SEARCH/$INITIAL_ADMIN_REPLACE/" /usr/local/src/zabbix/database/mysql/data.sql && \
+  rm -rf /tmp/* && \
+  touch /tmp/zabbix_traps.tmp
 
 CMD ["/config/bootstrap.sh"]
 
