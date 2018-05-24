@@ -38,7 +38,7 @@ git push origin --tags
 
 # master is the latest stable tag
 git checkout master
-sed -i -e "s#^[[:space:]]*ZABBIX_VERSION=.*#  ZABBIX_VERSION=tags/3.4.2 \\\#" Dockerfile
+sed -i -e "s#^[[:space:]]*ZABBIX_VERSION=.*#  ZABBIX_VERSION=tags/3.4.9 \\\#" Dockerfile
 sleep 5
 git add Dockerfile
 sleep 5
