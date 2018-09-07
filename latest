@@ -1,5 +1,5 @@
 {
 "display": 1,
-"version": "3.4.9 Dockbix XXL (2018-06-21)",
-"text": "<p style=\"font-size:80%\">New Dockbix Docker image version 3.4.9 Dockbix XXL (2018-06-21)  is available!. See <b><a href=\"https://hub.docker.com/r/monitoringartist/dockbix-xxl/\" target=\"_blank\">monitoringartist/dockbix-xxl:latest</a></b>.</p>"
+"version": "3.4.13 Dockbix XXL (2018-09-07)",
+"text": "<p style=\"font-size:80%\">New Dockbix Docker image version 3.4.13 Dockbix XXL (2018-09-07)  is available!. See <b><a href=\"https://hub.docker.com/r/monitoringartist/dockbix-xxl/\" target=\"_blank\">monitoringartist/dockbix-xxl:latest</a></b>.</p>"
 }
