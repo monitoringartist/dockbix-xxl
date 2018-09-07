@@ -100,7 +100,7 @@ RUN \
   yum clean all && \
   yum update -y && \
   yum install -y tar svn gcc automake make nmap traceroute iptstate wget \
-              net-snmp-devel net-snmp-libs net-snmp net-snmp-perl iksemel-devel \
+              net-snmp-devel net-snmp-libs net-snmp net-snmp-perl iksemel \
               net-snmp-python net-snmp-utils java-1.8.0-openjdk \
               java-1.8.0-openjdk-devel mariadb-devel libxml2-devel gettext \
               libcurl-devel OpenIPMI-devel mysql iksemel-devel libssh2-devel \
