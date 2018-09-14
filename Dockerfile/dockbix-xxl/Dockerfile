@@ -85,7 +85,7 @@ RUN \
   openssl req -new -key /etc/nginx/ssl/dummy.key -out /etc/nginx/ssl/dummy.csr -subj "/C=GB/L=London/O=Company Ltd/CN=zabbix-docker" && \
   openssl x509 -req -days 3650 -in /etc/nginx/ssl/dummy.csr -signkey /etc/nginx/ssl/dummy.key -out /etc/nginx/ssl/dummy.crt && \
   yum install -y http://rpms.remirepo.net/enterprise/remi-release-7.rpm && \
-  yum install -y --enablerepo=remi-php70 php-fpm \
+  yum install -y --enablerepo=remi-php71 php-fpm \
        php-gd php-bcmath php-ctype php-xml php-xmlreader php-xmlwriter \
        php-session php-net-socket php-mbstring php-gettext php-cli \
        php-mysqlnd php-opcache php-pdo php-snmp php-ldap && \
