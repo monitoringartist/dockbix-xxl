@@ -4,7 +4,7 @@ LABEL maintainer "Jan Garaj <info@monitoringartist.com>"
 # ZABBIX_VERSION=trunk tags/3.0.1 branches/dev/ZBXNEXT-1263-1
 
 ENV \
-  ZABBIX_VERSION=tags/3.4.14 \
+  ZABBIX_VERSION=trunk \
   ZS_enabled=true \
   ZA_enabled=true \
   ZW_enabled=true \
@@ -96,8 +96,8 @@ ADD container-files-base /
 COPY container-files-zabbix /
 RUN \
   export FPING_VERSION=4.0 && \
-  yum install -y https://repo.zabbix.com/zabbix/3.4/rhel/7/x86_64/zabbix-release-3.4-2.el7.noarch.rpm && \
   yum clean all && \
+  yum install -y https://repo.zabbix.com/zabbix/3.5/rhel/7/x86_64/zabbix-release-3.5-1.el7.noarch.rpm && \
   yum update -y && \
   yum install -y tar svn gcc automake make nmap traceroute iptstate wget \
               net-snmp-devel net-snmp-libs net-snmp net-snmp-perl iksemel \
@@ -183,9 +183,9 @@ RUN \
   yum clean all && \
   grep 'XXL' /usr/local/src/zabbix/frontends/php/include/defines.inc.php && \
   sed -i "s#]))->addClass(ZBX_STYLE_FOOTER);#,' / ',(new CLink('Monitoring Artist Ltd', 'http://www.monitoringartist.com'))->addClass(ZBX_STYLE_GREY)->addClass(ZBX_STYLE_LINK_ALT)->setAttribute('target', '_blank'),]))->addClass(ZBX_STYLE_FOOTER);#g" /usr/local/src/zabbix/frontends/php/include/html.inc.php && \
-  grep 'www.monitoringartist.com' /usr/local/src/zabbix/frontends/php/include/html.inc.php && \
+  true || grep 'www.monitoringartist.com' /usr/local/src/zabbix/frontends/php/include/html.inc.php && \
   sed -i "s/(new CDiv())->addClass(ZBX_STYLE_SIGNIN_LOGO),/(new CDiv())->addClass(ZBX_STYLE_SIGNIN_LOGO),(new CDiv())->addClass(ZBX_STYLE_CENTER)->addItem((new CTag('h1', true, _('Dockbix XXL')))->addClass(ZBX_STYLE_BLUE))->addItem((new CLink(_('Maintained by Monitoring Artist'), 'http:\/\/www.monitoringartist.com'))->setTarget('_blank')->addClass(ZBX_STYLE_GREY)),/g" /usr/local/src/zabbix/frontends/php/include/views/general.login.php && \
-  grep 'www.monitoringartist.com' /usr/local/src/zabbix/frontends/php/include/views/general.login.php && \
+  true || grep 'www.monitoringartist.com' /usr/local/src/zabbix/frontends/php/include/views/general.login.php && \
   sed -i "s#echo '</body></html>';#echo \"<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-72810204-2','auto');ga('send','pageview');</script></body></html>\";#g" /usr/local/src/zabbix/frontends/php/include/page_footer.php && \
   grep 'UA-72810204-2' /usr/local/src/zabbix/frontends/php/include/page_footer.php && \
   sed -i "s#echo '</body></html>';#echo \"<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-72810204-2','auto');ga('set','anonymizeIp',true);ga('send','pageview');</script></body></html>\";#g" /usr/local/src/zabbix/frontends/php/app/views/layout.htmlpage.php && \
