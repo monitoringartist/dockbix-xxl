@@ -6,7 +6,7 @@ git fetch --tags --force
 tags=()
 for t in `git tag`
 do
-    if [[ "$t" != 4.0 ]]; then
+    if [[ "$t" != 4.0* ]]; then
          continue
     fi
     echo "Deleting tag $t"
@@ -18,7 +18,7 @@ git push origin master
 git push origin --tags
 
 # create tags from the list
-tags=('4.0.0');
+tags=('4.0.0' '4.0.1');
 for t in "${tags[@]}"
 do
     echo "Creating tag $t"
@@ -38,7 +38,7 @@ git push origin --tags
 
 # master is the latest stable tag
 git checkout master
-sed -i -e "s#^[[:space:]]*ZABBIX_VERSION=.*#  ZABBIX_VERSION=tags/4.0.0 \\\#" Dockerfile
+sed -i -e "s#^[[:space:]]*ZABBIX_VERSION=.*#  ZABBIX_VERSION=tags/4.0.1 \\\#" Dockerfile
 sleep 5
 git add Dockerfile
 sleep 5
