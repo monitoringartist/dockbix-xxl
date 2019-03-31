@@ -18,7 +18,7 @@ git push origin master
 git push origin --tags
 
 # create tags from the list
-tags=('4.0.0' '4.0.1' '4.0.2' '4.0.3');
+tags=('4.0.0' '4.0.1' '4.0.2' '4.0.3' '4.0.4' '4.0.5' '4.0.6');
 for t in "${tags[@]}"
 do
     echo "Creating tag $t"
@@ -38,7 +38,7 @@ git push origin --tags
 
 # master is the latest stable tag
 git checkout master
-sed -i -e "s#^[[:space:]]*ZABBIX_VERSION=.*#  ZABBIX_VERSION=tags/4.0.3 \\\#" Dockerfile
+sed -i -e "s#^[[:space:]]*ZABBIX_VERSION=.*#  ZABBIX_VERSION=tags/4.0.6 \\\#" Dockerfile
 sleep 5
 git add Dockerfile
 sleep 5
