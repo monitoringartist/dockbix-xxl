@@ -78,7 +78,7 @@ docker run \
 ## Backup of DB Zabbix - configuration data only, no item history/trends
 docker exec \
     -ti dockbix-db \
-    /zabbix-backup/zabbix-mariadb-dump -u zabbix -p my_password -o /backups
+    /zabbix-backup/zabbix-dump -u zabbix -p my_password -o /backups
 
 ## Full compressed backup of Zabbix DB
 docker exec \
