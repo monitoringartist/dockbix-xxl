@@ -97,7 +97,7 @@ COPY container-files-zabbix /
 RUN \
   export FPING_VERSION=4.0 && \
   yum clean all && \
-  yum install -y https://repo.zabbix.com/zabbix/3.5/rhel/7/x86_64/zabbix-release-3.5-1.el7.noarch.rpm && \
+  yum install -y https://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-3.5-1.el7.noarch.rpm && \
   yum update -y && \
   yum install -y tar svn gcc automake make nmap traceroute iptstate wget \
               net-snmp-devel net-snmp-libs net-snmp net-snmp-perl iksemel \
