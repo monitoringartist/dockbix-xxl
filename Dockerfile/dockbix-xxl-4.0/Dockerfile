@@ -4,7 +4,7 @@ LABEL maintainer "Jan Garaj <info@monitoringartist.com>"
 # ZABBIX_VERSION=trunk tags/3.0.1 branches/dev/ZBXNEXT-1263-1
 
 ENV \
-  ZABBIX_VERSION=tags/4.0.6 \
+  ZABBIX_VERSION=4.0.19 \
   ZS_enabled=true \
   ZA_enabled=true \
   ZW_enabled=true \
@@ -95,11 +95,11 @@ ADD container-files-base /
 # Layer: zabbix
 COPY container-files-zabbix /
 RUN \
-  export FPING_VERSION=4.0 && \
+  export FPING_VERSION=4.2 && \
   yum clean all && \
   yum install -y https://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-4.0-2.el7.noarch.rpm && \
   yum update -y && \
-  yum install -y tar svn gcc automake make nmap traceroute iptstate wget \
+  yum install -y tar git gcc automake make nmap traceroute iptstate wget \
               net-snmp-devel net-snmp-libs net-snmp net-snmp-perl iksemel \
               net-snmp-python net-snmp-utils java-1.8.0-openjdk \
               java-1.8.0-openjdk-devel mariadb-devel libxml2-devel gettext \
@@ -110,13 +110,13 @@ RUN \
               libevent-devel openldap-clients && \
   yum -y -q reinstall glibc-common && \
   cp /usr/local/etc/zabbix_agentd.conf /tmp && \
-  svn co svn://svn.zabbix.com/${ZABBIX_VERSION} /usr/local/src/zabbix && \
+  git clone -b ${ZABBIX_VERSION} --single-branch --depth 1 https://github.com/zabbix/zabbix.git /usr/local/src/zabbix && \
   cd /usr/local/src/zabbix && \
   DATE=$(date +%Y-%m-%d) && \
   sed -i "s/ZABBIX_VERSION.*'\(.*\)'/ZABBIX_VERSION', '\1 Dockbix XXL ($DATE)'/g" frontends/php/include/defines.inc.php && \
   sed -i "s/ZABBIX_VERSION_RC.*\"\(.*\)\"/ZABBIX_VERSION_RC \"\1 Dockbix XXL (${DATE})\"/g" include/version.h && \
   sed -i "s/String VERSION =.*\"\(.*\)\"/String VERSION = \"\1 Dockbix XXL (${DATE})\"/g" src/zabbix_java/src/com/zabbix/gateway/GeneralInformation.java && \
-  zabbix_revision=$(svn info svn://svn.zabbix.com/${ZABBIX_VERSION} |grep "Last Changed Rev"|awk '{print $4;}') && \
+  zabbix_revision=$(git rev-parse --short HEAD) && \
   sed -i "s/{ZABBIX_REVISION}/$zabbix_revision/g" include/version.h && \
   ./bootstrap.sh && \
   export CFLAGS="-fPIC -pie -Wl,-z,relro -Wl,-z,now" && \
@@ -125,7 +125,7 @@ RUN \
               --enable-ipv6 --with-jabber --with-openssl --with-ssh2 \
               --enable-proxy --with-ldap --with-unixodbc && \
   make -j"$(nproc)" dbschema && \
-  make -j"$(nproc)" install && \
+  make -j"$(nproc)" install || true && \
   mv /health/ /usr/local/src/zabbix/frontends/php/ && \
   cp /usr/local/etc/web/zabbix.conf.php /usr/local/src/zabbix/frontends/php/conf/ && \
   wget https://github.com/schweikert/fping/releases/download/v${FPING_VERSION}/fping-${FPING_VERSION}.tar.gz && \
@@ -143,7 +143,7 @@ RUN \
   rm -rf ${FPING_VERSION}.tar.gz && \
   cd /usr/local/src/zabbix/frontends/php && \
   locale/make_mo.sh && \
-  yum autoremove -y gettext svn gcc automake mariadb-devel \
+  yum autoremove -y gettext git gcc automake mariadb-devel \
                     java-1.8.0-openjdk-devel libxml2-devel libcurl-devel \
                     OpenIPMI-devel iksemel-devel rubygems ruby-devel \
                     ruby-devel unixODBC-devel && \
