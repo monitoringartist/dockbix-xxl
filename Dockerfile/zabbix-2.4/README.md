@@ -66,7 +66,7 @@ Examples of admin tasks:
 # Backup of Zabbix configuration data only
 docker exec \
     -ti zabbix-db \
-    /zabbix-backup/zabbix-mariadb-dump -u zabbix -p my_password -o /backups
+    /zabbix-backup/zabbix-dump -u zabbix -p my_password -o /backups
 
 # Full DB backup of Zabbix
 docker exec \
